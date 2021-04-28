@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "458505594759",
+    "project_id": "landgreen-bca4f",
+    "storage_bucket": "landgreen-bca4f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:458505594759:android:ccd3f8e5cd9bb507a49522",
+        "android_client_info": {
+          "package_name": "com.atsoft.landgreen"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "458505594759-7a6ddqbisfc3tuqmss9ropk9kngqdl0r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPiFXnyVWZWF_FfURTIErYbdXgKNzIVnk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "458505594759-7a6ddqbisfc3tuqmss9ropk9kngqdl0r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

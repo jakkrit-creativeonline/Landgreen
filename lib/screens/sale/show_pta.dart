@@ -75,6 +75,7 @@ class _ShowPTAState extends State<ShowPTA> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: Container(
@@ -421,16 +422,49 @@ class _ShowPTAState extends State<ShowPTA> {
                                   },
                                 );
                               } else {
-                                return Card(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        'ยังไม่มีรายการ',
-                                        style: _baseFontStyle,
+                                return Center(
+                                  child: Container(
+                                    width: size.width * 0.98,
+                                    height: size.height * 0.42,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage("assets/img/bgAlert.png"),
+                                        fit: BoxFit.fill,
                                       ),
-                                      Text('ใบมอบอำนาจจากฝ่ายสินเชื่อ',
-                                          style: _baseFontStyle)
-                                    ],
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: size.width * 0.28,
+                                          child: Image.asset(
+                                              "assets/icons/icon_alert.png"),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 15),
+                                          child: Text(
+                                            "ไม่มีข้อมูลที่ท่านเรียก",
+                                            style: TextStyle(
+                                              fontSize: 28,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 5),
+                                          child: Text(
+                                            "วันที่คุณเลือกระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะคุณอาจจะยัง ไม่ได้ออกแจกสินค้าทดลอง \nในวันเวลา ดังกล่าวที่คุณเลือกมานี้",
+                                            style: TextStyle(
+                                                fontSize: 23,
+                                                color: Colors.white,
+                                                height: 1),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               }

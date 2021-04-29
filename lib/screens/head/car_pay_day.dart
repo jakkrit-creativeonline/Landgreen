@@ -1004,7 +1004,7 @@ class _CarPayDayState extends State<CarPayDay> {
                                             Expanded(
                                               flex: 1,
                                               child: Text(
-                                                'รวมรายจ่าย ${f.SeperateNumber(result['Money_paytotal'])} บาท',
+                                                'รวมรายจ่าย ${f.SeperateNumber( (result['Money_paytotal'] == null)?0:result['Money_paytotal'] )} บาท',
                                                 style: _baseFontStyle,
                                               ),
                                             ),

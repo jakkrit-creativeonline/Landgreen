@@ -87,7 +87,7 @@ class _TeamStockState extends State<TeamStock> {
     stockTeamSum.clear();
     stockTeam.forEach((val) {
       var index =
-          stockTeamSum.indexWhere((element) => element['Name'] == val['Name']);
+      stockTeamSum.indexWhere((element) => element['Name'] == val['Name']);
       if (index != -1) {
         stockTeamSum[index]['Qty'] += val['Qty'];
       } else {
@@ -149,8 +149,8 @@ class _TeamStockState extends State<TeamStock> {
                     imageUrl: url,
                     progressIndicatorBuilder:
                         (context, uri, downloadProgress) =>
-                            LinearProgressIndicator(
-                                value: downloadProgress.progress),
+                        LinearProgressIndicator(
+                            value: downloadProgress.progress),
                     errorWidget: (context, uri, error) => Icon(Icons.error),
                   ))),
         );
@@ -173,7 +173,9 @@ class _TeamStockState extends State<TeamStock> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Container(
@@ -334,13 +336,13 @@ class _TeamStockState extends State<TeamStock> {
                               Container(
                                 child: Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(8, 1, 8, 1),
+                                  const EdgeInsets.fromLTRB(8, 1, 8, 1),
                                   child: TextField(
                                     controller: _dateRange,
                                     decoration: InputDecoration(
                                       // labelText:'ข้อมูล ณ วันที่',
                                       hintText:
-                                          'รายการส่งของให้คลังประจำเดือนนี้',
+                                      'รายการส่งของให้คลังประจำเดือนนี้',
                                       contentPadding: EdgeInsets.all(0.0),
                                       isDense: true,
                                     ),
@@ -415,7 +417,7 @@ class _TeamStockState extends State<TeamStock> {
                       if (snap.hasData) {
                         if (receivedStock.length > 0) {
                           return Container(
-                              // width: size.width * 0.8,
+                            // width: size.width * 0.8,
                               height: size.height * 0.40,
                               child: ListView.builder(
                                   scrollDirection: Axis.vertical,
@@ -429,7 +431,7 @@ class _TeamStockState extends State<TeamStock> {
                                         children: [
                                           Row(
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.end,
+                                            CrossAxisAlignment.end,
                                             children: [
                                               Container(
                                                 child: Icon(
@@ -451,7 +453,7 @@ class _TeamStockState extends State<TeamStock> {
                                                 horizontal: 16),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                              MainAxisAlignment.start,
                                               children: [
                                                 Expanded(
                                                   child: Text(
@@ -471,16 +473,19 @@ class _TeamStockState extends State<TeamStock> {
                                                 horizontal: 16),
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                              MainAxisAlignment.start,
                                               children: [
                                                 Expanded(
                                                   child: Text(
-                                                    'ค่าขนส่ง ${f.SeperateNumber(res['Money_car_send'])} บาท',
+                                                    'ค่าขนส่ง ${f
+                                                        .SeperateNumber(
+                                                        res['Money_car_send'])} บาท',
                                                     style: _baseFontStyle,
                                                   ),
                                                 ),
                                                 Text(
-                                                  'กำหนดส่ง ${f.ThaiFormat(res['Date_send'])}',
+                                                  'กำหนดส่ง ${f.ThaiFormat(
+                                                      res['Date_send'])}',
                                                   style: _baseFontStyle,
                                                 )
                                               ],
@@ -495,43 +500,47 @@ class _TeamStockState extends State<TeamStock> {
                                                     height: 200,
                                                     child: ListView.builder(
                                                         scrollDirection:
-                                                            Axis.horizontal,
+                                                        Axis.horizontal,
                                                         shrinkWrap: true,
                                                         itemCount:
-                                                            res['stock_detail']
-                                                                .length,
+                                                        res['stock_detail']
+                                                            .length,
                                                         itemBuilder: (bc, i) {
                                                           var detail =
-                                                              res['stock_detail']
-                                                                  [i];
+                                                          res['stock_detail']
+                                                          [i];
                                                           return Card(
                                                             elevation: 2,
                                                             child: Container(
                                                               width: 200,
                                                               padding:
-                                                                  EdgeInsets
-                                                                      .all(8),
+                                                              EdgeInsets
+                                                                  .all(8),
                                                               child: Column(
                                                                 mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .center,
+                                                                MainAxisAlignment
+                                                                    .center,
                                                                 children: [
                                                                   SizedBox(
                                                                     height: 100,
                                                                     child:
-                                                                        CachedNetworkImage(
+                                                                    CachedNetworkImage(
                                                                       imageUrl:
-                                                                          '$storagePath${detail['Image']}',
-                                                                      progressIndicatorBuilder: (context,
-                                                                              url,
-                                                                              downloadProgress) =>
+                                                                      '$storagePath${detail['Image']}',
+                                                                      progressIndicatorBuilder: (
+                                                                          context,
+                                                                          url,
+                                                                          downloadProgress) =>
                                                                           LinearProgressIndicator(
-                                                                              value: downloadProgress.progress),
-                                                                      errorWidget: (context,
-                                                                              url,
-                                                                              error) =>
-                                                                          Icon(Icons
-                                                                              .error),
+                                                                              value: downloadProgress
+                                                                                  .progress),
+                                                                      errorWidget: (
+                                                                          context,
+                                                                          url,
+                                                                          error) =>
+                                                                          Icon(
+                                                                              Icons
+                                                                                  .error),
                                                                     ),
                                                                   ),
                                                                   Flexible(
@@ -542,7 +551,7 @@ class _TeamStockState extends State<TeamStock> {
                                                                     child: Text(
                                                                       'จำนวน ${detail['Qty']} ${detail['Unit_type']}',
                                                                       style:
-                                                                          _baseFontStyle,
+                                                                      _baseFontStyle,
                                                                     ),
                                                                   )
                                                                 ],
@@ -552,7 +561,8 @@ class _TeamStockState extends State<TeamStock> {
                                                         }),
                                                   ),
                                                   Text(
-                                                    'รวม : ${calStock(res['stock_detail'])} ชิ้น',
+                                                    'รวม : ${calStock(
+                                                        res['stock_detail'])} ชิ้น',
                                                     style: _baseFontStyle,
                                                   )
                                                 ],
@@ -562,54 +572,54 @@ class _TeamStockState extends State<TeamStock> {
                                           Row(
                                             mainAxisSize: MainAxisSize.min,
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
+                                            MainAxisAlignment.spaceEvenly,
                                             children: [
                                               res['showDetail'] == 0
                                                   ? Expanded(
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          res['showDetail'] = 1;
-                                                          setState(() {});
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            children: [
-                                                              Icon(
-                                                                Icons.zoom_in,
-                                                                size: 28,
-                                                                color:
-                                                                    kPrimaryColor,
-                                                              ),
-                                                              Text(
-                                                                  'ดูรายละเอียด')
-                                                            ],
-                                                          ),
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    res['showDetail'] = 1;
+                                                    setState(() {});
+                                                  },
+                                                  child: Container(
+                                                    child: Column(
+                                                      children: [
+                                                        Icon(
+                                                          Icons.zoom_in,
+                                                          size: 28,
+                                                          color:
+                                                          kPrimaryColor,
                                                         ),
-                                                      ),
-                                                    )
-                                                  : Expanded(
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          res['showDetail'] = 0;
-                                                          setState(() {});
-                                                        },
-                                                        child: Container(
-                                                          child: Column(
-                                                            children: [
-                                                              Icon(
-                                                                Icons
-                                                                    .visibility_off,
-                                                                size: 24,
-                                                                color:
-                                                                    kPrimaryColor,
-                                                              ),
-                                                              Text(
-                                                                  'ซ่อนรายละเอียด')
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
+                                                        Text(
+                                                            'ดูรายละเอียด')
+                                                      ],
                                                     ),
+                                                  ),
+                                                ),
+                                              )
+                                                  : Expanded(
+                                                child: InkWell(
+                                                  onTap: () {
+                                                    res['showDetail'] = 0;
+                                                    setState(() {});
+                                                  },
+                                                  child: Container(
+                                                    child: Column(
+                                                      children: [
+                                                        Icon(
+                                                          Icons
+                                                              .visibility_off,
+                                                          size: 24,
+                                                          color:
+                                                          kPrimaryColor,
+                                                        ),
+                                                        Text(
+                                                            'ซ่อนรายละเอียด')
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
                                               if (res['Status'] == 1 &&
                                                   res['isConfirm'] == 0)
                                                 Expanded(
@@ -625,7 +635,7 @@ class _TeamStockState extends State<TeamStock> {
                                                             Icons.check,
                                                             size: 28,
                                                             color:
-                                                                kPrimaryColor,
+                                                            kPrimaryColor,
                                                           ),
                                                           Text('รับสินค้า')
                                                         ],
@@ -636,87 +646,90 @@ class _TeamStockState extends State<TeamStock> {
                                               if (res['isConfirm'] == 1)
                                                 Expanded(
                                                     child: Row(
-                                                  mainAxisAlignment:
+                                                      mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceEvenly,
-                                                  children: [
-                                                    Column(
                                                       children: [
-                                                        Container(
-                                                          height: 36,
-                                                          child: IconButton(
-                                                              icon: Icon(
-                                                                Icons.check,
-                                                                size: 32,
-                                                              ),
-                                                              onPressed: () {
-                                                                res['isConfirm'] =
+                                                        Column(
+                                                          children: [
+                                                            Container(
+                                                              height: 36,
+                                                              child: IconButton(
+                                                                  icon: Icon(
+                                                                    Icons.check,
+                                                                    size: 32,
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    res['isConfirm'] =
                                                                     0;
-                                                                confirmStock(
-                                                                    res['ID'],
-                                                                    res['Team_code']);
-                                                              }),
+                                                                    confirmStock(
+                                                                        res['ID'],
+                                                                        res['Team_code']);
+                                                                  }),
+                                                            ),
+                                                            Text(
+                                                                'ยืนยันรับสินค้า'),
+                                                          ],
                                                         ),
-                                                        Text('ยืนยันรับสินค้า'),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      children: [
-                                                        Container(
-                                                          height: 36,
-                                                          child: IconButton(
-                                                              icon: Icon(
-                                                                Icons.close,
-                                                                size: 32,
-                                                              ),
-                                                              onPressed: () {
-                                                                res['isConfirm'] =
+                                                        Column(
+                                                          children: [
+                                                            Container(
+                                                              height: 36,
+                                                              child: IconButton(
+                                                                  icon: Icon(
+                                                                    Icons.close,
+                                                                    size: 32,
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    res['isConfirm'] =
                                                                     0;
-                                                                setState(() {});
-                                                              }),
-                                                        ),
-                                                        Text('ยังไม่รับ'),
+                                                                    setState(() {});
+                                                                  }),
+                                                            ),
+                                                            Text('ยังไม่รับ'),
+                                                          ],
+                                                        )
                                                       ],
-                                                    )
-                                                  ],
-                                                )),
+                                                    )),
                                               if (res['Survey'] == null)
                                                 Expanded(
                                                     child: Row(
-                                                  mainAxisAlignment:
+                                                      mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceEvenly,
-                                                  children: [
-                                                    Column(
                                                       children: [
-                                                        Container(
-                                                          height: 36,
-                                                          child: IconButton(
-                                                              icon: Icon(
-                                                                Icons
-                                                                    .ballot_outlined,
-                                                                size: 30,
-                                                                color:
+                                                        Column(
+                                                          children: [
+                                                            Container(
+                                                              height: 36,
+                                                              child: IconButton(
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .ballot_outlined,
+                                                                    size: 30,
+                                                                    color:
                                                                     kPrimaryColor,
-                                                              ),
-                                                              onPressed: () {
-                                                                locator<NavigationService>()
-                                                                    .navigateTo(
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    locator<
+                                                                        NavigationService>()
+                                                                        .navigateTo(
                                                                         'survey_team_stock',
                                                                         ScreenArguments(
                                                                           userId:
-                                                                              widget.userId,
+                                                                          widget
+                                                                              .userId,
                                                                           docId:
-                                                                              res['ID'],
+                                                                          res['ID'],
                                                                         ));
-                                                              }),
-                                                        ),
-                                                        Text(
-                                                            'ประเมินการส่งสินค้า'),
+                                                                  }),
+                                                            ),
+                                                            Text(
+                                                                'ประเมินการส่งสินค้า'),
+                                                          ],
+                                                        )
                                                       ],
-                                                    )
-                                                  ],
-                                                )),
+                                                    )),
                                               // if(res['Status'] == 3)
                                               //   Expanded(
                                               //     child: InkWell(
@@ -748,19 +761,57 @@ class _TeamStockState extends State<TeamStock> {
                                     );
                                   }));
                         } else {
-                          return Container(
-                              child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'ไม่พบรายการ',
-                              style: TextStyle(fontSize: 18),
+                          return Center(
+                            child: Container(
+                              width: size.width * 0.98,
+                              height: size.height * 0.42,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/img/bgAlert.png"),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.28,
+                                    child: Image.asset(
+                                        "assets/icons/icon_alert.png"),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15),
+                                    child: Text(
+                                      "ไม่มีข้อมูลที่ท่านเรียก",
+                                      style: TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      "วันที่คุณเลือกระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะคุณอาจจะยัง ไม่ได้ออกแจกสินค้าทดลอง \nในวันเวลา ดังกล่าวที่คุณเลือกมานี้",
+                                      style: TextStyle(
+                                          fontSize: 23,
+                                          color: Colors.white,
+                                          height: 1),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ));
-                        }
+                          );
+
+                      }
                       } else {
-                        return Container(
-                          child: ShimmerLoading(),
-                        );
+                      return Container(
+                      child: ShimmerLoading(),
+                      );
                       }
                     })
               ],
@@ -829,94 +880,152 @@ class _TeamStockState extends State<TeamStock> {
                     future: isLoaded,
                     builder: (BuildContext bc, AsyncSnapshot snap) {
                       if (snap.hasData) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 0),
-                          child: Container(
-                              width: size.width,
-                              height: size.height * 0.27,
-                              child: ListView.builder(
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: stockTeamSum.length,
-                                  itemBuilder: (bc, i) {
-                                    var result = stockTeamSum[i];
-                                    return Column(
-                                      children: [
-                                        Container(
-                                          padding:
-                                              EdgeInsets.symmetric(vertical: 5),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Expanded(
-                                                flex: 1,
-                                                child: SizedBox(
-                                                  height: 70,
-                                                  child: result['Image'] ==
-                                                              null ||
-                                                          result['Image'] ==
-                                                              'null' ||
-                                                          result['Image'] == ''
-                                                      ? Image.asset(
-                                                          'assets/no_image.png')
-                                                      : GestureDetector(
-                                                          onTap: () => showImageDetail(
+                        if (stockTeamSum.length > 0) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 0),
+                            child: Container(
+                                width: size.width,
+                                height: size.height * 0.27,
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: stockTeamSum.length,
+                                    itemBuilder: (bc, i) {
+                                      var result = stockTeamSum[i];
+                                      return Column(
+                                        children: [
+                                          Container(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 5),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                              children: [
+                                                Expanded(
+                                                  flex: 1,
+                                                  child: SizedBox(
+                                                    height: 70,
+                                                    child: result['Image'] ==
+                                                        null ||
+                                                        result['Image'] ==
+                                                            'null' ||
+                                                        result['Image'] ==
+                                                            ''
+                                                        ? Image.asset(
+                                                        'assets/no_image.png')
+                                                        : GestureDetector(
+                                                      onTap: () =>
+                                                          showImageDetail(
                                                               context,
                                                               '${result['Product_id']}',
                                                               '$storagePath${result['Image']}',
                                                               size),
-                                                          child: Hero(
-                                                              tag:
-                                                                  '${result['Product_id']}',
-                                                              child:
-                                                                  CachedNetworkImage(
-                                                                imageUrl:
-                                                                    '$storagePath${result['Image']}',
-                                                                progressIndicatorBuilder: (context,
-                                                                        url,
-                                                                        downloadProgress) =>
-                                                                    LinearProgressIndicator(
-                                                                        value: downloadProgress
-                                                                            .progress),
-                                                                errorWidget: (context,
-                                                                        url,
-                                                                        error) =>
-                                                                    Icon(Icons
-                                                                        .error),
-                                                              )
-                                                              // child: Image.network(
-                                                              //     '$storagePath${result['Image']}'),
-                                                              ),
-                                                        ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                flex: 2,
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      '${result['Name']}',
-                                                      style: _baseFontStyle,
+                                                      child: Hero(
+                                                          tag:
+                                                          '${result['Product_id']}',
+                                                          child:
+                                                          CachedNetworkImage(
+                                                            imageUrl:
+                                                            '$storagePath${result['Image']}',
+                                                            progressIndicatorBuilder: (
+                                                                context,
+                                                                url,
+                                                                downloadProgress) =>
+                                                                LinearProgressIndicator(
+                                                                    value:
+                                                                    downloadProgress
+                                                                        .progress),
+                                                            errorWidget: (
+                                                                context,
+                                                                url,
+                                                                error) =>
+                                                                Icon(Icons
+                                                                    .error),
+                                                          )
+                                                        // child: Image.network(
+                                                        //     '$storagePath${result['Image']}'),
+                                                      ),
                                                     ),
-                                                    Text(
-                                                        'คงเหลือจำนวน : ${result['Qty']} ${result['Unit'] == null ? '' : result['Unit']}',
-                                                        style: _baseFontStyle),
-                                                  ],
+                                                  ),
                                                 ),
-                                              )
-                                            ],
+                                                Expanded(
+                                                  flex: 2,
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      Text(
+                                                        '${result['Name']}',
+                                                        style: _baseFontStyle,
+                                                      ),
+                                                      Text(
+                                                          'คงเหลือจำนวน : ${result['Qty']} ${result['Unit'] ==
+                                                              null
+                                                              ? ''
+                                                              : result['Unit']}',
+                                                          style:
+                                                          _baseFontStyle),
+                                                    ],
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                        Divider(),
-                                      ],
-                                    );
-                                  })),
-                        );
+                                          Divider(),
+                                        ],
+                                      );
+                                    })),
+                          );
+                        } else {
+                          return Center(
+                            child: Container(
+                              width: size.width * 0.98,
+                              height: size.height * 0.42,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/img/bgAlert.png"),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.28,
+                                    child: Image.asset(
+                                        "assets/icons/icon_alert.png"),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15),
+                                    child: Text(
+                                      "ไม่มีข้อมูลแสดงผล",
+                                      style: TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      "ยังไม่มีข้อมูลสอนค้าคลังภายในทีม\nกรุณาติดต่อธุรการเพิ่มคลังสินค้าให้กับท่าน",
+                                      style: TextStyle(
+                                          fontSize: 23,
+                                          color: Colors.white,
+                                          height: 1),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
                       } else {
                         return ShimmerLoading(
                           type: 'boxItem',

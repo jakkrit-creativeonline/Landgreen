@@ -257,8 +257,8 @@ class _HeadKPISaleState extends State<HeadKPISale> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('ทะเบียน ${snapshot.data['car_name']} ',style: TextStyle(fontSize: 24.0,height: 1),),
-                              Text('รายงานเปิดใบสั่งจอง ทีม${snapshot.data['team_name']} ',style: TextStyle(fontSize: 18.0,height: 1),),
+                              Text('ทะเบียน ${ (snapshot.data['car_name'] == null)?' ':snapshot.data['car_name']} ',style: TextStyle(fontSize: 24.0,height: 1),),
+                              Text('รายงานเปิดใบสั่งจอง ทีม${(snapshot.data['team_name'] == null)?' ':snapshot.data['team_name'] } ',style: TextStyle(fontSize: 18.0,height: 1),),
                             ],
                           ),
                         ),
@@ -270,7 +270,10 @@ class _HeadKPISaleState extends State<HeadKPISale> {
                 ],
               );
             } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
+              return Padding(
+                padding: const EdgeInsets.only(top:10.0),
+                child: Center(child: Text('ไม่มีข้อมูลทะเบียนรถ กรุณาติดต่อธุรการให้เพิ่มทะเบียนรถให้ท่าน')),
+              );
             } else {
               return CircularProgressIndicator();
             }

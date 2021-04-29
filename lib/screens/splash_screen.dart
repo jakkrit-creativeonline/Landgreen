@@ -91,11 +91,12 @@ class _SplashScreenState extends State<SplashScreen>
               child: animationController != null
                   ? Opacity(
                       opacity: animationController.value,
-                      child: Image.network(
-                        // 'https://landgreen.ml/system/storage/app/Logoimage.png',
-                         'assets/img/logo.png',
-                        width: size.width * 0.5,
-                      ),
+                      child: Image.asset('assets/img/logo.png',width: size.width*0.5,),
+                      // child: Image.network(
+                      //   // 'https://landgreen.ml/system/storage/app/Logoimage.png',
+                      //    'assets/img/logo.png',
+                      //   width: size.width * 0.5,
+                      // ),
                     )
                   : Container(
                       child: Center(child: Text('WOWOWOWOWOWOOW')),

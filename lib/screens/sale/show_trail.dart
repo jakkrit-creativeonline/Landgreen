@@ -165,27 +165,32 @@ class _ShowTrailState extends State<ShowTrail> {
             ),
             body: RefreshIndicator(
               onRefresh: _refresh,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 18, right: 18, top: 10),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          showSum(),
-                          offlineTrailContainer(size),
-                        ],
+              child: Container(
+                width: size.width,
+                height: double.infinity,
+                child: SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 18, right: 18, top: 10),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            showSum(),
+                            offlineTrailContainer(size),
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Footer(),
-                  ],
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Footer(),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -386,48 +391,51 @@ class _ShowTrailState extends State<ShowTrail> {
                               },
                             ),
                           )
-                        : Center(
-                            child: Container(
-                              width: size.width * 0.98,
-                              height: size.height * 0.42,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage("assets/img/bgAlert.png"),
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: size.width * 0.28,
-                                    child: Image.asset(
-                                        "assets/icons/icon_alert.png"),
+                        : Container(
+                            height: size.height * 0.64,
+                            child: Center(
+                              child: Container(
+                                width: size.width * 0.98,
+                                height: size.height * 0.42,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage("assets/img/bgAlert.png"),
+                                    fit: BoxFit.fill,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 15),
-                                    child: Text(
-                                      "ไม่มีข้อมูลที่ท่านเรียก",
-                                      style: TextStyle(
-                                        fontSize: 28,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SizedBox(
+                                      width: size.width * 0.28,
+                                      child: Image.asset(
+                                          "assets/icons/icon_alert.png"),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 15),
+                                      child: Text(
+                                        "ไม่มีข้อมูลที่ท่านเรียก",
+                                        style: TextStyle(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 5),
-                                    child: Text(
-                                      "วันที่คุณเลือกระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะคุณอาจจะยัง ไม่ได้ออกแจกสินค้าทดลอง \nในวันเวลา ดังกล่าวที่คุณเลือกมานี้",
-                                      style: TextStyle(
-                                          fontSize: 23,
-                                          color: Colors.white,
-                                          height: 1),
-                                      textAlign: TextAlign.center,
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 5),
+                                      child: Text(
+                                        "วันที่คุณเลือกระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะคุณอาจจะยัง ไม่ได้ออกแจกสินค้าทดลอง \nในวันเวลา ดังกล่าวที่คุณเลือกมานี้",
+                                        style: TextStyle(
+                                            fontSize: 23,
+                                            color: Colors.white,
+                                            height: 1),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

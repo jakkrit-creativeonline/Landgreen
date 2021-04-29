@@ -271,6 +271,7 @@ class Sqlite {
       'Status': 0, //ยังไม่ Sync
       'Timestamp': DateTime.now().toString().split('.')[0],
       'Date_create': DateTime.now().toString().split('.')[0],
+      'Signature_date': DateTime.now().toString().split('.')[0],
       'Sale_work_car_id': billData['user']['Work_car_id'],
       'trail_location': billData['location'],
     };

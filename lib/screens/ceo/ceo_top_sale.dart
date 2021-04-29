@@ -357,9 +357,11 @@ class _CeoTopSaleState extends State<CeoTopSale> {
                         ),
                       );
                     }, childCount: topSale.length)),
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 15),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      fillOverscroll: true,
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
                         child: Footer(),
                       ),
                     )

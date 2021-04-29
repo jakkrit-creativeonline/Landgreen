@@ -894,6 +894,7 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
     trail['Customer_zipcode'] = _zipcode.text;
     trail['Customer_type'] = _customerType;
     trail['Customer_birthday'] = f.DateFormat(selectDate); //date only
+    print("----------> trail ${trail}");
     File ImageCustomer;
     File ImageIdCard;
     if (_tmpImage != null) {
@@ -1536,12 +1537,17 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
 
   Future<List> textRecog(File file) async {
     try {
+      // print("-------------------> file ${file.runtimeType}");
       final FirebaseVisionImage visionImage =
           await FirebaseVisionImage.fromFile(file);
+      // print("-------------------> 1");
+      // print("-------------------> visionImage ${visionImage}");
       final VisionDocumentText visionDocumentText =
           await cloudDocumentTextRecognizer.processImage(visionImage);
+      // print("-------------------> 2");
       List<String> textList = new List();
-      print('textRecog => ${textList}');
+      // print('textRecog => ${textList}');
+      // print("-------------------> 3");
 
       for (DocumentTextBlock block in visionDocumentText.blocks) {
         for (DocumentTextParagraph paragraph in block.paragraphs) {
@@ -1549,10 +1555,12 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
           textList.add(paragraph.text);
         }
       }
+      // print("-------------------> 4");
 
       return textList;
     } catch (e) {
       //show error dialog
+
       return [];
     }
   }
@@ -1578,6 +1586,7 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
     ];
     var tmp;
     var tmpArr;
+    print("--------------->textList ${textList}");
     textList.asMap().forEach((k, v) {
       tmp = v.replaceAll('\n', ' ');
       tmpArr = tmp.split(' ');
@@ -1586,7 +1595,7 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
       });
     });
     result.removeWhere((element) => element == '');
-    print("------------> result == ${result}");
+    // print("------------> result.asMap().forEach((k, v) {");
     try {
       result.asMap().forEach((k, v) {
         if ((v.endsWith('ber') ||
@@ -1690,7 +1699,6 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
   }
 
   Future imgPicker(bool isFromCamera, bool isForImageList) async {
-    print("------------> Future imgPicker(bool isFromCamera, bool isForImageList) async {");
     bool isConnect = await DataConnectionChecker().hasConnection;
     double percentage = 0.0;
     final ProgressDialog pr = ProgressDialog(context,
@@ -1723,7 +1731,6 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
     }
 
     if (pickedFile != null) {
-      print("------------> if (pickedFile != null) {");
       if (isForImageList) {
         imageList.add(File(pickedFile.path));
         setState(() {});
@@ -1754,8 +1761,12 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
         pr.update(progress: percentage, message: "กำลังอ่านบัตรประชาชน...");
         _tmpImage = File(pickedFile.path);
         List textList;
+        // print("----------------> 1");
         if (isConnect) {
+          // print("----------------> 2");
           if (IO.Platform.isIOS) {
+            // print("----------------> 3");
+            // print("----------------> ${textList}");
             print('ios คร้าบบบ ต้องหมุนภาพก่อน');
             Directory tempDir = await getTemporaryDirectory();
             final targetPath = tempDir.absolute.path + "/temp.jpg";
@@ -1763,8 +1774,10 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
                 await FlutterImageCompress.compressAndGetFile(
                     pickedFile.path, targetPath,
                     quality: 95, rotate: 90);
+            // print("----------------> _tmpImageRotate ${_tmpImageRotate}");
             textList = await textRecog(_tmpImageRotate);
           } else {
+            // print("---------------->_tmpImage ${_tmpImage}");
             textList = await textRecog(_tmpImage);
           }
         } else {
@@ -1824,6 +1837,7 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
     _image = null;
     _tmpImage = null;
     setState(() {});
+
   }
 
   Widget showPickedImage() {

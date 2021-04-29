@@ -23,19 +23,17 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
   List<TopTeam> topTeam = [];
 
   Future getCache() async {
-
     var res = await Sqlite().getJson('CEO_TOP_TEAM', '1');
     if (res != null) {
       topTeamTemp = jsonDecode(res['JSON_VALUE']);
-
     } else {
       bool isConnect = await DataConnectionChecker().hasConnection;
       if (isConnect) {
-        if(mounted)AlertNewDesign().showLoading(context,MediaQuery.of(context).size);
+        if (mounted)
+          AlertNewDesign().showLoading(context, MediaQuery.of(context).size);
         var result = await s.getCeoTopTeam();
         Navigator.pop(context);
         topTeamTemp = jsonDecode(result);
-
       }
     }
     final parsed = topTeamTemp.cast<Map<String, dynamic>>();
@@ -100,11 +98,10 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(42),
               child: AppBar(
-                titleSpacing:0.00,
+                titleSpacing: 0.00,
                 title: Text(''),
                 flexibleSpace: Container(
-                  decoration:
-                  BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/img/bgTop2.png'),
                       fit: BoxFit.fill,
@@ -130,7 +127,7 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top: 10,bottom: 5),
+                          padding: const EdgeInsets.only(top: 10, bottom: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -142,7 +139,10 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Icon(FontAwesomeIcons.star,color: btTextColor,),
+                                  child: Icon(
+                                    FontAwesomeIcons.star,
+                                    color: btTextColor,
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -151,8 +151,16 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('TOP TEAMS',style: TextStyle(fontSize: 24.0,height: 1),),
-                                    Text('จัดอันดับทีมขายยอดเยี่ยม',style: TextStyle(fontSize: 16.0,height: 1),),
+                                    Text(
+                                      'TOP TEAMS',
+                                      style:
+                                          TextStyle(fontSize: 24.0, height: 1),
+                                    ),
+                                    Text(
+                                      'จัดอันดับทีมขายยอดเยี่ยม',
+                                      style:
+                                          TextStyle(fontSize: 16.0, height: 1),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -163,14 +171,21 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
                           children: [
                             Expanded(
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 20,right: 20),
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('หมายเหตุ',style: TextStyle(fontSize: 15.0,height: 1),),
-                                    Text('ข้อมูลที่แสดงนับจาก ยอดขายเงินสด กับยอดขายเครดิตที่เก็บเงินลูกค้าครบแล้วเท่านั้น'),
-                                    Text('(ข้อมูลอัพเดทล่าสุดวันที่ $dayGen เวลา $timeGen)'),
+                                    Text(
+                                      'หมายเหตุ',
+                                      style:
+                                          TextStyle(fontSize: 15.0, height: 1),
+                                    ),
+                                    Text(
+                                        'ข้อมูลที่แสดงนับจาก ยอดขายเงินสด กับยอดขายเครดิตที่เก็บเงินลูกค้าครบแล้วเท่านั้น'),
+                                    Text(
+                                        '(ข้อมูลอัพเดทล่าสุดวันที่ $dayGen เวลา $timeGen)'),
                                   ],
                                 ),
                               ),
@@ -180,191 +195,204 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
                       ],
                     ),
                   ),
+                  (topTeam.length>0)?
                   SliverList(
-                      delegate: SliverChildBuilderDelegate((bc, i) {
-                    TopTeam res = topTeam[i];
-                    res.saleInCar.sort(
-                        (a, b) => b.sumCountProductCat1 - a.sumCountProductCat1);
-                    return Padding(
-                      padding: const EdgeInsets.only(left: 16,right: 16),
-                      child: Card(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            showInfo(i, res, size),
-                            Container(
-                              width: size.width * 0.92,
-                              height: 240,
-                              child: ListView.builder(
+                    delegate: SliverChildBuilderDelegate((bc, i) {
+                      TopTeam res = topTeam[i];
+                      res.saleInCar.sort((a, b) =>
+                          b.sumCountProductCat1 - a.sumCountProductCat1);
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 16, right: 16),
+                        child: Card(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              showInfo(i, res, size),
+                              Container(
+                                width: size.width * 0.92,
+                                height: 240,
+                                child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: res.saleInCar.length,
                                   itemBuilder: (context, i) {
                                     SaleInCar data = res.saleInCar[i];
-                                    TextStyle _itemFontStyle = TextStyle(fontSize: 18,color: whiteColor);
-                                      return Card(
-                                        elevation: 2,
-                                        color: data.sRowVariant != ''
-                                            ? danger
-                                            : grayFontColor,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: ConstrainedBox(
-                                            constraints: BoxConstraints(
-                                              minWidth: 140
-                                            ),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment: MainAxisAlignment.start,
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text('${i + 1} ${data.saleName} ${data.saleStatus == 0 ? '(ออก)' : ''}',style: TextStyle(fontSize: 24,color: whiteFontColor),),
-                                                SizedBox(height: 5,),
-                                                IntrinsicWidth(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
-                                                    children: [
-                                                      Text(
-                                                        'รวมเงินสด ${data.cashCountProductCat1590 + data.cashCountProductCat1690} กระสอบ',
-                                                        style: _itemFontStyle,
-                                                      ),
-                                                      Text(
-                                                          'ราคา 590 : ${data.cashCountProductCat1590} กระสอบ',
-                                                          style: _itemFontStyle,
-                                                      ),
-                                                      Text(
-                                                          'ราคา 690 : ${data.cashCountProductCat1690} กระสอบ',
-                                                          style: _itemFontStyle,
-                                                      ),
-                                                      Divider(color: Colors.white,),
-                                                      Text(
-                                                        'รวมเครดิต ${data.creditCountProductCat1590 + data.creditCountProductCat1690} กระสอบ',
-                                                        style: _itemFontStyle,
-                                                      ),
-                                                      Text(
-                                                          'ราคา 590 : ${data.creditCountProductCat1590} กระสอบ',
-                                                          style: _itemFontStyle),
-                                                      Text(
-                                                          'ราคา 690 : ${data.creditCountProductCat1690} กระสอบ',
-                                                          style: _itemFontStyle),
-                                                      Text(
-                                                        'รวม ${data.sumCountProductCat1} กระสอบ',
-                                                        style: TextStyle(
-                                                            color: whiteColor,
-                                                            fontSize: 25
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                    TextStyle _itemFontStyle = TextStyle(
+                                        fontSize: 18, color: whiteColor);
+                                    return Card(
+                                      elevation: 2,
+                                      color: data.sRowVariant != ''
+                                          ? danger
+                                          : grayFontColor,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: ConstrainedBox(
+                                          constraints:
+                                              BoxConstraints(minWidth: 140),
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${i + 1} ${data.saleName} ${data.saleStatus == 0 ? '(ออก)' : ''}',
+                                                style: TextStyle(
+                                                    fontSize: 24,
+                                                    color: whiteFontColor),
+                                              ),
+                                              SizedBox(
+                                                height: 5,
+                                              ),
+                                              IntrinsicWidth(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      'รวมเงินสด ${data.cashCountProductCat1590 + data.cashCountProductCat1690} กระสอบ',
+                                                      style: _itemFontStyle,
+                                                    ),
+                                                    Text(
+                                                      'ราคา 590 : ${data.cashCountProductCat1590} กระสอบ',
+                                                      style: _itemFontStyle,
+                                                    ),
+                                                    Text(
+                                                      'ราคา 690 : ${data.cashCountProductCat1690} กระสอบ',
+                                                      style: _itemFontStyle,
+                                                    ),
+                                                    Divider(
+                                                      color: Colors.white,
+                                                    ),
+                                                    Text(
+                                                      'รวมเครดิต ${data.creditCountProductCat1590 + data.creditCountProductCat1690} กระสอบ',
+                                                      style: _itemFontStyle,
+                                                    ),
+                                                    Text(
+                                                        'ราคา 590 : ${data.creditCountProductCat1590} กระสอบ',
+                                                        style: _itemFontStyle),
+                                                    Text(
+                                                        'ราคา 690 : ${data.creditCountProductCat1690} กระสอบ',
+                                                        style: _itemFontStyle),
+                                                    Text(
+                                                      'รวม ${data.sumCountProductCat1} กระสอบ',
+                                                      style: TextStyle(
+                                                          color: whiteColor,
+                                                          fontSize: 25),
+                                                    ),
+                                                  ],
                                                 ),
-
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         ),
-                                      );
+                                      ),
+                                    );
                                   },
+                                ),
                               ),
-                            ),
-                            // if (res.isShow)
-                            //   ListView.builder(
-                            //       itemCount: res.saleInCar.length,
-                            //       shrinkWrap: true,
-                            //       primary: false,
-                            //       itemBuilder: (bc, i) {
-                            //         SaleInCar data = res.saleInCar[i];
-                            //         return Card(
-                            //           color: data.sRowVariant != ''
-                            //               ? danger
-                            //               : whiteColor,
-                            //           child: Column(
-                            //             children: [
-                            //               Text(
-                            //                   '${i + 1} ${data.saleName} ${data.saleStatus == 0 ? '(ออก)' : ''}'),
-                            //               Row(
-                            //                 children: [
-                            //                   Expanded(
-                            //                     child: Card(
-                            //                       color: darkColor,
-                            //                       child: Column(
-                            //                         crossAxisAlignment:
-                            //                             CrossAxisAlignment.start,
-                            //                         children: [
-                            //                           Center(
-                            //                             child: Text(
-                            //                               'รวมเงินสด ${data.cashCountProductCat1590 + data.cashCountProductCat1690} กระสอบ',
-                            //                               style: TextStyle(
-                            //                                   color: whiteColor),
-                            //                             ),
-                            //                           ),
-                            //                           Text(
-                            //                               'ราคา 590 : ${data.cashCountProductCat1590} กระสอบ',
-                            //                               style: TextStyle(
-                            //                                   color: whiteColor)),
-                            //                           Text(
-                            //                               'ราคา 690 : ${data.cashCountProductCat1690} กระสอบ',
-                            //                               style: TextStyle(
-                            //                                   color: whiteColor)),
-                            //                         ],
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                   Expanded(
-                            //                     child: Card(
-                            //                       color: darkColor,
-                            //                       child: Column(
-                            //                         crossAxisAlignment:
-                            //                             CrossAxisAlignment.start,
-                            //                         children: [
-                            //                           Center(
-                            //                             child: Text(
-                            //                               'รวมเครดิต ${data.creditCountProductCat1590 + data.creditCountProductCat1690} กระสอบ',
-                            //                               style: TextStyle(
-                            //                                   color: whiteColor),
-                            //                             ),
-                            //                           ),
-                            //                           Text(
-                            //                               'ราคา 590 : ${data.creditCountProductCat1590} กระสอบ',
-                            //                               style: TextStyle(
-                            //                                   color: whiteColor)),
-                            //                           Text(
-                            //                               'ราคา 690 : ${data.creditCountProductCat1690} กระสอบ',
-                            //                               style: TextStyle(
-                            //                                   color: whiteColor)),
-                            //                         ],
-                            //                       ),
-                            //                     ),
-                            //                   ),
-                            //                 ],
-                            //               ),
-                            //               Row(
-                            //                 children: [
-                            //                   Expanded(
-                            //                       child: Card(
-                            //                     color: darkColor,
-                            //                     child: Center(
-                            //                       child: Text(
-                            //                         'รวม ${data.sumCountProductCat1} กระสอบ',
-                            //                         style: TextStyle(
-                            //                             color: kPrimaryColor),
-                            //                       ),
-                            //                     ),
-                            //                   ))
-                            //                 ],
-                            //               ),
-                            //             ],
-                            //           ),
-                            //         );
-                            //       }),
-                            // expandButton(res),
-                          ],
+                              // if (res.isShow)
+                              //   ListView.builder(
+                              //       itemCount: res.saleInCar.length,
+                              //       shrinkWrap: true,
+                              //       primary: false,
+                              //       itemBuilder: (bc, i) {
+                              //         SaleInCar data = res.saleInCar[i];
+                              //         return Card(
+                              //           color: data.sRowVariant != ''
+                              //               ? danger
+                              //               : whiteColor,
+                              //           child: Column(
+                              //             children: [
+                              //               Text(
+                              //                   '${i + 1} ${data.saleName} ${data.saleStatus == 0 ? '(ออก)' : ''}'),
+                              //               Row(
+                              //                 children: [
+                              //                   Expanded(
+                              //                     child: Card(
+                              //                       color: darkColor,
+                              //                       child: Column(
+                              //                         crossAxisAlignment:
+                              //                             CrossAxisAlignment.start,
+                              //                         children: [
+                              //                           Center(
+                              //                             child: Text(
+                              //                               'รวมเงินสด ${data.cashCountProductCat1590 + data.cashCountProductCat1690} กระสอบ',
+                              //                               style: TextStyle(
+                              //                                   color: whiteColor),
+                              //                             ),
+                              //                           ),
+                              //                           Text(
+                              //                               'ราคา 590 : ${data.cashCountProductCat1590} กระสอบ',
+                              //                               style: TextStyle(
+                              //                                   color: whiteColor)),
+                              //                           Text(
+                              //                               'ราคา 690 : ${data.cashCountProductCat1690} กระสอบ',
+                              //                               style: TextStyle(
+                              //                                   color: whiteColor)),
+                              //                         ],
+                              //                       ),
+                              //                     ),
+                              //                   ),
+                              //                   Expanded(
+                              //                     child: Card(
+                              //                       color: darkColor,
+                              //                       child: Column(
+                              //                         crossAxisAlignment:
+                              //                             CrossAxisAlignment.start,
+                              //                         children: [
+                              //                           Center(
+                              //                             child: Text(
+                              //                               'รวมเครดิต ${data.creditCountProductCat1590 + data.creditCountProductCat1690} กระสอบ',
+                              //                               style: TextStyle(
+                              //                                   color: whiteColor),
+                              //                             ),
+                              //                           ),
+                              //                           Text(
+                              //                               'ราคา 590 : ${data.creditCountProductCat1590} กระสอบ',
+                              //                               style: TextStyle(
+                              //                                   color: whiteColor)),
+                              //                           Text(
+                              //                               'ราคา 690 : ${data.creditCountProductCat1690} กระสอบ',
+                              //                               style: TextStyle(
+                              //                                   color: whiteColor)),
+                              //                         ],
+                              //                       ),
+                              //                     ),
+                              //                   ),
+                              //                 ],
+                              //               ),
+                              //               Row(
+                              //                 children: [
+                              //                   Expanded(
+                              //                       child: Card(
+                              //                     color: darkColor,
+                              //                     child: Center(
+                              //                       child: Text(
+                              //                         'รวม ${data.sumCountProductCat1} กระสอบ',
+                              //                         style: TextStyle(
+                              //                             color: kPrimaryColor),
+                              //                       ),
+                              //                     ),
+                              //                   ))
+                              //                 ],
+                              //               ),
+                              //             ],
+                              //           ),
+                              //         );
+                              //       }),
+                              // expandButton(res),
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }, childCount: topTeam.length)),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 10),
+                      );
+                    }, childCount: topTeam.length),
+                  ):NoDataCard(size),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    fillOverscroll: true,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
                       child: Footer(),
                     ),
                   )
@@ -374,6 +402,85 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
           ),
         ),
       ),
+    );
+  }
+
+  NoDataCard(size){
+    return SliverToBoxAdapter(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 20),
+
+        child: Center(
+          child: Container(
+            width:
+            size.width * 0.98,
+            height:
+            size.height * 0.42,
+            decoration:
+            BoxDecoration(
+              image:
+              DecorationImage(
+                image: AssetImage(
+                    "assets/img/bgAlert.png"),
+                fit: BoxFit.fill,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment:
+              CrossAxisAlignment
+                  .center,
+              mainAxisAlignment:
+              MainAxisAlignment
+                  .center,
+              children: [
+                SizedBox(
+                  width:
+                  size.width *
+                      0.28,
+                  child: Image.asset(
+                      "assets/icons/icon_alert.png"),
+                ),
+                Padding(
+                  padding:
+                  const EdgeInsets
+                      .only(
+                      top: 15),
+                  child: Text(
+                    "ไม่มีข้อมูลที่ท่านเรียก",
+                    style:
+                    TextStyle(
+                      fontSize: 28,
+                      fontWeight:
+                      FontWeight
+                          .bold,
+                      color: Colors
+                          .white,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding:
+                  const EdgeInsets
+                      .only(
+                      top: 5),
+                  child: Text(
+                    "เนื่องจากระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะว่ายังไม่มีข้อมูล\nกรุณาเพิ่มข้อมูล",
+                    style: TextStyle(
+                        fontSize:
+                        23,
+                        color: Colors
+                            .white,
+                        height: 1),
+                    textAlign:
+                    TextAlign
+                        .center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      )
     );
   }
 
@@ -389,8 +496,14 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
   Widget showInfo(int i, TopTeam res, Size size) {
     return Column(
       children: [
-        HeaderText(text:'อันดับ ${i + 1}',textSize: 20,gHeight: 26,),
-        SizedBox(height: 5,),
+        HeaderText(
+          text: 'อันดับ ${i + 1}',
+          textSize: 20,
+          gHeight: 26,
+        ),
+        SizedBox(
+          height: 5,
+        ),
         Row(
           children: [
             Expanded(
@@ -411,143 +524,151 @@ class _CeoTopTeamState extends State<CeoTopTeam> {
                       ),
                     ),
                   ),
-                  Text('ทีม : ${res.headName}',style: TextStyle(fontSize: 18),),
-                  Text('${res.carPlate}',style: TextStyle(fontSize: 18,height: 1)),
+                  Text(
+                    'ทีม : ${res.headName}',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  Text('${res.carPlate}',
+                      style: TextStyle(fontSize: 18, height: 1)),
                   Text('${res.carNote ?? ''}'),
                 ],
               ),
             ),
             Expanded(
-              flex: 4,
-                child:
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                IntrinsicHeight(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      IntrinsicWidth(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('เงินสด',style: TextStyle(fontSize: 15)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'รวมเงินสด',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  '${res.cashCountProductCat1590 + res.cashCountProductCat1690} กส.',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ราคา 590 ',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  '${res.cashCountProductCat1590} กส.',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ราคา 690 ',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  '${res.cashCountProductCat1690} กส.',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-
-                          ],
-                        ),
-                      ),
-                      VerticalDivider(),
-
-                      IntrinsicWidth(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('เครดิต',style: TextStyle(fontSize: 15)),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'รวมเครดิต',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  '${res.creditCountProductCat1590 + res.creditCountProductCat1690} กส.',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ราคา 590 ',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  '${res.creditCountProductCat1590}  กส.',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'ราคา 690 ',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                                Text(
-                                  '${res.creditCountProductCat1690}  กส.',
-                                  style: TextStyle(fontSize: 18),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Row(
+                flex: 4,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Text(
-                        'รวมทั้งหมด ${res.sumCountProductCat1} กระสอบ',
-                        style: TextStyle(color: kPrimaryColor,fontSize: 24),
+                    IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          IntrinsicWidth(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('เงินสด', style: TextStyle(fontSize: 15)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'รวมเงินสด',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      '${res.cashCountProductCat1590 + res.cashCountProductCat1690} กส.',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'ราคา 590 ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      '${res.cashCountProductCat1590} กส.',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'ราคา 690 ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      '${res.cashCountProductCat1690} กส.',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          VerticalDivider(),
+                          IntrinsicWidth(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('เครดิต', style: TextStyle(fontSize: 15)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'รวมเครดิต',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      '${res.creditCountProductCat1590 + res.creditCountProductCat1690} กส.',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'ราคา 590 ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      '${res.creditCountProductCat1590}  กส.',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'ราคา 690 ',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Text(
+                                      '${res.creditCountProductCat1690}  กส.',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
-                    )
+                    ),
+                    Row(
+                      children: [
+                        Center(
+                          child: Text(
+                            'รวมทั้งหมด ${res.sumCountProductCat1} กระสอบ',
+                            style:
+                                TextStyle(color: kPrimaryColor, fontSize: 24),
+                          ),
+                        )
+                      ],
+                    ),
                   ],
-                ),
-              ],
-            ))
+                ))
             // Expanded(
             //   child: Column(
             //     crossAxisAlignment: CrossAxisAlignment.start,

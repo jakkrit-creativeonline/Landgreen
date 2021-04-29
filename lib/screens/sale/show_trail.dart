@@ -106,6 +106,7 @@ class _ShowTrailState extends State<ShowTrail> {
 
     boolSet = Future.value(true);
     setState(() {});
+    print('genListOffline');
     print(_offlineResult);
   }
 

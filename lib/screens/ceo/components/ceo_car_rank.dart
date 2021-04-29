@@ -209,7 +209,7 @@ class _CeoCarRankState extends State<CeoCarRank> {
                       return ListView.builder(
                           primary: false,
                           shrinkWrap: true,
-                          itemCount: 5,
+                          itemCount: (showData.length>5)?5:showData.length,
                           itemBuilder: (bc, i) {
                             var res = showData[i];
                             return Column(

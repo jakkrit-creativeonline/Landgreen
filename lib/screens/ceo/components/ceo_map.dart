@@ -13,8 +13,8 @@ import 'package:http/http.dart';
 class CeoMap extends StatefulWidget {
   final DateTime selectedMonth;
 
-  const CeoMap({Key key, this.selectedMonth})
-      : super(key: key);
+  const CeoMap({Key key, this.selectedMonth}) : super(key: key);
+
   @override
   _CeoMapState createState() => _CeoMapState();
 }
@@ -138,7 +138,7 @@ class _CeoMapState extends State<CeoMap> {
     // (d >= 1 && d <= 5)
     if (d >= 1 && d <= 5) {
       m = (m - 1) == 0 ? 12 : (m - 1);
-      y = (m==0)?(y - 1):y;
+      y = (m == 0) ? (y - 1) : y;
       selectedReport = '${y.toString()}-${m.toString().padLeft(2, '0')}';
       optionReport[1] =
           DropdownMenuItem(value: selectedReport, child: Text('ประจำเดือนนี้'));
@@ -162,18 +162,15 @@ class _CeoMapState extends State<CeoMap> {
       bool isConnect = await DataConnectionChecker().hasConnection;
       if (isConnect) {
         var result = await s.getCeoMap(selectedReport: selectedReport);
-        if(showData.isEmpty){
+        if (showData.isEmpty) {
           var _result = await s.getCeoMap(selectedReport: selectedReport);
-          if(!_result.isEmpty){
+          if (!_result.isEmpty) {
             showData = jsonDecode(result);
           }
-
-        }else{
+        } else {
           showData = jsonDecode(result);
         }
-        setState(() {
-
-        });
+        setState(() {});
         // var res = await client.post('$apiPath-ceo', body: {
         //   'func': 'getCacheProvinceRanking',
         //   'namefile': selectedReport
@@ -240,10 +237,10 @@ class _CeoMapState extends State<CeoMap> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    Size _size =Size(size.width*0.9, size.height*0.79);
+    Size _size = Size(size.width * 0.9, size.height * 0.79);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24,vertical: 5),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 5),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -256,39 +253,98 @@ class _CeoMapState extends State<CeoMap> {
           Card(
             child: Column(
               children: [
-                HeaderText(text:'ข้อมูล Heat map ยอดขายแบ่งตามพื้นที่ประจำเดือนนี้',textSize: 20,gHeight: 26,),
-                SizedBox(height: 10,),
+                HeaderText(
+                  text: 'ข้อมูล Heat map ยอดขายแบ่งตามพื้นที่ประจำเดือนนี้',
+                  textSize: 20,
+                  gHeight: 26,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 FutureBuilder(
                     future: isLoaded,
                     builder: (context, snapshot) {
+                      print('showData =>${showData}');
+                      print('mapData =>${mapData}');
                       if (snapshot.hasData) {
-                        return SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: CanvasTouchDetector(
-                            builder: (context) => CustomPaint(
-                              painter: PathTestPainter(
-                                  context, showData.length, lastRank,
-                                  paths: mapData),
-                              size: _size,
+                        if (showData.length > 0) {
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.vertical,
+                            child: CanvasTouchDetector(
+                              builder: (context) => CustomPaint(
+                                painter: PathTestPainter(
+                                    context, showData.length, lastRank,
+                                    paths: mapData),
+                                size: _size,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } else {
+                          return Center(
+                            child: Container(
+                              width: size.width * 0.98,
+                              height: size.height * 0.42,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/img/bgAlert.png"),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.28,
+                                    child: Image.asset(
+                                        "assets/icons/icon_alert.png"),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15),
+                                    child: Text(
+                                      "ไม่มีข้อมูลแสดงผล",
+                                      style: TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      "เพราะทีมขายยัังไม่ได้ทำการออกบิล \nต้องให้ทีมขายออกบิลระบบถึงจะ\nนำข้อมูลมาแสดงผลได้",
+                                      style: TextStyle(
+                                          fontSize: 23,
+                                          color: Colors.white,
+                                          height: 1),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
                       } else if (snapshot.hasError) {
                         print(snapshot.error);
                         return Container();
                       } else {
-                        return ShimmerLoading(type: 'boxItem1Row',);
+                        return ShimmerLoading(
+                          type: 'boxItem1Row',
+                        );
                       }
                     }),
                 InkWell(
-                  onTap: (){
-                    Navigator.push(context,
-                                    MaterialPageRoute(
-                                        settings: RouteSettings(name: 'Heatmapเพิ่มเติม'),
-                                        builder: (BuildContext bc) => CeoMapDetail(
-                                              mapData: mapData,
-                                              showData: showData,
-                                            )));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            settings: RouteSettings(name: 'Heatmapเพิ่มเติม'),
+                            builder: (BuildContext bc) => CeoMapDetail(
+                                  mapData: mapData,
+                                  showData: showData,
+                                )));
                   },
                   child: Card(
                     elevation: 3,
@@ -297,17 +353,21 @@ class _CeoMapState extends State<CeoMap> {
                         borderRadius: BorderRadius.circular(4),
                         color: grayFontColor,
                       ),
-                      width: size.width*0.85,
+                      width: size.width * 0.85,
                       height: 40,
                       child: Center(
-                        child: Text('ดูข้อมูลเพิ่มเติมคลิ๊ก',style: TextStyle(fontSize: 24,color: whiteFontColor),),
+                        child: Text(
+                          'ดูข้อมูลเพิ่มเติมคลิ๊ก',
+                          style: TextStyle(fontSize: 24, color: whiteFontColor),
+                        ),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(height: 1,),
+                SizedBox(
+                  height: 1,
+                ),
               ],
-
             ),
           ),
 
@@ -325,99 +385,207 @@ class _CeoMapState extends State<CeoMap> {
           //                           showData: showData,
           //                         )));
           //           })),
-          SizedBox(height: 8,),
+          SizedBox(
+            height: 8,
+          ),
           FutureBuilder(
               future: isLoaded,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return GestureDetector(
-                    onTap: (){
-                      locator<NavigationService>().navigateTo(
-                          'ceo_mapStat',
-                          ScreenArguments()
-                      );
+                    onTap: () {
+                      locator<NavigationService>()
+                          .navigateTo('ceo_mapStat', ScreenArguments());
                     },
                     child: Card(
                       child: Column(
                         children: [
                           Stack(
                             children: [
-                              HeaderText(text:'ข้อมูลสถิติยอดขายแต่ละจังหวัด',textSize: 20,gHeight: 26,),
+                              HeaderText(
+                                text: 'ข้อมูลสถิติยอดขายแต่ละจังหวัด',
+                                textSize: 20,
+                                gHeight: 26,
+                              ),
                               Positioned(
                                   top: 0,
                                   right: 0,
-                                  child: Icon(Icons.arrow_right,color: whiteColor,))
+                                  child: Icon(
+                                    Icons.arrow_right,
+                                    color: whiteColor,
+                                  ))
                             ],
                           ),
-                          SizedBox(height: 5,),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          (showData.length !=0)?
                           Container(
                             height: 300,
                             child: GridView.builder(
-                                primary: false,
-                                itemCount: 4,
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 2,childAspectRatio: 1.2),
-                                itemBuilder: (context, i) {
-                                  var result = showData[i];
-                                  return Card(
-                                    elevation: 3,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        (i==0)
-                                        ?Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
+                              primary: false,
+                              itemCount:
+                                  (showData.length > 4) ? 4 : showData.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 2,
+                                      childAspectRatio: 1.2),
+                              itemBuilder: (context, i) {
+                                var result = showData[i];
+                                return Card(
+                                  elevation: 3,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      (i == 0)
+                                          ? Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Icon(
+                                                  FontAwesomeIcons.medal,
+                                                  color: kPrimaryLightColor,
+                                                ),
+                                                Text(
+                                                  'อันดับ ${i + 1}',
+                                                  style: TextStyle(
+                                                    fontSize: 25,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : Text(
+                                              'อันดับ ${i + 1}',
+                                              style: TextStyle(
+                                                fontSize: 25,
+                                              ),
+                                            ),
+                                      Text(
+                                          'จังหวัด${result['PROVINCE_NAME'].trim()}',
+                                          style: TextStyle(
+                                            fontSize: 25,
+                                          )),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 8, right: 8),
+                                        child: Column(
                                           children: [
-                                            Icon(FontAwesomeIcons.medal,color: kPrimaryLightColor,),
-                                            Text('อันดับ ${i + 1}',style: TextStyle(fontSize: 25,),),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('เงินสด',
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                    )),
+                                                Text(
+                                                    '${f.SeperateNumber(result['cash_count_product_cat1'])} กระสอบ',
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                    )),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('เครดิต',
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                    )),
+                                                Text(
+                                                    '${f.SeperateNumber(result['credit_count_product_cat1'])} กระสอบ',
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                    )),
+                                              ],
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text('รวม',
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                    )),
+                                                Text(
+                                                    '${f.SeperateNumber(result['sum_count_product_cat1'])} กระสอบ',
+                                                    style: TextStyle(
+                                                      fontSize: 20,
+                                                    )),
+                                              ],
+                                            ),
                                           ],
-                                        )
-                                        :Text('อันดับ ${i + 1}',style: TextStyle(fontSize: 25,),),
-                                        Text('จังหวัด${result['PROVINCE_NAME'].trim()}',style: TextStyle(fontSize: 25,)),
-                                        Padding(
-                                          padding: const EdgeInsets.only(left: 8,right: 8),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('เงินสด',style: TextStyle(fontSize: 20,)),
-                                                  Text('${f.SeperateNumber(result['cash_count_product_cat1'])} กระสอบ',style: TextStyle(fontSize: 20,)),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('เครดิต',style: TextStyle(fontSize: 20,)),
-                                                  Text('${f.SeperateNumber(result['credit_count_product_cat1'])} กระสอบ',style: TextStyle(fontSize: 20,)),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                children: [
-                                                  Text('รวม',style: TextStyle(fontSize: 20,)),
-                                                  Text('${f.SeperateNumber(result['sum_count_product_cat1'])} กระสอบ',style: TextStyle(fontSize: 20,)),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
                                         ),
-                                      ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ):Center(
+                            child: Container(
+                              width: size.width * 0.98,
+                              height: size.height * 0.42,
+                              decoration: BoxDecoration(
+                                image: DecorationImage(
+                                  image: AssetImage("assets/img/bgAlert.png"),
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: size.width * 0.28,
+                                    child: Image.asset(
+                                        "assets/icons/icon_alert.png"),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 15),
+                                    child: Text(
+                                      "ไม่มีข้อมูลแสดงผล",
+                                      style: TextStyle(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                  );
-                                },
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 5),
+                                    child: Text(
+                                      "เพราะทีมขายยัังไม่ได้ทำการออกบิล \nต้องให้ทีมขายออกบิลระบบถึงจะ\nนำข้อมูลมาแสดงผลได้",
+                                      style: TextStyle(
+                                          fontSize: 23,
+                                          color: Colors.white,
+                                          height: 1),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                           InkWell(
-                            onTap: (){
-                              locator<NavigationService>().navigateTo(
-                                  'ceo_mapStat',
-                                  ScreenArguments()
-                              );
+                            onTap: () {
+                              locator<NavigationService>()
+                                  .navigateTo('ceo_mapStat', ScreenArguments());
                             },
                             child: Card(
                               elevation: 3,
@@ -426,15 +594,21 @@ class _CeoMapState extends State<CeoMap> {
                                   borderRadius: BorderRadius.circular(4),
                                   color: grayFontColor,
                                 ),
-                                width: size.width*0.85,
+                                width: size.width * 0.85,
                                 height: 40,
                                 child: Center(
-                                  child: Text('ดูข้อมูลเพิ่มเติมคลิ๊ก',style: TextStyle(fontSize: 24,color: whiteFontColor),),
+                                  child: Text(
+                                    'ดูข้อมูลเพิ่มเติมคลิ๊ก',
+                                    style: TextStyle(
+                                        fontSize: 24, color: whiteFontColor),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                          SizedBox(height: 2,),
+                          SizedBox(
+                            height: 2,
+                          ),
                         ],
                       ),
                     ),
@@ -481,6 +655,7 @@ class PathTestPainter extends CustomPainter {
   final List<MapData> paths;
   final String lastRankName;
   final int lastRank;
+
   PathTestPainter(this.context, this.lastRank, this.lastRankName, {this.paths});
 
   Future showDetail(context, items) async {
@@ -570,7 +745,6 @@ class PathTestPainter extends CustomPainter {
     if (itemOffset.length > 5) {
       for (int i = 0; i < itemOffset.length; i++) {
         if (i != itemOffset.length - 1) {
-
           TextSpan span = new TextSpan(
               style: new TextStyle(fontSize: 14, color: backgroudBarColor),
               text: 'อันดับ ${i + 1}');

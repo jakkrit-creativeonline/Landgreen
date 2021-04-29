@@ -303,6 +303,7 @@ class _CeoMapStatState extends State<CeoMapStat> {
                     ),
                   ),
                 ),
+                (showData.length>0)?
                 SliverPadding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   sliver: SliverGrid(
@@ -367,6 +368,56 @@ class _CeoMapStatState extends State<CeoMapStat> {
                                     );
                       },
                       childCount: showData.length,
+                    ),
+                  ),
+                ):
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16,vertical: 20),
+                    child: Center(
+                      child: Container(
+                        width: size.width * 0.98,
+                        height: size.height * 0.42,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/img/bgAlert.png"),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: size.width * 0.28,
+                              child: Image.asset(
+                                  "assets/icons/icon_alert.png"),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 15),
+                              child: Text(
+                                "ไม่มีข้อมูลแสดงผล",
+                                style: TextStyle(
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Text(
+                                "เพราะทีมขายยัังไม่ได้ทำการออกบิล \nต้องให้ทีมขายออกบิลระบบถึงจะ\nนำข้อมูลมาแสดงผลได้",
+                                style: TextStyle(
+                                    fontSize: 23,
+                                    color: Colors.white,
+                                    height: 1),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -449,9 +500,9 @@ class _CeoMapStatState extends State<CeoMapStat> {
                 //         }
                 //       }),
                 // ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                SliverFillRemaining(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
                     child: Footer(),
                   ),
                 )

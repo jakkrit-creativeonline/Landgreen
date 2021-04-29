@@ -133,8 +133,11 @@ class _ShowRankAllState extends State<ShowRankAll> {
                       children: saleRankList,
                     ),
                   ),
-                SliverToBoxAdapter(
-                  child: Footer(),
+                SliverFillRemaining(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Footer(),
+                  ),
                 )
               ],
             ),

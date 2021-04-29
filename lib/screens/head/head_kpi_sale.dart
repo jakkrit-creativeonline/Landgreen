@@ -209,12 +209,14 @@ class _HeadKPISaleState extends State<HeadKPISale> {
                   showTeamName(),
                   summaryInfo(size),
                   showDetail(size),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 15),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    fillOverscroll: true,
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
                       child: Footer(),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),

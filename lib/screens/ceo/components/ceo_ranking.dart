@@ -196,7 +196,7 @@ class CeoRankingCard extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text('$name $surname',style: TextStyle(fontSize: 24,color: whiteFontColor,height: 1),),
+                                          Text('$name $surname',style: TextStyle(fontSize: 24,color: whiteFontColor,height: 1),overflow: TextOverflow.ellipsis,),
                                           Text('รหัสพนักงาน $username',style: TextStyle(fontSize: 18,color: whiteFontColor,height: 1),),
                                         ],
                                       ),

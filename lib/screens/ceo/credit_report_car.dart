@@ -408,7 +408,7 @@ class _CreditReportCarState extends State<CreditReportCar> {
                       );
                     });
               } else if (snap.hasError) {
-                return Center(child: Text('ไม่มีข้อมูล กรุณาลองใหม่ในภายหลัง'));
+                return Center(child: Text(''));
               } else {
                 return ShimmerLoading(type: 'boxText2row',);
               }

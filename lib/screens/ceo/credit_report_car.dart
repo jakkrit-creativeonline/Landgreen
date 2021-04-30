@@ -186,12 +186,14 @@ class _CreditReportCarState extends State<CreditReportCar> {
                       summaryInfo(size),
 
                       showDetail(size),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 10),
+                      SliverFillRemaining(
+                        hasScrollBody: false,
+                        fillOverscroll: true,
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
                           child: Footer(),
                         ),
-                      )
+                      ),
                     ],
                   ))),
         ),

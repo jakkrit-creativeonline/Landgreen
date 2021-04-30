@@ -455,7 +455,7 @@ class _MoneyTransferState extends State<MoneyTransfer> {
                             Expanded(
                               child: Container(
                                 padding: EdgeInsets.symmetric(vertical: 16.0),
-                                child: ListView.builder(
+                                child: (_resultHistory.length>0)?ListView.builder(
                                     itemCount: _resultHistory.length,
                                     shrinkWrap: true,
                                     scrollDirection: Axis.vertical,
@@ -465,7 +465,51 @@ class _MoneyTransferState extends State<MoneyTransfer> {
                                       return MoneyTransferHistoeyList(
                                         result: result,
                                       );
-                                    }),
+                                    },):Center(
+                                  child: Container(
+                                    width: size.width * 0.98,
+                                    height: size.height * 0.42,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage("assets/img/bgAlert.png"),
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: size.width * 0.28,
+                                          child: Image.asset(
+                                              "assets/icons/icon_alert.png"),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 15),
+                                          child: Text(
+                                            "ไม่มีข้อมูลที่ท่านเรียก",
+                                            style: TextStyle(
+                                              fontSize: 28,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 5),
+                                          child: Text(
+                                            "วันที่คุณเลือกระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะคุณอาจจะยัง ไม่ได้แจ้งโอนเงินสด \nในวันเวลา ดังกล่าวที่คุณเลือกมานี้",
+                                            style: TextStyle(
+                                                fontSize: 23,
+                                                color: Colors.white,
+                                                height: 1),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
                             )
                           ],
@@ -650,7 +694,7 @@ class _MoneyTransferState extends State<MoneyTransfer> {
                                     height: size.height * 0.4,
                                     padding:
                                         EdgeInsets.symmetric(vertical: 0.0),
-                                    child: ListView.builder(
+                                    child: (_result.length>0)?ListView.builder(
                                         itemCount: _result.length,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
@@ -661,13 +705,62 @@ class _MoneyTransferState extends State<MoneyTransfer> {
                                             result: result,
                                             currentUserId: widget.userId,
                                           );
-                                        }),
+                                        },):
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 10),
+                                      child: Center(
+                                        child: Container(
+                                          width: size.width * 0.98,
+                                          height: size.height * 0.42,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: AssetImage("assets/img/bgAlert.png"),
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              SizedBox(
+                                                width: size.width * 0.28,
+                                                child: Image.asset(
+                                                    "assets/icons/icon_alert.png"),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 15),
+                                                child: Text(
+                                                  "ไม่มีข้อมูลบิล",
+                                                  style: TextStyle(
+                                                    fontSize: 28,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 5),
+                                                child: Text(
+                                                  "เนื่องจากทีมยังไม่ได้ทำการเปิดบิล\nต้องให้ทีมเปิดบิลและรอแจ้งโอนก่อน \nรายการถึงจะแสดงผลในหน้านี้",
+                                                  style: TextStyle(
+                                                      fontSize: 23,
+                                                      color: Colors.white,
+                                                      height: 1),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                           ],
                         );
+
                       } else {
                         print('else');
                         return ShimmerLoading(

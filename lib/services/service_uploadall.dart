@@ -50,8 +50,11 @@ class ServiceUploadAll {
     parsed = res.toList().cast<Map<String, dynamic>>();
     _receipt = parsed.map<Receipt>((json) => Receipt.fromJson(json)).toList();
     res = await Sqlite().getAllTrail();
-    parsed = res.toList().cast<Map<String, dynamic>>();
-    _trail = parsed.map<Trail>((json) => Trail.fromJson(json)).toList();
+    if(res!=null){
+      parsed = res.toList().cast<Map<String, dynamic>>();
+      _trail = parsed.map<Trail>((json) => Trail.fromJson(json)).toList();
+    }
+
   }
 
   Future<Null> _checkBill() async {

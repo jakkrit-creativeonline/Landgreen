@@ -794,7 +794,7 @@ class _TeamStockState extends State<TeamStock> {
                                   Padding(
                                     padding: const EdgeInsets.only(top: 5),
                                     child: Text(
-                                      "วันที่คุณเลือกระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะคุณอาจจะยัง ไม่ได้ออกแจกสินค้าทดลอง \nในวันเวลา ดังกล่าวที่คุณเลือกมานี้",
+                                      "วันที่คุณเลือกระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะคุณอาจจะยัง ไม่ได้ออกใบสั่งขาย \nในวันเวลา ดังกล่าวที่คุณเลือกมานี้",
                                       style: TextStyle(
                                           fontSize: 23,
                                           color: Colors.white,

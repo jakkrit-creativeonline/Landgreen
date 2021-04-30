@@ -573,7 +573,7 @@ class _CarPayDayState extends State<CarPayDay> {
                     Container(
                       height: size.height * 0.7,
                       padding: EdgeInsets.all(8),
-                      child: ListView.builder(
+                      child: (carPayHistory.length>0)?ListView.builder(
                           itemCount: carPayHistory.length,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
@@ -673,7 +673,51 @@ class _CarPayDayState extends State<CarPayDay> {
                                 ),
                               ),
                             );
-                          }),
+                          }):Center(
+                        child: Container(
+                          width: size.width * 0.98,
+                          height: size.height * 0.42,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("assets/img/bgAlert.png"),
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: size.width * 0.28,
+                                child: Image.asset(
+                                    "assets/icons/icon_alert.png"),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 15),
+                                child: Text(
+                                  "ไม่มีข้อมูลที่ท่านเรียก",
+                                  style: TextStyle(
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5),
+                                child: Text(
+                                  "วันที่คุณเลือกระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะคุณอาจจะยัง ไม่ได้บันทึกรายจ่าย \nในวันเวลา ดังกล่าวที่คุณเลือกมานี้",
+                                  style: TextStyle(
+                                      fontSize: 23,
+                                      color: Colors.white,
+                                      height: 1),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

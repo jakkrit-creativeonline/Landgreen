@@ -157,8 +157,8 @@ class _CreateSaleOrderState extends State<CreateSaleOrder> {
   getTeamCode() async {
     var res = await client.post('$urlPath/api-store',
         body: {'func': 'get_stock_team_code', 'team_id': '${_userId}'});
-
     _teamCode = res.body.replaceAll('"', '');
+
   }
 
   getCatagory() async {
@@ -578,7 +578,7 @@ class _CreateSaleOrderState extends State<CreateSaleOrder> {
                           style: _baseFontStyle,
                         ),
                         Text(
-                          'รหัสคลัง $_teamCode',
+                          'รหัสคลัง ${_teamCode}',
                           style: _baseFontStyle,
                         ),
                       ],

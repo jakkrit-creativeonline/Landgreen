@@ -202,6 +202,7 @@ class _CreateReceiptState extends State<CreateReceipt> {
         signatureDate = res['Signature_date'];
         receiptNumber = res['Receipt_number'];
         var imgText = res['Image_receive'];
+        print("imgText = > ${imgText}");
         if (imgText != null) {
           var imgList = jsonDecode(imgText);
           print(widget.isOnline);
@@ -390,7 +391,7 @@ class _CreateReceiptState extends State<CreateReceipt> {
         child: pw.Text('$sumMoney', style: baseFontStype),
       ),
     ]));
-
+    // now_year = today.year();
     rowsWidget.add(Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -1151,6 +1152,7 @@ class _CreateReceiptState extends State<CreateReceipt> {
     if (billData['billPayType'] == 2 && contractId == null) {
       ShowModalBottom().alertDialog(context, 'กรุณาสร้างสัญญาซื้อขาย');
     } else {
+      print("else  -----> ");
       if (signatureBase64 != null) {
         FormatMethod f = FormatMethod();
         DateTime now = DateTime.now();
@@ -1173,17 +1175,24 @@ class _CreateReceiptState extends State<CreateReceipt> {
         } else {
           data['Receipt_number'] = receiptNumber;
         }
+        // print(data['Receipt_number']);
         List imageListCopy = [];
+        // List img_name = [];
         File tmp;
         var filename =
             '${now.year}${f.PadLeft(now.month)}${f.PadLeft(now.day)}${f.PadLeft(now.hour)}${f.PadLeft(now.minute)}${f.PadLeft(now.second)}_${widget.userId}';
+        // print("Y ---> ${now.year}");
+        // print("M ---> ${now.month}");
         if (imageList.length > 0) {
           imageList.asMap().forEach((i, val) {
             tmp = val.copySync('$appDocPath/${filename}_$i.jpeg');
+            // img_name.add('${filename}_$i.jpeg');
             imageListCopy.add(tmp.path);
           });
+          // data['img_name'] = jsonEncode(img_name);
           data['Image_receive'] = jsonEncode(imageListCopy);
         }
+        print("data['Image_receive'] = ${data['Image_receive']}");
         await Sqlite().insertReceipt(data);
         Navigator.pop(context);
         await locator<NavigationService>()

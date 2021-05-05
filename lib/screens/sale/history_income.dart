@@ -184,6 +184,7 @@ class _HistoryIncomeState extends State<HistoryIncome> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     TextStyle _baseFontStyle = TextStyle(fontSize: 18);
+    print("--------->${incomeData.length}");
     return MediaQuery(
         data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
         child: Container(
@@ -211,7 +212,8 @@ class _HistoryIncomeState extends State<HistoryIncome> {
               body: Column(
                 children: [
                   Expanded(
-                    child: FutureBuilder(
+                    child: (incomeData.length > 0)
+                    ? FutureBuilder(
                         future: isLoaded,
                         builder: (bc, snap) {
                           if (snap.hasData) {
@@ -408,7 +410,78 @@ class _HistoryIncomeState extends State<HistoryIncome> {
                             //   ],
                             // );
                           }
-                        }),
+                        }
+                        )
+                    : Center(
+                      child: Container(
+                        width:
+                        size.width * 0.98,
+                        height:
+                        size.height * 0.42,
+                        decoration:
+                        BoxDecoration(
+                          image:
+                          DecorationImage(
+                            image: AssetImage(
+                                "assets/img/bgAlert.png"),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        child: Column(
+                          crossAxisAlignment:
+                          CrossAxisAlignment
+                              .center,
+                          mainAxisAlignment:
+                          MainAxisAlignment
+                              .center,
+                          children: [
+                            SizedBox(
+                              width:
+                              size.width *
+                                  0.28,
+                              child: Image.asset(
+                                  "assets/icons/icon_alert.png"),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets
+                                  .only(
+                                  top: 15),
+                              child: Text(
+                                "ไม่มีข้อมูลที่ท่านเรียก",
+                                style:
+                                TextStyle(
+                                  fontSize: 28,
+                                  fontWeight:
+                                  FontWeight
+                                      .bold,
+                                  color: Colors
+                                      .white,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                              const EdgeInsets
+                                  .only(
+                                  top: 5),
+                              child: Text(
+                                "ไม่มีข้อมูลที่จะแสดงผล\nเพราะคุณอาจจะยัง ไม่ได้เปิดบิล ไม่ได้ออกใบเสร็จ\nหรือไม่ได้ออกแจกสินค้าทดลอง",
+                                style: TextStyle(
+                                    fontSize:
+                                    23,
+                                    color: Colors
+                                        .white,
+                                    height: 1),
+                                textAlign:
+                                TextAlign
+                                    .center,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
                   ),
                   Footer(),
                 ],

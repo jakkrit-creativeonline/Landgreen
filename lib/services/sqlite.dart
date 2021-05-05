@@ -850,6 +850,8 @@ class Sqlite {
   Future<Null> insertReceipt(var rec) async {
     final Database db = await connectedDatabase();
     try {
+      print("rec['Image_receive'] ------> ${rec['Image_receive']}");
+
       await db.insert(
           'RECEIPT',
           {
@@ -860,6 +862,7 @@ class Sqlite {
             'Image_signature': rec['Image_signature'],
             'Signature_date': rec['Signature_date'],
             'Image_receive': rec['Image_receive'],
+            // 'Image_receive_name': rec['img_name'],
             'Status': 1,
             'Edit_user_id': rec['Edit_user_id'],
             'receipt_location': rec['receipt_location'],
@@ -869,7 +872,10 @@ class Sqlite {
           conflictAlgorithm: ConflictAlgorithm.replace);
       await db.rawUpdate(
           'UPDATE BILL SET Status = 4,isSync = 0 WHERE ID = ${rec['Bill_id']}');
-    } catch (e) {}
+      print('success');
+    } catch (e) {
+      print('e -------> ${e}');
+    }
   }
 
   Future getContract(int id) async {

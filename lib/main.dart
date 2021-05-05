@@ -163,9 +163,9 @@ class _MyAppState extends State<MyApp> {
         } else {
           File imageCustomer = File('${offlineCustomer['Image']}');
           File imageIdCard = File('${offlineCustomer['Image_id_card']}');
-          String imageCustomerName = offlineCustomer['Image'].split('/')[6];
+          String imageCustomerName = offlineCustomer['Image'].split('/')[offlineCustomer['Image'].split('/').length - 1];
           String imageIdCardName =
-              offlineCustomer['Image_id_card'].split('/')[6];
+              offlineCustomer['Image_id_card'].split('/')[offlineCustomer['Image_id_card'].split('/').length - 1];
           isImageCustomerUpload = await ftpConnect
               .uploadFileWithRetry(imageCustomer, pRetryCount: 2);
           isImageIdCardUpload =
@@ -269,7 +269,7 @@ class _MyAppState extends State<MyApp> {
         var imgList = jsonDecode(val.imageReceive);
         for (var img in imgList) {
           File image = File('$img');
-          String imageName = img.split('/')[6];
+          String imageName = img.split('/')[img.split('/').length - 1];
           isImageUpload =
               await ftpConnect.uploadFileWithRetry(image, pRetryCount: 2);
           imageReceipt.add("faarunApp/receipt/$imageName");
@@ -396,8 +396,8 @@ class _MyAppState extends State<MyApp> {
         } else {
           File imageCustomer = File('${trail.image}');
           File imageIdCard = File('${trail.imageIdCard}');
-          String imageCustomerName = trail.image.split('/')[6];
-          String imageIdCardName = trail.imageIdCard.split('/')[6];
+          String imageCustomerName = trail.image.split('/')[trail.image.split('/').length - 1];
+          String imageIdCardName = trail.imageIdCard.split('/')[trail.imageIdCard.split('/').length - 1];
           isImageUpload = await ftpConnect.uploadFileWithRetry(imageCustomer,
               pRetryCount: 2);
           isImageUpload =
@@ -436,7 +436,7 @@ class _MyAppState extends State<MyApp> {
         var imgList = jsonDecode(trail.imageReceive);
         for (var img in imgList) {
           File image = File('$img');
-          String imageName = img.split('/')[6];
+          String imageName = img.split('/')[img.split('/').length - 1];
           isImageUpload =
               await ftpConnect.uploadFileWithRetry(image, pRetryCount: 2);
           imageReceipt.add("faarunApp/receipt/$imageName");

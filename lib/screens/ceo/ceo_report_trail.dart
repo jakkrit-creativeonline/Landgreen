@@ -290,7 +290,7 @@ class _CEOReportTrailState extends State<CEOReportTrail> {
                                                       textAlignVertical: TextAlignVertical.center,
                                                       decoration: InputDecoration(
                                                         // labelText:'ข้อมูล ณ วันที่',
-                                                        hintText: 'ข้อมูลประจำเดือนนี้',
+                                                        hintText: 'ข้อมูลประจำเดือนนี้ /',
                                                         contentPadding: EdgeInsets.all(5),
                                                         border: InputBorder.none,
                                                         isDense: true,

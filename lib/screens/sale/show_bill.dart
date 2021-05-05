@@ -160,6 +160,7 @@ class _ShowBillState extends State<ShowBill> {
   Future<Null> uploadReceipt() async {
     print('start upload receipt');
     var receipt = await Sqlite().getReceipt(); //ต้อง loop ก่อน
+    // print("receipt -------> ${receipt}");
     if (receipt.isNotEmpty) {
       for (var val in receipt) {
         if (val['isSync'] == 0) {
@@ -264,6 +265,7 @@ class _ShowBillState extends State<ShowBill> {
 
   Future _refresh({String startDate = '', String endDate = ''}) async {
     bool isConnect = await DataConnectionChecker().hasConnection;
+    print("isConnect -----> ${isConnect}");
     if (isConnect) ServiceUploadAll().uploadALL();
     _search.clear();
     await getData(startDate: startDate, endDate: endDate);

@@ -562,6 +562,7 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
       }
 
       var objImage_receive = jsonDecode(data['Image_receive']);
+      print("------------------");
 
       objImage_receive.forEach((item) {
         if (item.toString().split('sales_trail/').length > 1) {

@@ -134,9 +134,9 @@ class ServiceUploadAll {
         } else {
           File imageCustomer = File('${offlineCustomer['Image']}');
           File imageIdCard = File('${offlineCustomer['Image_id_card']}');
-          String imageCustomerName = offlineCustomer['Image'].split('/')[6];
+          String imageCustomerName = offlineCustomer['Image'].split('/')[offlineCustomer['Image'].split('/').length - 1];
           String imageIdCardName =
-              offlineCustomer['Image_id_card'].split('/')[6];
+              offlineCustomer['Image_id_card'].split('/')[offlineCustomer['Image_id_card'].split('/').length - 1];
           isImageCustomerUpload = await ftpConnect
               .uploadFileWithRetry(imageCustomer, pRetryCount: 2);
           isImageIdCardUpload =
@@ -206,90 +206,100 @@ class ServiceUploadAll {
   }
 
   Future<Null> _uploadReceipt() async {
-    var result = _receipt.where((element) => element.isSync == 0).toList();
-    DateTime now = DateTime.now();
-    String folderName = now.year.toString();
-    String subFolderName = now.month.toString();
-    String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/receipt/';
-    String uploadPath = '$mainFolder$folderName/$subFolderName';
-    await ftpConnect.createFolderIfNotExist(mainFolder);
-    await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
-    await ftpConnect
-        .createFolderIfNotExist('$mainFolder$folderName/$subFolderName');
-    await ftpConnect.changeDirectory(uploadPath);
-    for (var val in result) {
-      var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/uploadReceipt');
-      var req = new http.MultipartRequest('POST', postUri);
-      http.MultipartFile multipartFile;
-      //req ของ Receipt
-      req.fields['Bill_number'] = '${val.billNumber}';
-      req.fields['Receipt_number'] = '${val.receiptNumber}';
-      req.fields['User_id'] = '${val.userId}';
-      req.fields['Image_signature'] =
-          'data:image/png;base64,${val.receiptImageSignature}';
-      req.fields['Signature_date'] = '${val.receiptSignatureDate}';
-      req.fields['Status'] = '${val.receiptStatus}';
-      req.fields['Edit_user_id'] = '${val.receiptEditUserId}';
-      req.fields['receipt_location'] = '${val.location}';
+    print('service upload ---------> ');
+    try {
+      var result = _receipt.where((element) => element.isSync == 0).toList();
+      DateTime now = DateTime.now();
+      String folderName = now.year.toString();
+      String subFolderName = now.month.toString();
+      String mainFolder =
+          '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/receipt/';
+      String uploadPath = '$mainFolder$folderName/$subFolderName';
+      await ftpConnect.createFolderIfNotExist(mainFolder);
+      await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
+      await ftpConnect
+          .createFolderIfNotExist('$mainFolder$folderName/$subFolderName');
+      await ftpConnect.changeDirectory(uploadPath);
+      print('service upload ---------> 1');
+      print('service upload result ---------> ${result}');
+      for (var val in result) {
+        var postUri =
+        Uri.parse('https://landgreen.ml/system/public/api/uploadReceipt');
+        var req = new http.MultipartRequest('POST', postUri);
+        http.MultipartFile multipartFile;
+        //req ของ Receipt
+        req.fields['Bill_number'] = '${val.billNumber}';
+        req.fields['Receipt_number'] = '${val.receiptNumber}';
+        req.fields['User_id'] = '${val.userId}';
+        req.fields['Image_signature'] =
+        'data:image/png;base64,${val.receiptImageSignature}';
+        req.fields['Signature_date'] = '${val.receiptSignatureDate}';
+        req.fields['Status'] = '${val.receiptStatus}';
+        req.fields['Edit_user_id'] = '${val.receiptEditUserId}';
+        req.fields['receipt_location'] = '${val.location}';
 
-      bool isImageUpload = true;
-      List imageReceipt = [];
-      if (val.imageReceive != null && val.imageReceive != 'null') {
-        var imgList = jsonDecode(val.imageReceive);
-        for (var img in imgList) {
-          File image = File('$img');
-          String imageName = img.split('/')[6];
-          isImageUpload =
-              await ftpConnect.uploadFileWithRetry(image, pRetryCount: 2);
-          imageReceipt.add("faarunApp/receipt/$imageName");
+        bool isImageUpload = true;
+        List imageReceipt = [];
+        if (val.imageReceive != null && val.imageReceive != 'null') {
+          var imgList = jsonDecode(val.imageReceive);
+          for (var img in imgList) {
+            File image = File('$img');
+            print("img -------- ${img}");
+            String imageName = img.split('/')[img.split('/').length - 1];
+            print("imageName -------- ${imageName}");
+            isImageUpload =
+            await ftpConnect.uploadFileWithRetry(image, pRetryCount: 2);
+            imageReceipt.add("faarunApp/receipt/${now.year}/${now.month}/$imageName");
+          }
+          req.fields['Image_receive'] = jsonEncode(imageReceipt);
         }
-        req.fields['Image_receive'] = jsonEncode(imageReceipt);
-      }
-      //req ของ Contract
-      req.fields['Contract_number'] = '${val.contractNumber}';
-      req.fields['Contract_image_signature'] =
-          'data:image/png;base64,${val.imageSignature}';
-      req.fields['Contract_signature_date'] = '${val.signatureDate}';
-      req.fields['Image_signature_witness_1'] =
-          'data:image/png;base64,${val.imageSignatureWitness1}';
-      req.fields['Witness_name_1'] = '${val.witnessName1}';
-      req.fields['Image_signature_witness_2'] =
-          'data:image/png;base64,${val.imageSignatureWitness2}';
-      req.fields['Witness_name_2'] = '${val.witnessName2}';
-      req.fields["Other_name_1"] = "${val.otherName1}";
-      req.fields["Other_relationship_1"] = "${val.otherRelationship1}";
-      req.fields["Other_phone_1"] = "${val.otherPhone1}";
-      req.fields["Other_name_2"] = "${val.otherName2}";
-      req.fields["Other_relationship_2"] = "${val.otherRelationship2}";
-      req.fields["Other_phone_2"] = "${val.otherPhone2}";
-      req.fields["Book_number"] = "${val.bookNumber}";
-      req.fields["Contract_status"] = "${val.status}";
-      req.fields["Contract_edit_user_id"] = "${val.editUserId}";
+        //req ของ Contract
+        req.fields['Contract_number'] = '${val.contractNumber}';
+        req.fields['Contract_image_signature'] =
+        'data:image/png;base64,${val.imageSignature}';
+        req.fields['Contract_signature_date'] = '${val.signatureDate}';
+        req.fields['Image_signature_witness_1'] =
+        'data:image/png;base64,${val.imageSignatureWitness1}';
+        req.fields['Witness_name_1'] = '${val.witnessName1}';
+        req.fields['Image_signature_witness_2'] =
+        'data:image/png;base64,${val.imageSignatureWitness2}';
+        req.fields['Witness_name_2'] = '${val.witnessName2}';
+        req.fields["Other_name_1"] = "${val.otherName1}";
+        req.fields["Other_relationship_1"] = "${val.otherRelationship1}";
+        req.fields["Other_phone_1"] = "${val.otherPhone1}";
+        req.fields["Other_name_2"] = "${val.otherName2}";
+        req.fields["Other_relationship_2"] = "${val.otherRelationship2}";
+        req.fields["Other_phone_2"] = "${val.otherPhone2}";
+        req.fields["Book_number"] = "${val.bookNumber}";
+        req.fields["Contract_status"] = "${val.status}";
+        req.fields["Contract_edit_user_id"] = "${val.editUserId}";
 
-      print(req.fields);
+        print(req.fields);
 
-      if (isImageUpload) {
-        req.send().then((response) {
-          http.Response.fromStream(response).then((value) async {
-            if (value.statusCode == 200) {
-              var res = await jsonDecode(value.body);
-              //print('upload receipt value $res');
-              if (res['Status'] == 'Success') {
-                Sqlite().rawQuery(
-                    'UPDATE RECEIPT SET isSync = 1 WHERE ID = ${val.receiptId}');
-                // var target = _receipt
-                //     .firstWhere((item) => item.receiptId == val.receiptId);
-                // target.isSync = 1;
+        if (isImageUpload) {
+          req.send().then((response) {
+            http.Response.fromStream(response).then((value) async {
+              if (value.statusCode == 200) {
+                var res = await jsonDecode(value.body);
+                //print('upload receipt value $res');
+                if (res['Status'] == 'Success') {
+                  Sqlite().rawQuery(
+                      'UPDATE RECEIPT SET isSync = 1 WHERE ID = ${val
+                          .receiptId}');
+                  // var target = _receipt
+                  //     .firstWhere((item) => item.receiptId == val.receiptId);
+                  // target.isSync = 1;
+                }
+              } else {
+                //print('upload receipt status : ${value.statusCode}');
+                //print(value.body);
               }
-            } else {
-              //print('upload receipt status : ${value.statusCode}');
-              //print(value.body);
-            }
+            });
           });
-        });
+        }
       }
+    }catch(e){
+      print('error ----------> ${e}');
     }
   }
 
@@ -367,8 +377,8 @@ class ServiceUploadAll {
         } else {
           File imageCustomer = File('${trail.image}');
           File imageIdCard = File('${trail.imageIdCard}');
-          String imageCustomerName = trail.image.split('/')[6];
-          String imageIdCardName = trail.imageIdCard.split('/')[6];
+          String imageCustomerName = trail.image.split('/')[trail.image.split('/').length - 1];
+          String imageIdCardName = trail.imageIdCard.split('/')[trail.imageIdCard.split('/').length - 1];
           isImageUpload = await ftpConnect.uploadFileWithRetry(imageCustomer,
               pRetryCount: 2);
           isImageUpload =
@@ -407,10 +417,10 @@ class ServiceUploadAll {
         var imgList = jsonDecode(trail.imageReceive);
         for (var img in imgList) {
           File image = File('$img');
-          String imageName = img.split('/')[6];
+          String imageName = img.split('/')[img.split('/').length - 1];
           isImageUpload =
               await ftpConnect.uploadFileWithRetry(image, pRetryCount: 2);
-          imageReceipt.add("faarunApp/receipt/$imageName");
+          imageReceipt.add("faarunApp/receipt/$folderName/$subFolderName/$imageName");
         }
         req.fields['Image_receive'] = jsonEncode(imageReceipt);
       }

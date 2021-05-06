@@ -245,6 +245,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<Null> insertJson(String api, String filename) async {
+    print('load data online to sqlife');
     stateText = 'กำลังดาวน์โหลด $filename.json';
     final url = 'https://landgreen.ml/system/public/api/$api';
     final req = http.Request('GET', Uri.parse(url));
@@ -265,6 +266,7 @@ class _SplashScreenState extends State<SplashScreen>
         await file.writeAsBytes(_bytes);
         String data = await file.readAsString();
         var decodeData = jsonDecode(data);
+        // print(decodeData);
         switch (filename) {
           case 'SETTING_COMPANY':
             await Sqlite().insertSettingCompany(decodeData);

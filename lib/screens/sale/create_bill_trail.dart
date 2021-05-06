@@ -581,6 +581,7 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
         } else {
           customerSign = data['Image_signature'];
         }
+
       }
       _customerType = data['Type_id'].toString();
 

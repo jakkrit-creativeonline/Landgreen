@@ -354,7 +354,7 @@ class _UserSettingState extends State<UserSetting> {
           isUpload =
               await ftpConnect.uploadFileWithRetry(image, pRetryCount: 2);
           ftpConnect.disconnect();
-          uploadName = 'user/' + imageName.split('/')[6];
+          uploadName = 'user/' + imageName.split('/')[imageName.split('/').length - 1];
         } else {
           uploadName = imageName;
         }

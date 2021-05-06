@@ -65,15 +65,21 @@ class _ShowBillState extends State<ShowBill> {
     var result = await Sqlite()
         .getBill(widget.userId, selectStart: startDate, selectEnd: endDate);
     _result = result.toList();
+    print('result ----> ${_result.length}');
     if (_result.length > 0) {}
     if (mounted) setState(() {});
   }
 
   Future<Null> genRowOffline() async {
-    print('get bill offline');
+    // print('get bill offline');
+    // print('result ----> ${_result.length}');
     _offlineResult = parseResults(jsonEncode(_result));
+    // print('_offlineResult ----> ${_offlineResult}');
+    // print('_offline ----> ${_offline}');
     _offline.clear();
+    // print('_offline ----> ${_offline}');
     _offline.addAll(await _offlineResult);
+    // print(_offline);
   }
 
   Future<Null> _checkSync() async {
@@ -268,9 +274,13 @@ class _ShowBillState extends State<ShowBill> {
     print("isConnect -----> ${isConnect}");
     if (isConnect) ServiceUploadAll().uploadALL();
     _search.clear();
+    print(1);
     await getData(startDate: startDate, endDate: endDate);
+    print(2);
     await genRowOffline();
+    print(3);
     if (isConnect) {
+      print(4);
       //ถ้าหน้านี้เปิดเน็ตให้ไปดึงบิลออนไลน์มาเก็บไว้ในเครื่อง
       await getSaleCommission(widget.userId);
       print('isFirst ${isFirst}');

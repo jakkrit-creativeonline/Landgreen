@@ -215,6 +215,7 @@ class _ShowRankAllState extends State<ShowRankAll> {
                 padding: const EdgeInsets.only(top: 0,bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: _row1,
                 ),
               ),
@@ -222,6 +223,7 @@ class _ShowRankAllState extends State<ShowRankAll> {
                 padding: const EdgeInsets.only(top: 0,bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: _row2,
                 ),
               ),
@@ -229,6 +231,7 @@ class _ShowRankAllState extends State<ShowRankAll> {
                 padding: const EdgeInsets.only(top: 0,bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: _row3,
                 ),
               )

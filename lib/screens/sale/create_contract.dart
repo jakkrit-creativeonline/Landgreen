@@ -41,6 +41,7 @@ class _CreateContractState extends State<CreateContract> {
       ref1 = TextEditingController(),
       ref2 = TextEditingController(),
       contractNumber = TextEditingController();
+  var settingCompany;
   String saleSign, customerSign, ref1Sign, ref2Sign;
   final SignatureController _sale = SignatureController(
     penStrokeWidth: 5,
@@ -165,6 +166,8 @@ class _CreateContractState extends State<CreateContract> {
     setState(() {});
   }
 
+
+
   Future<Null> submitContract(context) async {
     if (other1.text.isEmpty ||
         other1Rela.text.isEmpty ||
@@ -203,12 +206,26 @@ class _CreateContractState extends State<CreateContract> {
     }
   }
 
+  getSettingCompany () async{
+
+    var res = await Sqlite().rawQuery('SELECT * FROM SETTING_COMPANY WHERE ID = 1');
+    settingCompany = res[0];
+    setState(() {
+
+    });
+    print("SETTING COMPONY === ${settingCompany['Address']}");
+    // print("SETTING COMPONY === ${res}");
+    // print('res -----> ${res[0]['Address']}');
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+    getSettingCompany();
     getProduct();
     getContractData();
     super.initState();
+    // print("SETTING COMPONY initState === ${settingCompany['Address']}");
   }
 
   @override
@@ -229,6 +246,7 @@ class _CreateContractState extends State<CreateContract> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    print("settingCompany['Contract_name'] ----> ${settingCompany['Name']}");
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Container(
@@ -310,7 +328,7 @@ class _CreateContractState extends State<CreateContract> {
                             ),
                             Center(
                               child: Text(
-                                '(สินเชื่อโครงการใช้สบายจ่ายสบาย)',
+                                settingCompany['Contract_name'],
                                 style: TextStyle(fontSize: 24.0),
                               ),
                             ),
@@ -346,11 +364,11 @@ class _CreateContractState extends State<CreateContract> {
                             Text.rich(
                               TextSpan(
                                 text:
-                                    '    สัญญาฉบับนี้ทำขึ้นระหว่าง ${widget.contractInfo['companyInfo']['name']} โดยนางโดยนางตรีพิพัฒน์  ศิลปการสกุล',
+                                    '    สัญญาฉบับนี้ทำขึ้นระหว่าง ${widget.contractInfo['companyInfo']['name']} โดยนางโดย${settingCompany['Ceo_name']}',
                                 children: <TextSpan>[
                                   TextSpan(
                                     text:
-                                        'กรรมการผู้มีอำนาจ สำนักงานตั้งอยู่เลขที่ 9/69 ถนนนวมินทร์ 70 แขวงคลองกุ่ม เขตบึงกุ่ม กรุงเทพฯ ซึ่งต่อไปในสัญญานี้จะเรียกว่า "ผู้ขาย" ฝ่ายหนึ่งกับ ',
+                                        'กรรมการผู้มีอำนาจ สำนักงานตั้งอยู่เลขที่ ${settingCompany['Address']} ซึ่งต่อไปในสัญญานี้จะเรียกว่า "ผู้ขาย" ฝ่ายหนึ่งกับ ',
                                   ),
                                   TextSpan(
                                       text:
@@ -558,8 +576,9 @@ class _CreateContractState extends State<CreateContract> {
                                           width: 150,
                                           height: 100,
                                           child:
-                                              Image.asset('assets/sign.png')),
-                                      Text('(นางตรีพิพัฒน์ ศิลปการสกุล)')
+                                            Image.memory(base64Decode(settingCompany['Img_sign_ceo'].toString()))),
+                                              // Image.asset('${settingCompany['Name']}')),
+                                      Text('(${settingCompany['Ceo_name']})')
                                     ],
                                   ),
                                 )),

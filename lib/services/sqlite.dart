@@ -211,7 +211,10 @@ class Sqlite {
             "Qrcodeimage": "${e['Qrcodeimage']}",
             "Edit_user_id": "${e['Edit_user_id']}",
             "Timestamp": "${e['Timestamp']}",
-            "Img_sign_ceo": "${e['Img_sign_ceo']}"
+            "Img_sign_ceo": "${e['Img_sign_ceo']}",
+            "Contract_name": "${e['Contract_name']}",
+            "Ceo_name": "${e['Ceo_name']}",
+            "SName": "${e['SName']}"
           },
           conflictAlgorithm: ConflictAlgorithm.replace);
     });

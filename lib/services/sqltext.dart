@@ -265,7 +265,10 @@ class sqltext {
   `Qrcodeimage` text DEFAULT NULL,
   `Edit_user_id` int(11) DEFAULT NULL,
   `Timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `Img_sign_ceo` text DEFAULT NULL
+  `Img_sign_ceo` text DEFAULT NULL,
+  `Contract_name` text DEFAULT NULL,
+  `Ceo_name` text DEFAULT NULL,
+  `SName` text DEFAULT NULL
   )
   ''';
   final sqlInitTrail = '''

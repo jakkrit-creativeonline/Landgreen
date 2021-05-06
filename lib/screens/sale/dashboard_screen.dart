@@ -1121,6 +1121,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     } else {
       throw Exception('ไม่สามารถโหลดข้อมูลได้');
     }
+    print('--------------');
   }
 
   Future<Null> getProductCanSell(int userId) async {
@@ -1318,21 +1319,28 @@ class _DashboardScreenState extends State<DashboardScreen> {
     var _heightImg = size.width * 0.17;
 
     if (saleRanking != null) {
-      List<Widget> _row1 = new List();
-      List<Widget> _row2 = new List();
-      List<Widget> _row3 = new List();
-      if (saleRanking.length <= 5) {
-        _row1 = lS(1, saleRanking.length);
+      // List<Widget> _row1 = new List();
+      // List<Widget> _row2 = new List();
+      // List<Widget> _row3 = new List();
+      // if (saleRanking.length <= 5) {
+      //   _row1 = lS(1, saleRanking.length);
+      // }
+      // if(saleRanking.length > 5 && saleRanking.length <= 10){
+      //   _row1 = lS(1, 5);
+      //   _row2 = lS(6, saleRanking.length);
+      // }
+      // if(saleRanking.length > 10 && saleRanking.length <= 15){
+      //   _row1 = lS(1, 5);
+      //   _row2 = lS(6, 10);
+      //   _row3 = lS(11, saleRanking.length);
+      // }
+      List<Widget> _row = new List();
+      if(saleRanking.length < 15){
+        _row = lS(1,saleRanking.length);
+      }else{
+        _row = lS(1,15);
       }
-      if(saleRanking.length > 5 && saleRanking.length <= 10){
-        _row1 = lS(1, 5);
-        _row2 = lS(6, saleRanking.length);
-      }
-      if(saleRanking.length > 10 && saleRanking.length <= 15){
-        _row1 = lS(1, 5);
-        _row2 = lS(6, 5);
-        _row3 = lS(11, saleRanking.length);
-      }
+
 
       return Padding(
         padding: const EdgeInsets.only(left: 16, right: 16),
@@ -1348,30 +1356,43 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   style: TextStyle(fontSize: 18),
                 ),
               ),
-              if (_row1.length > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, bottom: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _row1,
-                  ),
+              Container(
+                // width: 400,
+                height: 330,
+                child: GridView.count(
+                  crossAxisCount: 5,
+                  physics: NeverScrollableScrollPhysics(),
+                  childAspectRatio: 0.7,
+                  children: _row,
                 ),
-              if (_row2.length > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, bottom: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _row2,
-                  ),
-                ),
-              if (_row3.length > 0)
-                Padding(
-                  padding: const EdgeInsets.only(top: 0, bottom: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: _row3,
-                  ),
-                )
+              )
+              // if (_row1.length > 0)
+              //   Padding(
+              //     padding: const EdgeInsets.only(top: 0, bottom: 10),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: _row1,
+              //     ),
+              //   ),
+              // if (_row2.length > 0)
+              //   Padding(
+              //     padding: const EdgeInsets.only(top: 0, bottom: 10),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: _row2,
+              //     ),
+              //   ),
+              // if (_row3.length > 0)
+              //   Padding(
+              //     padding: const EdgeInsets.only(top: 0, bottom: 10),
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: _row3,
+              //     ),
+              //   )
             ],
           ),
         ),

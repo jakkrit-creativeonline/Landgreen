@@ -62,9 +62,13 @@ class _DocCertificateState extends State<DocCertificate> {
       await loadimage();
     } else {
       print('have sql lite ${resSQLite}');
-      var json = jsonDecode(resSQLite['JSON_VALUE']);
-      imageCertificate = json['Image'];
-      if (mounted) setState(() {});
+      if(resSQLite['JSON_VALUE'] == "{}"){
+        await loadimage();
+      }else{
+        var json = jsonDecode(resSQLite['JSON_VALUE']);
+        imageCertificate = json['Image'];
+        if (mounted) setState(() {});
+      }
     }
 
     // if (!File('$appDocPath/certificate_$user_id.jpeg').existsSync()) {

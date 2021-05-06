@@ -976,6 +976,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       print('$appDocPath/user_avatar_$user_id.jpeg');
       if (File('$appDocPath/user_avatar_$user_id.jpeg').existsSync()) {
         imageAvatar = Image.file(File('$appDocPath/user_avatar_$user_id.jpeg'));
+        setState(() {});
       } else {
         imageAvatar = Image.asset('assets/avatar.png');
       }

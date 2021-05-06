@@ -174,6 +174,7 @@ class _CeoTopSaleState extends State<CeoTopSale> {
                         ],
                       ),
                     ),
+                    (topSale.length>0)?
                     SliverList(
                         delegate: SliverChildBuilderDelegate((bc, i) {
                       SaleInCar data = topSale[i];
@@ -356,7 +357,7 @@ class _CeoTopSaleState extends State<CeoTopSale> {
                           ),
                         ),
                       );
-                    }, childCount: topSale.length)),
+                    }, childCount: topSale.length)):NoDataCard(size),
                     SliverFillRemaining(
                       hasScrollBody: false,
                       fillOverscroll: true,
@@ -370,6 +371,86 @@ class _CeoTopSaleState extends State<CeoTopSale> {
           ),
         ),
       ),
+    );
+
+  }
+
+  NoDataCard(size){
+    return SliverToBoxAdapter(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 18,vertical: 20),
+
+          child: Center(
+            child: Container(
+              width:
+              size.width * 0.98,
+              height:
+              size.height * 0.42,
+              decoration:
+              BoxDecoration(
+                image:
+                DecorationImage(
+                  image: AssetImage(
+                      "assets/img/bgAlert.png"),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment:
+                CrossAxisAlignment
+                    .center,
+                mainAxisAlignment:
+                MainAxisAlignment
+                    .center,
+                children: [
+                  SizedBox(
+                    width:
+                    size.width *
+                        0.28,
+                    child: Image.asset(
+                        "assets/icons/icon_alert.png"),
+                  ),
+                  Padding(
+                    padding:
+                    const EdgeInsets
+                        .only(
+                        top: 15),
+                    child: Text(
+                      "ไม่มีข้อมูลที่ท่านเรียก",
+                      style:
+                      TextStyle(
+                        fontSize: 28,
+                        fontWeight:
+                        FontWeight
+                            .bold,
+                        color: Colors
+                            .white,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding:
+                    const EdgeInsets
+                        .only(
+                        top: 5),
+                    child: Text(
+                      "เนื่องจากระบบไม่มีข้อมูลที่จะแสดงผล\nเพราะว่ายังไม่มีข้อมูล\nกรุณาเพิ่มข้อมูล",
+                      style: TextStyle(
+                          fontSize:
+                          23,
+                          color: Colors
+                              .white,
+                          height: 1),
+                      textAlign:
+                      TextAlign
+                          .center,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        )
     );
   }
 }

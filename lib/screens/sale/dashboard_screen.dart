@@ -971,7 +971,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     print(" ===> Future loadImage() async {");
     try {
       Directory appDocDir = await getApplicationDocumentsDirectory();
+
       String appDocPath = appDocDir.path;
+      print('$appDocPath/user_avatar_$user_id.jpeg');
       if (File('$appDocPath/user_avatar_$user_id.jpeg').existsSync()) {
         imageAvatar = Image.file(File('$appDocPath/user_avatar_$user_id.jpeg'));
       } else {
@@ -1009,6 +1011,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
       }
     } else {
       print('has file');
+      bool isConnect = await DataConnectionChecker().hasConnection;
+      if(isConnect){
+        if (_user['Image'] != null) {
+          print("IMAGE");
+          final url = 'https://landgreen.ml/system/public/api/downloadImage';
+          File file = File('$appDocPath/user_avatar_$user_id.jpeg');
+          var res = await client
+              .post(url, body: {'path': '${_user['Image']}'}).then((val) {
+            file.writeAsBytesSync(val.bodyBytes);
+            loadImage();
+          });
+        } else {
+          print("NO IMAGE");
+        }
+      }
     }
   }
 

@@ -214,7 +214,10 @@ class Sqlite {
             "Img_sign_ceo": "${e['Img_sign_ceo']}",
             "Contract_name": "${e['Contract_name']}",
             "Ceo_name": "${e['Ceo_name']}",
-            "SName": "${e['SName']}"
+            "SName": "${e['SName']}",
+            "Seal": "${e['Seal']}",
+            "Ceo_Born": "${e['Ceo_Born']}",
+            "Ceo_ID_Card": "${e['Ceo_ID_Card']}"
           },
           conflictAlgorithm: ConflictAlgorithm.replace);
     });

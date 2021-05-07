@@ -233,17 +233,17 @@ class _UserSettingState extends State<UserSetting> {
       aspectRatioPresets: Platform.isAndroid
           ? [
               CropAspectRatioPreset.square,
-              CropAspectRatioPreset.ratio3x2,
-              CropAspectRatioPreset.original,
-              CropAspectRatioPreset.ratio4x3,
-              CropAspectRatioPreset.ratio16x9
+              // CropAspectRatioPreset.ratio3x2,
+              // CropAspectRatioPreset.original,
+              // CropAspectRatioPreset.ratio4x3,
+              // CropAspectRatioPreset.ratio16x9
             ]
           : [
-              CropAspectRatioPreset.original,
+              // CropAspectRatioPreset.original,
               CropAspectRatioPreset.square,
-              CropAspectRatioPreset.ratio3x2,
-              CropAspectRatioPreset.ratio4x3,
-              CropAspectRatioPreset.ratio16x9
+              // CropAspectRatioPreset.ratio3x2,
+              // CropAspectRatioPreset.ratio4x3,
+              // CropAspectRatioPreset.ratio16x9
             ],
       androidUiSettings: AndroidUiSettings(
           toolbarTitle: 'Cropper',

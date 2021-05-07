@@ -230,6 +230,7 @@ class _UserSettingState extends State<UserSetting> {
       maxWidth: 720,
       maxHeight: 720,
       compressQuality: 80,
+        aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
       aspectRatioPresets: Platform.isAndroid
           ? [
               CropAspectRatioPreset.square,

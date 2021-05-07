@@ -268,7 +268,10 @@ class sqltext {
   `Img_sign_ceo` text DEFAULT NULL,
   `Contract_name` text DEFAULT NULL,
   `Ceo_name` text DEFAULT NULL,
-  `SName` text DEFAULT NULL
+  `SName` text DEFAULT NULL,
+  `Seal` text DEFAULT NULL,
+  `Ceo_Born` date DEFAULT NULL,
+  `Ceo_ID_Card` text DEFAULT NULL,
   )
   ''';
   final sqlInitTrail = '''

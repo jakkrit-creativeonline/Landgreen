@@ -21,7 +21,6 @@ class SaleRankingItem extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     var _widthImg = size.width * 0.16;
     var _heightImg = size.width * 0.16;
-
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

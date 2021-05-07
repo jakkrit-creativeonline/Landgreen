@@ -271,7 +271,7 @@ class sqltext {
   `SName` text DEFAULT NULL,
   `Seal` text DEFAULT NULL,
   `Ceo_Born` date DEFAULT NULL,
-  `Ceo_ID_Card` text DEFAULT NULL,
+  `Ceo_ID_Card` text DEFAULT NULL
   )
   ''';
   final sqlInitTrail = '''

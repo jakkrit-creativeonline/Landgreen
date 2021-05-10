@@ -93,7 +93,7 @@ class Trail {
     customerRefNo2 = json['Customer_ref_no2'];
     image = json['Image'];
     imageIdCard = json['Image_id_card'];
-    editUserId = json['Edit_user_id'];
+    editUserId = (json['Edit_user_id'] == 'null')?json['User_id']:json['Edit_user_id'];
     timestamp = json['Trail_timestamp'];
   }
 }

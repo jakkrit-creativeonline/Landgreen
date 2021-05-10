@@ -1101,9 +1101,15 @@ class _CreateBillState extends State<CreateBill> {
         _selectedProduct = _selectedProductMap.values.toList();
         genRows();
       } else {
+        // _selectedProduct.add({
+        //   'items': _listProduct
+        //       .where((map) => _product.contains(map['ID'].toString()))
+        //       .toList(),
+        //   'amount': amount,
+        // });
         _selectedProduct.add({
           'items': _listProduct
-              .where((map) => _product.contains(map['ID'].toString()))
+              .where((map) => _product.toString() == map['ID'].toString())
               .toList(),
           'amount': amount,
         });
@@ -1130,9 +1136,15 @@ class _CreateBillState extends State<CreateBill> {
         _selectedProduct = _selectedProductMap.values.toList();
         genRows();
       } else {
+        // _selectedProduct.add({
+        //   'items': _listProductGift
+        //       .where((map) => _productGift.contains(map['ID'].toString()))
+        //       .toList(),
+        //   'amount': amountGift,
+        // });
         _selectedProduct.add({
           'items': _listProductGift
-              .where((map) => _productGift.contains(map['ID'].toString()))
+              .where((map) => _productGift.toString()==map['ID'].toString())
               .toList(),
           'amount': amountGift,
         });

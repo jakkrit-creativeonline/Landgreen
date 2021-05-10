@@ -1190,7 +1190,7 @@ class BillOnline {
     commissionPaydate = json['Commission_paydate'];
     imageSignature = json['Image_signature'];
     signatureDate = json['Signature_date'];
-    editUserId = json['Edit_user_id'];
+    editUserId = (json['Edit_user_id'] == 'null')?json['User_id']:json['Edit_user_id'];
     timestamp = json['Timestamp'];
     orderDetail = json['Order_detail'];
     creditTermId = json['Credit_term_id'];

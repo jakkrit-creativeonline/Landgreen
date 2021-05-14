@@ -19,6 +19,7 @@ class ServiceUploadAll {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   Future<void> uploadALL() async {
+    print('uploadALL');
     ftpConnect = FTPConnect(ftpHost, user: ftpUser, pass: ftpPass, port: 21);
     bool isConnect = await DataConnectionChecker().hasConnection;
     await getBill();

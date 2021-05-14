@@ -46,16 +46,16 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
-        checkReleaseBuilds true
+        checkReleaseBuilds false
     }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.atsoft.landgreen"
+        applicationId "com.atsofts.landgreen"
         minSdkVersion 26
         targetSdkVersion 29
-        versionCode flutterVersionCode.toInteger()
-        versionName flutterVersionName
+        versionCode 1
+        versionName '1.0.0'
         ndk {
             debugSymbolLevel 'FULL'
         }

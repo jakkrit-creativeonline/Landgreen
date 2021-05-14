@@ -933,7 +933,7 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
         pr.update(progress: percentage, message: "ส่งข้อมูลเสร็จแล้ว...");
         pr.hide().then((value) {
           percentage = 0.0;
-          Navigator.of(context).pushReplacementNamed(DASHBOARD_PAGE);
+          // Navigator.of(context).pushReplacementNamed(DASHBOARD_PAGE);
         });
       });
     });

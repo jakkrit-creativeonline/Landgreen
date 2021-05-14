@@ -286,17 +286,19 @@ class Sqlite {
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  Future<Null> billRecord(Map<String, dynamic> billData) async {
-    final Database db = await connectedDatabase();
-    var customerId;
-    var Customer = await query('CUSTOMER',
-        firstRow: true,
-        where:
-            "Name = '${billData['Customer_name']}' AND Surname = '${billData['Customer_surname']}' ");
-    if (Customer != null) {
-      // Update
-      print('Update Customer');
-      await db.rawUpdate('''UPDATE CUSTOMER SET 
+  Future<String> billRecord(Map<String, dynamic> billData) async {
+    try {
+      final Database db = await connectedDatabase();
+      print('--------------> db --------> ${db}');
+      var customerId;
+      var Customer = await query('CUSTOMER',
+          firstRow: true,
+          where:
+          "Name = '${billData['Customer_name']}' AND Surname = '${billData['Customer_surname']}' ");
+      if (Customer != null) {
+        // Update
+        print('Update Customer');
+        await db.rawUpdate('''UPDATE CUSTOMER SET 
       Name = '${billData['Customer_name']}',Surname = '${billData['Customer_surname']}',
       Id_card = '${billData['Customer_id_card']}',Type_id = '${billData['Customer_type']}',
       Sex = '${billData['Customer_sex']}',Address = '${billData['Customer_address']}',
@@ -306,86 +308,91 @@ class Sqlite {
       Image = '${billData['Image_customer']}',Image_id_card = '${billData['Image_id_card']}',
       Edit_user_id = '${billData['Edit_user_id']}',Timestamp = '${DateTime.now().toString().split('.')[0]}'
       WHERE ID = ${Customer['ID']}''');
-      customerId = Customer['ID'];
-      print(customerId);
-    } else {
-      // insert
-      print('Insert Customer');
-      customerId = await db.insert(
-          'CUSTOMER',
-          {
-            'Name': billData['Customer_name'],
-            'Surname': billData['Customer_surname'],
-            'Id_card': billData['Customer_id_card'],
-            'Type_id': billData['Customer_type'],
-            'Sex': billData['Customer_sex'],
-            'Address': billData['Customer_address'],
-            'District_id': billData['Customer_district_id'],
-            'Amphur_id': billData['Customer_amphur_id'],
-            'Province_id': billData['Customer_province_id'],
-            'Zipcode': billData['Customer_zipcode'],
-            'Birthday': billData['Customer_birthday'],
-            'Phone': billData['Customer_phone'],
-            'Customer_ref_no1': 0,
-            'Customer_ref_no2': 0,
-            'Image': billData['Image_customer'],
-            'Image_id_card': billData['Image_id_card'],
-            'Edit_user_id': billData['Edit_user_id'],
-            'Timestamp': DateTime.now().toString().split('.')[0],
-          },
-          conflictAlgorithm: ConflictAlgorithm.replace);
-    }
-    //print('CustomerId : $customerId');
-    //print('UserId : ${billData['user']['ID']}');
-
-    var insertData = {
-      'Bill_number': billData['DocNumber'],
-      'Customer_id': customerId,
-      'User_id': billData['User_id'],
-      'Pay_type': billData['Pay_type'],
-      'Commission_sum': billData['Commission_sum'],
-      'Date_send': billData['Date_send'],
-      'Money_total': billData['Money_total'],
-      'Sales_province_id': billData['user']['Sales_Province_id'],
-      'Edit_user_id': billData['Edit_user_id'],
-      'bill_location': billData['bill_location'].toString(),
-      'Sale_work_car_id': billData['user']['Work_car_id'],
-      'Order_detail': billData['Table_data'],
-      'isSync': 0,
-      'Timestamp': DateTime.now().toString().split('.')[0],
-    };
-    if (billData['Pay_type'] == 2 || billData['Pay_type'] == '2') {
-      insertData['Money_due'] = billData['Money_due'];
-      insertData['Money_earnest'] = billData['Money_earnest'];
-      insertData['Credit_term_id'] = billData['Credit_term_id'];
-      insertData['Date_due'] = billData['Date_due'];
-    }
-    if (billData['Images_sign'] != null || billData['Images_sign'] != '') {
-      insertData['Image_signature'] = billData['Images_sign'];
-      insertData['Signature_date'] = billData['Signature_date'];
-    }
-    if (billData['edit_status'] != 1) {
-      if (billData['Images_sign'] == null || billData['Images_sign'] == '') {
-        insertData['Status'] = 0;
+        customerId = Customer['ID'];
+        print(customerId);
       } else {
-        if (billData['Pay_type'] == 2 || billData['Pay_type'] == '2') {
-          insertData['Status'] = 2;
+        // insert
+        print('Insert Customer');
+        customerId = await db.insert(
+            'CUSTOMER',
+            {
+              'Name': billData['Customer_name'],
+              'Surname': billData['Customer_surname'],
+              'Id_card': billData['Customer_id_card'],
+              'Type_id': billData['Customer_type'],
+              'Sex': billData['Customer_sex'],
+              'Address': billData['Customer_address'],
+              'District_id': billData['Customer_district_id'],
+              'Amphur_id': billData['Customer_amphur_id'],
+              'Province_id': billData['Customer_province_id'],
+              'Zipcode': billData['Customer_zipcode'],
+              'Birthday': billData['Customer_birthday'],
+              'Phone': billData['Customer_phone'],
+              'Customer_ref_no1': 0,
+              'Customer_ref_no2': 0,
+              'Image': billData['Image_customer'],
+              'Image_id_card': billData['Image_id_card'],
+              'Edit_user_id': billData['Edit_user_id'],
+              'Timestamp': DateTime.now().toString().split('.')[0],
+            },
+            conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+      //print('CustomerId : $customerId');
+      //print('UserId : ${billData['user']['ID']}');
+
+      var insertData = {
+        'Bill_number': billData['DocNumber'],
+        'Customer_id': customerId,
+        'User_id': billData['User_id'],
+        'Pay_type': billData['Pay_type'],
+        'Commission_sum': billData['Commission_sum'],
+        'Date_send': billData['Date_send'],
+        'Money_total': billData['Money_total'],
+        'Sales_province_id': billData['user']['Sales_Province_id'],
+        'Edit_user_id': billData['Edit_user_id'],
+        'bill_location': billData['bill_location'].toString(),
+        'Sale_work_car_id': billData['user']['Work_car_id'],
+        'Order_detail': billData['Table_data'],
+        'isSync': 0,
+        'Timestamp': DateTime.now().toString().split('.')[0],
+      };
+      if (billData['Pay_type'] == 2 || billData['Pay_type'] == '2') {
+        insertData['Money_due'] = billData['Money_due'];
+        insertData['Money_earnest'] = billData['Money_earnest'];
+        insertData['Credit_term_id'] = billData['Credit_term_id'];
+        insertData['Date_due'] = billData['Date_due'];
+      }
+      if (billData['Images_sign'] != null || billData['Images_sign'] != '') {
+        insertData['Image_signature'] = billData['Images_sign'];
+        insertData['Signature_date'] = billData['Signature_date'];
+      }
+      if (billData['edit_status'] != 1) {
+        if (billData['Images_sign'] == null || billData['Images_sign'] == '') {
+          insertData['Status'] = 0;
         } else {
-          insertData['Status'] = 1;
+          if (billData['Pay_type'] == 2 || billData['Pay_type'] == '2') {
+            insertData['Status'] = 2;
+          } else {
+            insertData['Status'] = 1;
+          }
         }
       }
-    }
 
-    // if ((billData['Customer_id_card'] == null || billData['Customer_id_card'] == '') && billData['Pay_type'] == 2) {
-    //   insertData['Status'] = 0;
-    // }
+      // if ((billData['Customer_id_card'] == null || billData['Customer_id_card'] == '') && billData['Pay_type'] == 2) {
+      //   insertData['Status'] = 0;
+      // }
 
-    if (billData['Bill_id'] == '') {
-      insertData['Date_create'] = DateTime.now().toString().split('.')[0];
-    } else {
-      insertData['ID'] = billData['Bill_id'];
+      if (billData['Bill_id'] == '') {
+        insertData['Date_create'] = DateTime.now().toString().split('.')[0];
+      } else {
+        insertData['ID'] = billData['Bill_id'];
+      }
+      db.insert('BILL', insertData, conflictAlgorithm: ConflictAlgorithm.replace);
+      return 'Successfully';
     }
-    db.insert('BILL', insertData, conflictAlgorithm: ConflictAlgorithm.replace);
+    catch(e){
+      return 'Failed';
+    }
   }
 
   Future getUserData(int id) async {

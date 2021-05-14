@@ -1279,22 +1279,22 @@ class _ShowBillOnlineState extends State<ShowBillOnline> {
       case 0:
         var _string = (statusBill == 0)
             ? '(ระบบไม่นำส่งบิลยังไม่สมบูรณ์)'
-            : '(กำลังนำส่งเข้าคิว)';
+            : '(อยู่ในเครื่องรอเข้าคิว ดึงรีเฟสเพื่อส่งบิล)';
         return Text(
           _string,
           style: TextStyle(fontSize: 16, color: danger),
         );
         break;
       case 1:
-        return Text('(เข้าคิวแล้วกำลังส่งเข้าเซิฟเวอร์)',
-            style: TextStyle(fontSize: 16, color: kSecondaryColor));
+        return Text('(เข้าคิวแล้วรอเข้าเซิฟเวอร์ ธุรการยังไม่เห็นบิล)',
+            style: TextStyle(fontSize: 16, color: Color(0xF9AB00)));
         break;
       case 2:
-        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว)',
+        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว ธุรการยังเห็นบิลแล้ว)',
             style: TextStyle(fontSize: 16, color: kPrimaryColor));
         break;
       default:
-        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว)',
+        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว ธุรการยังเห็นบิลแล้ว)',
             style: TextStyle(fontSize: 16, color: kPrimaryColor));
     }
   }

@@ -1,34 +1,41 @@
 {
   "project_info": {
-    "project_number": "458505594759",
-    "project_id": "landgreen-bca4f",
-    "storage_bucket": "landgreen-bca4f.appspot.com"
+    "project_number": "851588283888",
+    "project_id": "landgreen",
+    "storage_bucket": "landgreen.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:458505594759:android:ccd3f8e5cd9bb507a49522",
+        "mobilesdk_app_id": "1:851588283888:android:3a364e80f5aa3e17b4b135",
         "android_client_info": {
-          "package_name": "com.atsoft.landgreen"
+          "package_name": "com.atsofts.landgreen"
         }
       },
       "oauth_client": [
         {
-          "client_id": "458505594759-7a6ddqbisfc3tuqmss9ropk9kngqdl0r.apps.googleusercontent.com",
+          "client_id": "851588283888-u8bsou78v740f5sq2fq9j3pphrs7l98r.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBPiFXnyVWZWF_FfURTIErYbdXgKNzIVnk"
+          "current_key": "AIzaSyBCokrZ1oNMGaoIVpEjn9IF2NO7h2K9kFo"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "458505594759-7a6ddqbisfc3tuqmss9ropk9kngqdl0r.apps.googleusercontent.com",
+              "client_id": "851588283888-u8bsou78v740f5sq2fq9j3pphrs7l98r.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "851588283888-9042voceh0dfsflk8jh60fria74pj4uu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.atsofts.landgreen"
+              }
             }
           ]
         }

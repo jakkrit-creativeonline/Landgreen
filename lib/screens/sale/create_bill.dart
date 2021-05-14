@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:io' as IO;
+import 'dart:wasm';
 
 import 'package:alert_dialog/alert_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -127,7 +128,6 @@ class _CreateBillState extends State<CreateBill> {
   final picker = ImagePicker();
 
   final _formKey = GlobalKey<FormState>();
-
   final DocumentTextRecognizer cloudDocumentTextRecognizer =
       FirebaseVision.instance.cloudDocumentTextRecognizer(
           CloudDocumentRecognizerOptions(hintedLanguages: ["en", "th"]));
@@ -1550,19 +1550,21 @@ class _CreateBillState extends State<CreateBill> {
 
     bill['edit_status'] = widget.editStatus;
 
-    print('edit status : ${widget.editStatus}');
+    // print('edit status : ${widget.editStatus}');
 
     percentage = percentage + 30.0;
     pr.update(progress: percentage, message: "ส่งข้อมูล...");
 
     await Sqlite().billRecord(bill).then((val) {
-      Future.delayed(Duration(seconds: 2)).then((value) {
-        pr.update(progress: percentage, message: "ส่งข้อมูลเสร็จแล้ว...");
-        pr.hide().then((value) {
-          percentage = 0.0;
-          Navigator.of(context).pushReplacementNamed(DASHBOARD_PAGE);
+        Future.delayed(Duration(seconds: 2)).then((value) {
+          pr.update(progress: percentage, message: 'ส่งข้อมูลสำเร็จ...');
+          // Future.delayed(Duration(seconds: 2)).then((value) {
+            pr.hide().then((value) {
+              Navigator.of(context).pushReplacementNamed(DASHBOARD_PAGE);
+            // });
+          });
         });
-      });
+
     });
   }
 
@@ -1695,7 +1697,7 @@ class _CreateBillState extends State<CreateBill> {
 
   @override
   void initState() {
-    print('USER ID : ${widget.userId}');
+    // print('USER ID : ${widget.userId}');
     _provinceData = [];
     _districtData = [];
     _subDistrictData = [];
@@ -1710,6 +1712,8 @@ class _CreateBillState extends State<CreateBill> {
     getCurrPosition();
     getOldCustomer();
     getBill();
+
+
 
     myFocusNode = FocusNode();
 

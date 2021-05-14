@@ -74,7 +74,7 @@ class _CreateContractState extends State<CreateContract> {
         jsonDecode(widget.contractInfo['billData']['billOrderDetail']);
     for (var order in orderDetails) {
       if (order['cat_id'] == 1) {
-        product['brand'] = order['name'].split('ตรา')[1];
+        product['brand'] = order['name'];
         product['qty'] += order['qty'];
         product['sumPrice'] += order['qty'] * order['price_sell'];
         product['price'] = order['price_sell'];
@@ -364,7 +364,7 @@ class _CreateContractState extends State<CreateContract> {
                             Text.rich(
                               TextSpan(
                                 text:
-                                    '    สัญญาฉบับนี้ทำขึ้นระหว่าง ${widget.contractInfo['companyInfo']['name']} โดยนางโดย${settingCompany['Ceo_name']}',
+                                    '    สัญญาฉบับนี้ทำขึ้นระหว่าง ${widget.contractInfo['companyInfo']['name']} โดย${settingCompany['Ceo_name']}',
                                 children: <TextSpan>[
                                   TextSpan(
                                     text:

@@ -1057,6 +1057,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           // print("DASHBOARD : [BackgroundFetch] Event received $taskId");
           bool isConnect = await DataConnectionChecker().hasConnection;
           await getBill();
+          print("-- >MAIN : [BackgroundFetch] Event received 2 $taskId");
           if (isConnect) {
             await ftpConnect.connect();
             await _uploadBill();
@@ -1066,6 +1067,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             await _uploadTrail();
             await _checkTrail();
             await ftpConnect.disconnect();
+            print('< ------------------- > 2');
           }
       }
       BackgroundFetch.finish(taskId);
@@ -1152,7 +1154,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         WHERE PRODUCT.Category_id IN (1,2) AND PRODUCT.Status = 1 AND USER_PRODUCT_CAN_SELL.User_id = "$userId"
         AND USER_PRODUCT_CAN_SELL.Status = 1 ORDER BY Category_id ASC
         ''');
-    print("XYZ :: ${res}");
+    // print("XYZ :: ${res}");
     res.asMap().forEach((key, value) async {
       if (!File('$appDocPath/product_image_${value['ID']}.png').existsSync()) {
         if (value['Image'] != null && value['Image'] != '') {

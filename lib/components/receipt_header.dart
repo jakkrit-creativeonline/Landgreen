@@ -293,16 +293,16 @@ class ReceiptHeader extends StatelessWidget {
                           Expanded(
                             flex: 5,
                             child: InkWell(
-                              onTap: () {
-                                locator<NavigationService>().navigateTo(
-                                    'createBill',
-                                    ScreenArguments(
-                                        userId: billData['saleUserId'],
-                                        billId: billData['billId'],
-                                        isBillOnline: isOnline));
-                              },
+                              // onTap: () {
+                              //   locator<NavigationService>().navigateTo(
+                              //       'createBill',
+                              //       ScreenArguments(
+                              //           userId: billData['saleUserId'],
+                              //           billId: billData['billId'],
+                              //           isBillOnline: isOnline));
+                              // },
                               child: Text('${billData['billNumber']}',
-                                  style: TextStyle(fontSize: 20.0, color: kPrimaryColor)),
+                                  style: TextStyle(fontSize: 20.0,)),
                             ),
                           ),
                         ],

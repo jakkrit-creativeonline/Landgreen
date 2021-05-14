@@ -4,8 +4,8 @@ import 'package:version/version.dart';
 class CheckVersionUpdate {
   check(context) async {
     final newVersion = NewVersion(
-        iOSId: 'com.atsoft.landgreen',
-        androidId: 'com.atsoft.landgreen',
+        iOSId: 'com.atsofts.landgreen',
+        androidId: 'com.atsofts.landgreen',
         dialogTitle: 'อัพเดทเวอร์ชั่นใหม่ !!!',
         dialogText:
             'ทำการอัพเดทเวอร์ชั่นแลนด์กรีนของคุณให้เป็นเวอร์ชั่นล่าสุด 1.0.0 กดอัพเดทได้เลย',

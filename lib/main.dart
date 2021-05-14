@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:async';
+import 'dart:io' as IO;
 
 import 'package:background_fetch/background_fetch.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
@@ -20,7 +22,11 @@ import 'package:flutter/services.dart';
 import 'package:system/services/service_analytic.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+// void checkForNewSharedLists(){
+//   print('--------------> ${DateTime.now()}');
+// }
 void main() {
+  print('----> MAIN <----');
   setupLocator();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(
@@ -34,7 +40,8 @@ void main() {
             ),
           ], child: MyApp())));
 
-  //BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+  // Timer.periodic(Duration(seconds: 5), (Timer t) => checkForNewSharedLists());
+  // BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
 class MyApp extends StatefulWidget {
@@ -42,7 +49,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   FirebaseAnalytics analytics = FirebaseAnalytics();
   FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -51,6 +58,7 @@ class _MyAppState extends State<MyApp> {
   String channelId = "1000";
   String channelName = "FLUTTER_NOTIFICATION_CHANNEL";
   String channelDescription = "FLUTTER_NOTIFICATION_CHANNEL_DETAIL";
+  // String _taskID = "";
 
   var client = http.Client();
 
@@ -508,19 +516,31 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
+    print("-- >  Future<void> initPlatformState() async {");
     ftpConnect = FTPConnect(ftpHost,
         user: ftpUser, pass: ftpPass, port: 21, timeout: 60);
+    print('----> 1');
     BackgroundFetch.configure(
         BackgroundFetchConfig(
             minimumFetchInterval: 15,
-            stopOnTerminate: true,
-            enableHeadless: false,
+            // stopOnTerminate: true,
+            // enableHeadless: false,
+            // requiresBatteryNotLow: false,
+            // requiresCharging: false,
+            // requiresStorageNotLow: false,
+            // requiresDeviceIdle: false,
+            forceAlarmManager: false,
+            stopOnTerminate: false,
+            startOnBoot: true,
+            enableHeadless: true,
             requiresBatteryNotLow: false,
             requiresCharging: false,
             requiresStorageNotLow: false,
             requiresDeviceIdle: false,
             requiredNetworkType: NetworkType.ANY), (String taskId) async {
-      print("MAIN : [BackgroundFetch] Event received $taskId");
+      // _taskID = taskId;
+      // insertOffToOn(_taskID);
+      print("-- >MAIN : [BackgroundFetch] Event received $taskId");
       bool isConnect = await DataConnectionChecker().hasConnection;
       await getBill();
       if (isConnect) {
@@ -532,9 +552,11 @@ class _MyAppState extends State<MyApp> {
         await _uploadTrail();
         await _checkTrail();
         await ftpConnect.disconnect();
+        print('< ------------------- >');
       }
       BackgroundFetch.finish(taskId);
     }).then((int status) {
+      // insertOffToOn(_taskID);
       print('MAIN : [BackgroundFetch] configure success: $status');
     }).catchError((e) {
       print('MAIN : [BackgroundFetch] configure ERROR: $e');
@@ -547,9 +569,55 @@ class _MyAppState extends State<MyApp> {
     print('main initstat');
     initLocalNotification();
     initFirebaseMessaging();
-
-    super.initState();
     initPlatformState();
+    // uploadData();
+    // print('xxxxxxxxxxx');
+    // if(IO.Platform.isIOS)
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  uploadData() async{
+      print('-------------xxxx');
+      await ServiceUploadAll().uploadALL();
+
+  }
+
+  // start test --------------------------------->
+  @override
+  void dispose(){
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState s){
+    super.didChangeAppLifecycleState(s);
+
+    if(s == AppLifecycleState.inactive || s == AppLifecycleState.detached)
+      return;
+    final isPaused = s == AppLifecycleState.paused;
+    if(!isPaused)
+      uploadData();
+  }
+  // end test --------------------------------->
+
+
+  insertOffToOn(tID) async {
+    print("-- >MAIN : [BackgroundFetch] Event received $tID");
+    bool isConnect = await DataConnectionChecker().hasConnection;
+    await getBill();
+    if (isConnect) {
+      await ftpConnect.connect();
+      await _uploadBill();
+      await _checkBill();
+      await _uploadReceipt();
+      await _checkReceipt();
+      await _uploadTrail();
+      await _checkTrail();
+      await ftpConnect.disconnect();
+      print('< ------------------- >');
+    }
+    BackgroundFetch.finish(tID);
   }
 
   initLocalNotification() async {

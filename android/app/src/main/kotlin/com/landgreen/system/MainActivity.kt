@@ -1,4 +1,4 @@
-package com.atsoft.landgreen
+package com.atsofts.landgreen
 
 import io.flutter.embedding.android.FlutterActivity
 

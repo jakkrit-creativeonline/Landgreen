@@ -578,7 +578,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   uploadData() async{
-      print('-------------xxxx');
+    print('-------------xxxx');
       await ServiceUploadAll().uploadALL();
 
   }

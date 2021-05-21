@@ -98,6 +98,7 @@ class _ShowTrailState extends State<ShowTrail> {
     print('gen list offline');
     _offlineResult = await parseResults(jsonEncode(_result));
     sumTrail = _offlineResult.length;
+    sumAmount = 0;
     for (var i = 0; i < _offlineResult.length; i++) {
       var result = _offlineResult[i];
       var order = jsonDecode(result.orderDetail);

@@ -40,7 +40,7 @@ class _CEODashboardState extends State<CEODashboard> {
   var userData = new Map();
   Future<bool> userDataFuture;
 
-  String incomeSelected = '98';
+  String incomeSelected = '13';
 
   var lastAvaliable;
   DateTime currentTime = DateTime.now();
@@ -98,8 +98,16 @@ class _CEODashboardState extends State<CEODashboard> {
     }
   }
 
-  testCallBack(String test) {
+  testCallBack(String test) async{
+    print('testCallBack ==>${test}');
     incomeSelected = test;
+    bool isConnect = await DataConnectionChecker().hasConnection;
+    if (isConnect) {
+      await s.getCeoIncome(
+          noResult: true, isThisMonth: true, selectedReport: incomeSelected);
+      await s.getCeoIncome(
+          noResult: true, isThisMonth: false, selectedReport: incomeSelected);
+    }
   }
 
   Future refresh() async {
@@ -110,9 +118,10 @@ class _CEODashboardState extends State<CEODashboard> {
       s.getCeoTeamRanking();
       s.getCeoCarRanking();
       s.getCeoManagerRank();
-      s.getCeoIncome(
+      print('incomeSelected =>${incomeSelected}');
+      await s.getCeoIncome(
           noResult: true, isThisMonth: true, selectedReport: incomeSelected);
-      s.getCeoIncome(
+      await s.getCeoIncome(
           noResult: true, isThisMonth: false, selectedReport: incomeSelected);
       Navigator.popAndPushNamed(context, 'ceo_dashboard',arguments: ScreenArguments(userId: widget.userId));
     }

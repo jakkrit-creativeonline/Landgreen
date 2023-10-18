@@ -484,7 +484,7 @@ class _ManagerKPISaleState extends State<ManagerKPISale> {
             future: showData,
             builder: (context, snap) {
               if (snap.hasData) {
-                print('has data =>${snap.data.length}');
+                print('has data =>${snap.data}');
                 return ListView.builder(
                     itemCount: snap.data.length,
                     primary: false,

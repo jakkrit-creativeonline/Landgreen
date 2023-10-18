@@ -1,24 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:background_fetch/background_fetch.dart';
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'dart:typed_data';
+// import 'package:background_fetch/background_fetch.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'dart:math';
 import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:ftpconnect/ftpconnect.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:new_version/new_version.dart';
+// import 'package:new_version/new_version.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:shimmer/shimmer.dart';
-import 'package:speech_bubble/speech_bubble.dart';
+// import 'package:shimmer/shimmer.dart';
+// import 'package:speech_bubble/speech_bubble.dart';
 import 'package:provider/provider.dart';
 import 'package:system/components/buttom_chart.dart';
 import 'package:system/components/divider_widget.dart';
@@ -36,7 +36,7 @@ import 'package:system/components/square_button.dart';
 import 'package:system/components/sub_menager_team_lead_widget.dart';
 import 'package:system/configs/constants.dart';
 import 'package:system/screens/ceo/components/ceo_report_car_detail.dart';
-import 'package:system/screens/ceo/components/credit_report_manager_detail.dart';
+// import 'package:system/screens/ceo/components/credit_report_manager_detail.dart';
 import 'package:system/screens/ceo/credit_report_manager.dart';
 import 'package:system/screens/head/head_kpi_sale.dart';
 import 'package:system/screens/manager/manager_kpi_sale.dart';
@@ -118,15 +118,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
       workCarData,
       internetVariable,
       comData,
-      cashCountCat1,
-      cashCountCat2,
-      creditCountCat1,
-      creditCountCat2,
-      saleCommissionTotal,
-      sumIncomeAll,
+      cashCountCat1 = 0,
+      cashCountCat2 = 0,
+      creditCountCat1 = 0,
+      creditCountCat2 = 0,
+      saleCommissionTotal = 0,
+      sumIncomeAll = 0,
       saleRanking = null,
-      sumCat1,
-      totalMoneyShareCat1,
+      sumCat1 = 0,
+      totalMoneyShareCat1 = 0,
       tax = 0.0,
       net;
   Widget imageAvatar;
@@ -136,13 +136,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
   Map<String, SellGoal> data;
   FormatMethod f = new FormatMethod();
-  String lastDate;
+  String lastDate =
+      '${DateTime.now().year}-${DateTime.now().month.toString().padLeft(2, '0')}-${DateTime.now().day.toString().padLeft(2, '0')}';
 
   List<Bill> _bill;
   List<Receipt> _receipt;
   List<Trail> _trail;
-  FTPConnect ftpConnect =
-      FTPConnect(ftpHost, user: ftpUser, pass: ftpPass, port: 21);
+  FTPConnect ftpConnect = FTPConnect(ftpHost, user: ftpUser, pass: ftpPass, port: 21);
 
   Future<String> getLocation() async {
     print(" ===>  Future<String> getLocation() async {");
@@ -153,7 +153,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<Null> getOnline(_userId) async {
     print(" ===> Future<Null> getOnline(_userId) async {");
-    // print('getOnline user_id => ${_userId}');
+
     var now = DateTime.now();
     var startDate = DateTime(now.year, now.month, 1, 0, 0, 0);
     int lastday = DateTime(now.year, now.month + 1, 0).day;
@@ -164,16 +164,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
       int lastdaypreiousmonth = DateTime(now.year, now.month, 0).day;
       endDate = DateTime(now.year, now.month, lastdaypreiousmonth, 23, 59, 59);
     }
+    // print('getOnline user_id => ${_userId}');
+    // print('getOnline startDate => ${startDate}');
+    // print('getOnline endDate => ${endDate}');
     try {
-      final response = await client
-          .post('https://landgreen.ml/system/public/api/getBillOnline', body: {
-        'User_id': '${_userId}',
-        'startDate': startDate.toString(),
-        'endDate': endDate.toString()
-      });
+      print('getOnline user_id => ${_userId}');
+      final response = await client.post(
+          'https://thanyakit.com/systemv2/public/api/getBillOnline',
+          body: {
+            'User_id': '${_userId}',
+            'startDate': startDate.toString(),
+            'endDate': endDate.toString()
+          });
       final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
-
-      // print(parsed.length);
+      print('parsed -----> ${parsed.length}');
       if (parsed.length > 0) {
         for (var i = 0; i < parsed.length; i++) {
           // print('${parsed[i]}');
@@ -181,23 +185,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
         }
       }
 
-      final responseTrail = await client
-          .post('https://landgreen.ml/system/public/api/getTrailOnline', body: {
-        'User_id': '${_userId}',
-        'startDate': startDate,
-        'endDate': endDate
-      });
+      final responseTrail = await client.post(
+          'https://thanyakit.com/systemv2/public/api/getTrailOnline',
+          body: {
+            'User_id': '${_userId}',
+            'startDate': startDate,
+            'endDate': endDate
+          });
 
-      final parsedTrail =
-          jsonDecode(responseTrail.body).cast<Map<String, dynamic>>();
-
+      final parsedTrail = jsonDecode(responseTrail.body).cast<Map<String, dynamic>>();
+      print('parsedTrail ----> ${parsedTrail.length}');
       if (parsedTrail.length > 0) {
         for (var i = 0; i < parsedTrail.length; i++) {
-          // print('${parsed[i]}');
+          print('parsedTrail ----> ${parsedTrail[i]}');
           await Sqlite().insertOrUpdateTrailFromOnline(parsedTrail[i]);
         }
       }
-    } catch (e) {}
+    } catch (e) {
+      print('CATCH -----> getOnline ${_userId}');
+    }
   }
 
   Future<Null> getOnlineTrail(_userId) async {
@@ -213,12 +219,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
       endDate = DateTime(now.year, now.month, lastdaypreiousmonth, 23, 59, 59);
     }
 
-    final response = await client
-        .post('https://landgreen.ml/system/public/api/getTrailOnline', body: {
-      'User_id': '${_userId}',
-      'startDate': startDate.toString(),
-      'endDate': endDate.toString()
-    });
+    final response = await client.post(
+        'https://thanyakit.com/systemv2/public/api/getTrailOnline',
+        body: {
+          'User_id': '${_userId}',
+          'startDate': startDate.toString(),
+          'endDate': endDate.toString()
+        });
     if (response.body != null) {
       final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
 
@@ -279,7 +286,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
     if (billNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineBill',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineBill',
           body: {'billNumber': jsonEncode(billNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {
@@ -315,7 +322,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String folderName = now.year.toString();
     String subFolderName = now.month.toString();
     String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/customer/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/customer/';
     String uploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -326,7 +333,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       var offlineCustomer = await Sqlite()
           .query('CUSTOMER', where: 'ID = ${bill.customerId}', firstRow: true);
       var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/recordBill');
+          Uri.parse('https://thanyakit.com/systemv2/public/api/recordBill');
       var req = new http.MultipartRequest('POST', postUri);
       bool isImageCustomerUpload = true;
       bool isImageIdCardUpload = true;
@@ -417,7 +424,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String folderName = now.year.toString();
     String subFolderName = now.month.toString();
     String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/receipt/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/receipt/';
     String uploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -426,7 +433,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     await ftpConnect.changeDirectory(uploadPath);
     for (var val in result) {
       var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/uploadReceipt');
+          Uri.parse('https://thanyakit.com/systemv2/public/api/uploadReceipt');
       var req = new http.MultipartRequest('POST', postUri);
       http.MultipartFile multipartFile;
       //req ของ Receipt
@@ -517,7 +524,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     //print(receiptNumber);
     if (receiptNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineReceipt',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineReceipt',
           body: {'receiptNumber': jsonEncode(receiptNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {
@@ -547,7 +554,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     String folderName = now.year.toString();
     String subFolderName = now.month.toString();
     String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/customer/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/customer/';
     String customerUploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -555,7 +562,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         .createFolderIfNotExist('$mainFolder$folderName/$subFolderName');
 
     mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/receipt/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/receipt/';
     String trailUploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -565,7 +572,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     for (var trail in result) {
       await ftpConnect.changeDirectory(customerUploadPath);
       var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/recordTrail');
+          Uri.parse('https://thanyakit.com/systemv2/public/api/recordTrail');
       var req = new http.MultipartRequest('POST', postUri);
 
       bool isImageUpload = true;
@@ -666,7 +673,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     //print(trailNumber);
     if (trailNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineTrail',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineTrail',
           body: {'trailNumber': jsonEncode(trailNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {
@@ -706,11 +713,121 @@ class _DashboardScreenState extends State<DashboardScreen> {
     print(ID);
     try {
       var result = await Sqlite().getCommission(ID);
-      // print(result);
+      print('result =>${result}');
       if (result == null) {
         await getSaleCommission(user_id);
         result = await Sqlite().getCommission(ID);
         // // print("****** ${result}");
+        loading = false;
+        comData = {
+          "ID": user_id,
+          "Name":
+              "\u0e18\u0e31\u0e19\u0e22\u0e4c\u0e1b\u0e27\u0e31\u0e12\u0e19\u0e4c \u0e18\u0e31\u0e0d\u0e27\u0e07\u0e28\u0e4c\u0e27\u0e23\u0e42\u0e0a\u0e15 ",
+          "Level_id": 3,
+          "Work_car_id": 6,
+          "IdCard": "2301400021417",
+          "Qtyordercat": "0,0,0",
+          "Qtycredit": "0,0,0",
+          "billCommission_sum": 0,
+          "sumcommission": "0,0,0",
+          "Sum_income": 0,
+          "Sum_money_share_headmain": 0,
+          "sumusermoney2other": 37060,
+          "MoneyRecommend": 0,
+          "sumEXPENSES": 0,
+          "Bank_account": "0611895526",
+          "billcommiss_id": [],
+          "sumcat1forsale": 0,
+          "cat1forsale": [],
+          "car1forsaleother": [],
+          "sumcat1team": 0,
+          "namerecommend": [],
+          "sum_cat1_cash_forsale": 0,
+          "sum_cat1_credit_forsale": 0,
+          "sum_cat1_credit_wait_forsale": 0,
+          "sum_cat1_credit_receive_forsale": 0,
+          "sale_commission_receipt_detail": [],
+          "sale_received_commission_rate_cat1_590": 120,
+          "sale_received_commission_rate_cat1_690": 100,
+          "sale_data": {
+            "ID": user_id,
+            "Username": "000001",
+            "Password": "123654",
+            "Level_id": 3,
+            "Name":
+                "\u0e18\u0e31\u0e19\u0e22\u0e4c\u0e1b\u0e27\u0e31\u0e12\u0e19\u0e4c",
+            "Surname":
+                "\u0e18\u0e31\u0e0d\u0e27\u0e07\u0e28\u0e4c\u0e27\u0e23\u0e42\u0e0a\u0e15",
+            "Id_card": "2301400021417",
+            "Setting_commission": 0,
+            "Setting_recommend": 0,
+            "Work_date_start": "2016-12-05",
+            "Work_team_user_id": null,
+            "Work_manager_user_id": null,
+            "Work_car_number": null,
+            "Work_status": 1,
+            "Work_car_id": 6,
+            "Goal": 200,
+            "Edit_user_id": 40,
+            "Bank_id": 1,
+            "Bank_account": "0611895526",
+            "Address": "71",
+            "District_id": 6355,
+            "Amphur_id": 713,
+            "Province_id": 49,
+            "Sex": 1,
+            "Birthday": "1991-06-03",
+            "User_id_recommend": 0,
+            "Image": "user\/avatar_20200921120730.jpeg",
+            "Image_id_card": null,
+            "Before_after_type": 0,
+            "Setting_commission_percent": null,
+            "Sales_Province_id": 56,
+            "Timestamp": "2021-06-07 00:56:04",
+            "Sale_vip_team_id": 0,
+            "Salary": 0,
+            "Daily": 0,
+            "Visa_text": null,
+            "Visa_img": null,
+            "DocApprove_text": null,
+            "DocApprove_img": null,
+            "DocReport_text": null,
+            "DocReport_img": null,
+            "RegisterFromApp": null,
+            "Plate_number": "6 \u0e01\u0e13 3663",
+            "PROVINCE_NAME":
+                "\u0e01\u0e23\u0e38\u0e07\u0e40\u0e17\u0e1e\u0e21\u0e2b\u0e32\u0e19\u0e04\u0e23   "
+          },
+          "time_gen": "13:02",
+          "day_gen": "2021-06-25",
+          "sumMoneyTotal": 0,
+          "cash_sumCat1_590": 0,
+          "cash_sumCat1_690": 0,
+          "cash_sumCat2": 0,
+          "cash_sumMoneyTotal": 0,
+          "credit_sumCat1_590": 0,
+          "credit_sumCat1_690": 0,
+          "credit_sumCat2": 0,
+          "credit_sumMoneyTotal": 0,
+          "credit_wait_sumCat1_590": 0,
+          "credit_wait_sumCat1_690": 0,
+          "credit_wait_sumCat2": 0,
+          "credit_wait_sumMoneyTotal": 0,
+          "sumCat1_590_K": 0,
+          "sumCat1_690_K": 0,
+          "sumCat2_K": 0,
+          "sumMoneyTotal_K": 0,
+          "dataExpenses": []
+        };
+        data = {
+          'sell': SellGoal(
+              'Sell', sumCat1, charts.ColorUtil.fromDartColor(kPrimaryColor)),
+          'goal': SellGoal(
+              'Goal',
+              ((_user['Goal'] - sumCat1) < 0) ? 0 : _user['Goal'] - sumCat1,
+              charts.ColorUtil.fromDartColor(Color(0xFFf1f1f1)))
+        };
+        setState(() {});
       }
       setState(() {
         if (result != null) {
@@ -749,7 +866,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 comData['MoneyRecommend']);
           }
           sumCat1 = cashCountCat1 + creditCountCat1;
-          if (sumIncomeAll >= 25000) {
+          if (sumIncomeAll >= 1000) {
             tax = num.parse((sumIncomeAll * 3 / 100).toStringAsFixed(2));
           } else {
             tax = 0.0;
@@ -774,7 +891,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       });
     } catch (e) {
       setState(() {
-        loading = true;
+        // loading = true;
       });
       print('Error get commission $e');
     }
@@ -790,7 +907,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       var result = await Sqlite().getUserData(ID);
       _user = result;
       workCarId = result['Work_car_id'];
-      print("workCarId === ${workCarId}");
+      // print("workCarId === ${workCarId}");
+      // print("_user === ${_user}");
       // setState(() {
       //
       // });
@@ -821,14 +939,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
         if (orangeCount > 0) {
           lv_orange += ',';
         }
-        if (val.toUserId == 123 ||
-            val.toUserId == 124 ||
-            val.toUserId == 119 ||
-            val.toUserId == 145) {
-          //Sales_overmanager พักก่อน
-        } else {
-          lv_orange += 'คุณ${val.userName}';
-        }
+        lv_orange += 'คุณ${val.userName}';
+        // if (val.toUserId == 123 ||
+        //     val.toUserId == 124 ||
+        //     val.toUserId == 119 ||
+        //     val.toUserId == 145) {
+        //   //Sales_overmanager พักก่อน
+        // } else {
+        //   lv_orange += 'คุณ${val.userName}';
+        // }
         orangeCount++;
       } else {
         // เหลือง
@@ -997,7 +1116,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         print(_user);
         if (_user['Image'] != null) {
           print("IMAGE");
-          final url = 'https://landgreen.ml/system/public/api/downloadImage';
+          final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
           File file = File('$appDocPath/user_avatar_$user_id.jpeg');
           var res = await client
               .post(url, body: {'path': '${_user['Image']}'}).then((val) {
@@ -1013,10 +1132,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     } else {
       print('has file');
       bool isConnect = await DataConnectionChecker().hasConnection;
-      if(isConnect){
+      if (isConnect) {
         if (_user['Image'] != null) {
           print("IMAGE");
-          final url = 'https://landgreen.ml/system/public/api/downloadImage';
+          final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
           File file = File('$appDocPath/user_avatar_$user_id.jpeg');
           var res = await client
               .post(url, body: {'path': '${_user['Image']}'}).then((val) {
@@ -1036,47 +1155,47 @@ class _DashboardScreenState extends State<DashboardScreen> {
     super.dispose();
   }
 
-  Future<void> initPlatformState() async {
-    print(" ===> Future<void> initPlatformState() async {");
-    //ftpConnect = FTPConnect(ftpHost, user: ftpUser, pass: ftpPass, port: 21);
-    BackgroundFetch.configure(
-        BackgroundFetchConfig(
-            minimumFetchInterval: 15,
-            stopOnTerminate: true,
-            enableHeadless: false,
-            requiresBatteryNotLow: false,
-            requiresCharging: false,
-            requiresStorageNotLow: false,
-            requiresDeviceIdle: false,
-            requiredNetworkType: NetworkType.ANY), (String taskId) async {
-      switch (taskId) {
-        case 'taskA':
-          // print('task a jaaaaaaaa');
-          break;
-        default:
-          // print("DASHBOARD : [BackgroundFetch] Event received $taskId");
-          bool isConnect = await DataConnectionChecker().hasConnection;
-          await getBill();
-          print("-- >MAIN : [BackgroundFetch] Event received 2 $taskId");
-          if (isConnect) {
-            await ftpConnect.connect();
-            await _uploadBill();
-            await _checkBill();
-            await _uploadReceipt();
-            await _checkReceipt();
-            await _uploadTrail();
-            await _checkTrail();
-            await ftpConnect.disconnect();
-            print('< ------------------- > 2');
-          }
-      }
-      BackgroundFetch.finish(taskId);
-    }).then((int status) {
-      // print('DASHBOARD : [BackgroundFetch] configure success: $status');
-    }).catchError((e) {
-      // print('DASHBOARD : [BackgroundFetch] configure ERROR: $e');
-    });
-  }
+  // Future<void> initPlatformState() async {
+  //   print(" ===> Future<void> initPlatformState() async {");
+  //   //ftpConnect = FTPConnect(ftpHost, user: ftpUser, pass: ftpPass, port: 21);
+  //   BackgroundFetch.configure(
+  //       BackgroundFetchConfig(
+  //           minimumFetchInterval: 15,
+  //           stopOnTerminate: true,
+  //           enableHeadless: false,
+  //           requiresBatteryNotLow: false,
+  //           requiresCharging: false,
+  //           requiresStorageNotLow: false,
+  //           requiresDeviceIdle: false,
+  //           requiredNetworkType: NetworkType.ANY), (String taskId) async {
+  //     switch (taskId) {
+  //       case 'taskA':
+  //         // print('task a jaaaaaaaa');
+  //         break;
+  //       default:
+  //         // print("DASHBOARD : [BackgroundFetch] Event received $taskId");
+  //         bool isConnect = await DataConnectionChecker().hasConnection;
+  //         await getBill();
+  //         print("-- >MAIN : [BackgroundFetch] Event received 2 $taskId");
+  //         if (isConnect) {
+  //           await ftpConnect.connect();
+  //           await _uploadBill();
+  //           await _checkBill();
+  //           await _uploadReceipt();
+  //           await _checkReceipt();
+  //           await _uploadTrail();
+  //           await _checkTrail();
+  //           await ftpConnect.disconnect();
+  //           print('< ------------------- > 2');
+  //         }
+  //     }
+  //     BackgroundFetch.finish(taskId);
+  //   }).then((int status) {
+  //     // print('DASHBOARD : [BackgroundFetch] configure success: $status');
+  //   }).catchError((e) {
+  //     // print('DASHBOARD : [BackgroundFetch] configure ERROR: $e');
+  //   });
+  // }
 
   CheckEarlyMonth() async {
     print(" ===> CheckEarlyMonth() async {");
@@ -1103,18 +1222,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
       loadCreditKPI(user_id);
     });
     loadImage();
+    // print('Current status : ${DataConnectionChecker().connectionStatus}');
+    // print('Last results : ${DataConnectionChecker().lastTryResults}');
+    // print(await DataConnectionChecker().hasConnection);
     internetVariable = DataConnectionChecker().onStatusChange.listen((status) {
+      print('Connected ----> ${status}');
       switch (status) {
         case DataConnectionStatus.connected:
-          // print('Connected');
-
+          print('Connected');
           _refresh();
           break;
         case DataConnectionStatus.disconnected:
-          // print('No Connection');
+          print('No Connection');
           break;
       }
     });
+    print('End Connect');
     super.initState();
   }
 
@@ -1159,7 +1282,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (!File('$appDocPath/product_image_${value['ID']}.png').existsSync()) {
         if (value['Image'] != null && value['Image'] != '') {
           // print('Image : ' + value['Image']);
-          final url = 'https://landgreen.ml/system/public/api/downloadImage';
+          final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
           File file = File('$appDocPath/product_image_${value['ID']}.png');
           var res = await client
               .post(url, body: {'path': value['Image']}).then((val) {
@@ -1177,7 +1300,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       if (!File('$appDocPath/product_image_${value['ID']}.png').existsSync()) {
         if (value['Image'] != null && value['Image'] != '') {
           // print('Image : ' + value['Image']);
-          final url = 'https://landgreen.ml/system/public/api/downloadImage';
+          final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
           File file = File('$appDocPath/product_image_${value['ID']}.png');
           var res = await client
               .post(url, body: {'path': value['Image']}).then((val) {
@@ -1236,7 +1359,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Future getSaleRankingOnline() async {
     print(" ===> Future getSaleRankingOnline() async {");
     try {
-      var res = await client.post('https://landgreen.ml/system/public/api-ceo',
+      var res = await client.post(
+          'https://thanyakit.com/systemv2/public/api-ceo',
           body: {'func': 'getCacheSaleRanking'});
       var dataSet = res.body;
       // print('getSaleRankingOnline');
@@ -1270,7 +1394,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     // print("User ID == ${user_id}");
     //print('get and insert SaleCommission');
     var res = await client.post(
-        'https://landgreen.ml/system/public/api/SaleCommission',
+        'https://thanyakit.com/systemv2/public/api/SaleCommission',
         body: {'filename': '$userId'});
     var dataSet = res.body;
     // print("getSaleCommission =>${dataSet}");
@@ -1355,12 +1479,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
       //   _row3 = lS(11, saleRanking.length);
       // }
       List<Widget> _row = new List();
-      if(saleRanking.length < 15){
-        _row = lS(1,saleRanking.length);
-      }else{
-        _row = lS(1,15);
+      if (saleRanking.length < 15) {
+        _row = lS(1, saleRanking.length);
+      } else {
+        _row = lS(1, 15);
       }
-
 
       return Padding(
         padding: const EdgeInsets.only(left: 16, right: 16),
@@ -1677,7 +1800,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                   MaterialPageRoute(
                                                       settings: RouteSettings(
                                                           name:
-                                                              'รายงานข้อมูลเครดิตสีส้ม'),
+                                                              'รายงานข้อมูลเครดิตผอ'),
                                                       builder: (context) =>
                                                           CreditReportManager()));
                                             } else {
@@ -1814,7 +1937,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                     MaterialPageRoute(
                                                         settings: RouteSettings(
                                                             name:
-                                                                'สีส้มเหลืองดูรายงานทีมเปิดใบสั่งจอง'),
+                                                                'ผู้อำนวยการดูรายงานทีมเปิดใบสั่งจอง'),
                                                         builder: (context) =>
                                                             ManagerKPISale(
                                                               manager_id:
@@ -1828,7 +1951,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                                     MaterialPageRoute(
                                                         settings: RouteSettings(
                                                             name:
-                                                                'สีแดงดูรายงานทีมเปิดใบสั่งจอง'),
+                                                                'Sup.ดูรายงานทีมเปิดใบสั่งจอง'),
                                                         builder: (context) =>
                                                             HeadKPISale(
                                                               carId: workCarId,
@@ -1880,7 +2003,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   OtherDataShow() {
-    print(" ===> OtherDataShow() {");
+    print(" ===> OtherDataShow() ${comData}");
     if ((level_id == 2 || level_id == 3 || level_id == 12) ||
         (comData['MoneyRecommend'] != 0) ||
         (comData['Sum_income'] != 0) ||
@@ -1985,7 +2108,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   // ignore: non_constant_identifier_names
   Row CommissionData() {
-    print(" ===>  Row CommissionData() {");
+    // print('CommissionData ---- OXOXOXOXO');
     int _goal = (_user['Goal'] == 0) ? 1 : _user['Goal'];
     var series = [
       new charts.Series(

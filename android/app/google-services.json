@@ -1,40 +1,40 @@
 {
   "project_info": {
-    "project_number": "851588283888",
-    "project_id": "landgreen",
-    "storage_bucket": "landgreen.appspot.com"
+    "project_number": "809030938726",
+    "project_id": "thanyakit-f3e48",
+    "storage_bucket": "thanyakit-f3e48.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:851588283888:android:3a364e80f5aa3e17b4b135",
+        "mobilesdk_app_id": "1:809030938726:android:e43b8fdab7d1abd1a9bda7",
         "android_client_info": {
-          "package_name": "com.atsofts.landgreen"
+          "package_name": "com.atsofts.thanyakit"
         }
       },
       "oauth_client": [
         {
-          "client_id": "851588283888-u8bsou78v740f5sq2fq9j3pphrs7l98r.apps.googleusercontent.com",
+          "client_id": "809030938726-ge1bvcn54utdkhda4e2q3n34g531sajg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBCokrZ1oNMGaoIVpEjn9IF2NO7h2K9kFo"
+          "current_key": "AIzaSyBEmv19ZKAwkqwp96GdQK81NHoqhXwjs40"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "851588283888-u8bsou78v740f5sq2fq9j3pphrs7l98r.apps.googleusercontent.com",
+              "client_id": "809030938726-ge1bvcn54utdkhda4e2q3n34g531sajg.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "851588283888-9042voceh0dfsflk8jh60fria74pj4uu.apps.googleusercontent.com",
+              "client_id": "809030938726-43qo5gbc8t8m2h04gor8es7in4hsqfod.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.atsofts.landgreen"
+                "bundle_id": "com.atsofts.thanyakit"
               }
             }
           ]

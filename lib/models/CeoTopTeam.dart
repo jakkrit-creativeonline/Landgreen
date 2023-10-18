@@ -2,9 +2,9 @@ class TopTeam {
   int carId;
   String carPlate;
   String carNote;
-  int headId;
+  var headId;
   String headName;
-  int headLevelId;
+  var headLevelId;
   String headImg;
   int cashCountProductCat1590;
   int cashCountProductCat1690;

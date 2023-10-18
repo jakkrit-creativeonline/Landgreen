@@ -15,74 +15,77 @@ class AlertNewDesign {
           return AlertDialog(
               contentPadding: EdgeInsets.zero,
               backgroundColor: Colors.transparent,
-              content: Container(
-                  width: size.width * 0.98,
-                  height: size.height * 0.41,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/img/bgAlert.png"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: size.width * 0.28,
-                        child: Image.asset("assets/icons/icon_alert.png"),
+              content: MediaQuery(
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                child: Container(
+                    width: size.width * 0.98,
+                    height: size.height * 0.41,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage("assets/img/bgAlert.png"),
+                        fit: BoxFit.fill,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: Text(
-                          "อยู่ในช่วงการคิดคอมมิชชั่น",
-                          style: TextStyle(
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: size.width * 0.28,
+                          child: Image.asset("assets/icons/icon_alert.png"),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: Text(
+                            "อยู่ในช่วงการคิดคอมมิชชั่น",
+                            style: TextStyle(
+                              fontSize: 28,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Text(
-                          "ท่านสามารถดูระบบได้ แต่ข้อมูล จะมีการ\nอัพเดทที่ไม่เท่ากันบ้าง ในช่วงเวลานี้ และทุกอย่าง\nจะอัพเดทตรงกันหลังจากวันที่ 5 เป็นต้นไป",
-                          style: TextStyle(
-                              fontSize: 23, color: Colors.white, height: 1),
-                          textAlign: TextAlign.center,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 5),
+                          child: Text(
+                            "ท่านสามารถดูระบบได้ แต่ข้อมูล จะมีการ\nอัพเดทที่ไม่เท่ากันบ้าง ในช่วงเวลานี้ และทุกอย่าง\nจะอัพเดทตรงกันหลังจากวันที่ 5 เป็นต้นไป",
+                            style: TextStyle(
+                                fontSize: 23, color: Colors.white, height: 1),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15),
-                        child: InkWell(
-                          onTap: () {
-                            print("click ok");
-                            Navigator.of(context).pop();
-                          },
-                          child: Container(
-                            width: size.width * 0.5,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: warningColor,
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "ตกลงฉันเข้าใจแล้ว",
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: InkWell(
+                            onTap: () {
+                              print("click ok");
+                              Navigator.of(context).pop();
+                            },
+                            child: Container(
+                              width: size.width * 0.5,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: warningColor,
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "ตกลงฉันเข้าใจแล้ว",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                ),
               ),
               // actions: <Widget>[
               //   TextButton(

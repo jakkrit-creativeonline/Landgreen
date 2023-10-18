@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
 		<string>com.transistorsoft.fetch</string>
@@ -9,7 +11,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>ระบบแลนด์กรีน</string>
+	<string>ระบบธัญกิจ</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -28,8 +30,6 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -40,13 +40,13 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>ระบบแลนด์กรีน ขออนุญาติเข้าถึงไฟล์ภาพในกล้อง เพื่อใช้ในการอัพโหลดสลิปและออกใบเสร็จ</string>
+	<string>ระบบธัญกิจ ขออนุญาติเข้าถึงไฟล์ภาพในกล้อง เพื่อใช้ในการอัพโหลดสลิปและออกใบเสร็จ</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>ระบบแลนด์กรีน ขออนุญาติเข้าถึงตำแหน่งโลเคชั่น เพื่อเก็บตำแหน่งที่อยู่ลูกค้าตอนเปิดบิลตลอดเวลา</string>
+	<string>ระบบธัญกิจ ขออนุญาติเข้าถึงตำแหน่งโลเคชั่น เพื่อเก็บตำแหน่งที่อยู่ลูกค้าตอนเปิดบิลตลอดเวลา</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>ระบบแลนด์กรีน ขออนุญาติเข้าถึงตำแหน่งโลเคชั่น เพื่อเก็บตำแหน่งที่อยู่ลูกค้าตอนเปิดบิลขณะใช้แอปพลิเคชั่น</string>
+	<string>ระบบธัญกิจ ขออนุญาติเข้าถึงตำแหน่งโลเคชั่น เพื่อเก็บตำแหน่งที่อยู่ลูกค้าตอนเปิดบิลขณะใช้แอปพลิเคชั่น</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>ระบบแลนด์กรีน ขออนุญาติเข้าถึงไฟล์ภาพในอัลบั้ม เพื่อใช้ในการอัพโหลดสลิปและออกใบเสร็จ</string>
+	<string>ระบบธัญกิจ ขออนุญาติเข้าถึงไฟล์ภาพในอัลบั้ม เพื่อใช้ในการอัพโหลดสลิปและออกใบเสร็จ</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

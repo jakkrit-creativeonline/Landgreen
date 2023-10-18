@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>851588283888-9042voceh0dfsflk8jh60fria74pj4uu.apps.googleusercontent.com</string>
+	<string>809030938726-43qo5gbc8t8m2h04gor8es7in4hsqfod.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.851588283888-9042voceh0dfsflk8jh60fria74pj4uu</string>
+	<string>com.googleusercontent.apps.809030938726-43qo5gbc8t8m2h04gor8es7in4hsqfod</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDrgjJkQ4eYoLa3AuQGdRXoHl8laGCS8L8</string>
+	<string>AIzaSyCOECv4GSjTtzm9WtP7O22RETamqZRj-UM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>851588283888</string>
+	<string>809030938726</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.atsofts.landgreen</string>
+	<string>com.atsofts.thanyakit</string>
 	<key>PROJECT_ID</key>
-	<string>landgreen</string>
+	<string>thanyakit-f3e48</string>
 	<key>STORAGE_BUCKET</key>
-	<string>landgreen.appspot.com</string>
+	<string>thanyakit-f3e48.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:851588283888:ios:39a477ad89e40a8eb4b135</string>
+	<string>1:809030938726:ios:fe3da6e4d83472bda9bda7</string>
 </dict>
 </plist>

@@ -122,7 +122,7 @@ class _CarPayDayState extends State<CarPayDay> {
   Future<Null> getCarPayHistory() async {
     print('get car pay history');
     var res =
-        await client.post('https://landgreen.ml/system/public/api-head', body: {
+        await client.post('https://thanyakit.com/systemv2/public/api-head', body: {
       'Type': 'tbcaridhead',
       'user_id': '${widget.userId}',
       'startDate': '',
@@ -135,7 +135,7 @@ class _CarPayDayState extends State<CarPayDay> {
   }
 
   Future<void> getCarMoney() async {
-    var res = await client.post('https://landgreen.ml/system/public/api-head',
+    var res = await client.post('https://thanyakit.com/systemv2/public/api-head',
         body: {'Type': 'showcarmoney', 'user_id': '${widget.userId}'});
     showMoney = jsonDecode(res.body);
     showMoney
@@ -144,7 +144,7 @@ class _CarPayDayState extends State<CarPayDay> {
       _carsList.add(element);
     });
     var typeList = await client
-        .get('https://landgreen.ml/system/public/api-head/TypePayDay');
+        .get('https://thanyakit.com/systemv2/public/api-head/TypePayDay');
     typePay = jsonDecode(typeList.body);
     typePay
         .map((e) => DropDown().getDropDownWidget(e, 'ID', 'Name'))
@@ -269,7 +269,7 @@ class _CarPayDayState extends State<CarPayDay> {
       );
     });
     var postUri =
-        Uri.parse('https://landgreen.ml/system/public/api/recordCarPayDay');
+        Uri.parse('https://thanyakit.com/systemv2/public/api/recordCarPayDay');
     var req = new http.MultipartRequest('POST', postUri);
 
     req.fields['Type'] = 'insert';
@@ -291,7 +291,7 @@ class _CarPayDayState extends State<CarPayDay> {
       String subFolderName = now.month.toString();
       String subFolderName2 = now.day.toString();
       String mainFolder =
-          '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/slip_car_pay_day/';
+          '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/slip_car_pay_day/';
       String uploadPath =
           '$mainFolder$folderName/$subFolderName/$subFolderName2';
       await ftpConnect.createFolderIfNotExist(mainFolder);
@@ -411,7 +411,7 @@ class _CarPayDayState extends State<CarPayDay> {
 
   Future deleteCarPay(var id, var imageSlip) async {
     var res = await client.post(
-        'https://landgreen.ml/system/public/api/deleteCarPayDay',
+        'https://thanyakit.com/systemv2/public/api/deleteCarPayDay',
         body: {'ID': '$id', 'Image_slip': '$imageSlip'});
     print(res.body);
   }
@@ -1385,7 +1385,7 @@ class _EditFormCarPayState extends State<EditFormCarPay> {
       );
     });
     var postUri =
-        Uri.parse('https://landgreen.ml/system/public/api/recordCarPayDay');
+        Uri.parse('https://thanyakit.com/systemv2/public/api/recordCarPayDay');
     var req = new http.MultipartRequest('POST', postUri);
 
     req.fields['Type'] = 'insert';
@@ -1410,7 +1410,7 @@ class _EditFormCarPayState extends State<EditFormCarPay> {
       String subFolderName = now.month.toString();
       String subFolderName2 = now.day.toString();
       String mainFolder =
-          '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/slip_car_pay_day/';
+          '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/slip_car_pay_day/';
       String uploadPath =
           '$mainFolder$folderName/$subFolderName/$subFolderName2';
       await ftpConnect.createFolderIfNotExist(mainFolder);

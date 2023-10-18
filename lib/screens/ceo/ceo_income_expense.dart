@@ -352,33 +352,59 @@ class _CEOIncomeExpenseState extends State<CEOIncomeExpense> {
                               var sumNetPercent = '0';
                               if (data.length > 0) {
                                 sumIncome = data[0]
-                                        ['income_sum_cash_cat1_money'] +
-                                    data[0]['income_sum_cash_cat2_money'] +
-                                    data[0]['income_sum_credit_money_earnest'] +
-                                    data[0]['income_sum_credit_cus_pay'];
+                                            ['income_sum_cash_cat1_money']
+                                        .toInt() +
+                                    data[0]['income_sum_cash_cat2_money']
+                                        .toInt() +
+                                    data[0]['income_sum_credit_money_earnest']
+                                        .toInt() +
+                                    data[0]['income_sum_credit_cus_pay']
+                                        .toInt();
 
-                                sumExpense = ((data[0]['expense_sum_cash_cat1_cost'] == null)?0:data[0]['expense_sum_cash_cat1_cost']) +
-                                    ((data[0]['expense_sum_cash_cat2_cost'] == null)?0:data[0]['expense_sum_cash_cat2_cost']) +
-                                    ((data[0]['expense_sum_credit_cat1_cost'] == null)?0:data[0]['expense_sum_credit_cat1_cost']) +
-                                    ((data[0]['expense_sum_credit_cat2_cost'] == null)?0:data[0]['expense_sum_credit_cat2_cost']) +
-                                    ((data[0]['expense_sum_commision'] == null)?0:data[0]['expense_sum_commision']) +
-                                    ((data[0]['expense_sum_money_share_red'] == null)?0:data[0]['expense_sum_money_share_red']) +
-                                    ((data[0]['expense_sum_money_share_yellow'] == null)?0:data[0]['expense_sum_money_share_yellow']) +
-                                    ((data[0]['expense_sum_money_share_orange'] == null)?0:data[0]['expense_sum_money_share_orange']) +
-                                    ((data[0]['expense_sum_money_share_ceo'] == null)?0:data[0]['expense_sum_money_share_ceo']) +
-                                    ((data[0]['expense_sum_money_recomend'] == null)?0:data[0]['expense_sum_money_recomend']) +
-                                    ((data[0]['expense_sum_money_sendteam'] == null)?0:data[0]['expense_sum_money_sendteam']) +
-                                    ((data[0]['expense_sum_money_carpayday'] == null)?0:data[0]['expense_sum_money_carpayday']) +
-                                    ((data[0]['expense_sum_money_creditpay'] == null)?0:data[0]['expense_sum_money_creditpay']);
+                                sumExpense = ((data[0]['expense_sum_cash_cat1_cost'] == null) ? 0 : data[0]['expense_sum_cash_cat1_cost'].toInt()) +
+                                    ((data[0]['expense_sum_cash_cat2_cost'] == null)
+                                        ? 0
+                                        : data[0]['expense_sum_cash_cat2_cost']
+                                            .toInt()) +
+                                    ((data[0]['expense_sum_credit_cat1_cost'] == null)
+                                        ? 0
+                                        : data[0]['expense_sum_credit_cat1_cost']
+                                            .toInt()) +
+                                    ((data[0]['expense_sum_credit_cat2_cost'] == null)
+                                        ? 0
+                                        : data[0]['expense_sum_credit_cat2_cost']
+                                            .toInt()) +
+                                    ((data[0]['expense_sum_commision'] == null)
+                                        ? 0
+                                        : data[0]['expense_sum_commision']
+                                            .toInt()) +
+                                    ((data[0]['expense_sum_money_share_red'] == null)
+                                        ? 0
+                                        : data[0]['expense_sum_money_share_red']
+                                            .toInt()) +
+                                    ((data[0]['expense_sum_money_share_yellow'] == null)
+                                        ? 0
+                                        : data[0]['expense_sum_money_share_yellow']
+                                            .toInt()) +
+                                    ((data[0]['expense_sum_money_share_orange'] == null)
+                                        ? 0
+                                        : data[0]['expense_sum_money_share_orange']
+                                            .toInt()) +
+                                    ((data[0]['expense_sum_money_share_ceo'] == null)
+                                        ? 0
+                                        : data[0]['expense_sum_money_share_ceo'].toInt()) +
+                                    ((data[0]['expense_sum_money_recomend'] == null) ? 0 : data[0]['expense_sum_money_recomend'].toInt()) +
+                                    ((data[0]['expense_sum_money_sendteam'] == null) ? 0 : data[0]['expense_sum_money_sendteam'].toInt()) +
+                                    ((data[0]['expense_sum_money_carpayday'] == null) ? 0 : data[0]['expense_sum_money_carpayday'].toInt()) +
+                                    ((data[0]['expense_sum_money_creditpay'] == null) ? 0 : data[0]['expense_sum_money_creditpay'].toInt());
 
                                 sumNet = sumIncome - sumExpense;
-                                if(sumIncome>0){
+                                if (sumIncome > 0) {
                                   sumNetPercent = ((sumNet / sumIncome) * 100)
                                       .toStringAsFixed(0);
-                                }else{
-                                  sumNetPercent = '0' ;
+                                } else {
+                                  sumNetPercent = '0';
                                 }
-
                               }
 
                               return Column(
@@ -620,7 +646,7 @@ class _CEOIncomeExpenseState extends State<CEOIncomeExpense> {
                                                         children: [
                                                           Expanded(
                                                               child: Text(
-                                                            'ค่าส่วนต่างสีแดง',
+                                                            'ค่าส่วนต่างหัวหน้าทีม',
                                                             style:
                                                                 _baseFontStyle,
                                                           )),
@@ -641,7 +667,7 @@ class _CEOIncomeExpenseState extends State<CEOIncomeExpense> {
                                                         children: [
                                                           Expanded(
                                                               child: Text(
-                                                            'ค่าส่วนต่างสีเหลือง',
+                                                            'ค่าส่วนต่างผู้จัดการ',
                                                             style:
                                                                 _baseFontStyle,
                                                           )),
@@ -662,7 +688,7 @@ class _CEOIncomeExpenseState extends State<CEOIncomeExpense> {
                                                         children: [
                                                           Expanded(
                                                               child: Text(
-                                                            'ค่าส่วนต่างสีส้ม',
+                                                            'ค่าส่วนต่างผู้อำนวยการ',
                                                             style:
                                                                 _baseFontStyle,
                                                           )),

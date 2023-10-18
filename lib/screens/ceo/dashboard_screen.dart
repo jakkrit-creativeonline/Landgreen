@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:background_fetch/background_fetch.dart';
+// import 'package:background_fetch/background_fetch.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:new_version/new_version.dart';
@@ -40,7 +40,7 @@ class _CEODashboardState extends State<CEODashboard> {
   var userData = new Map();
   Future<bool> userDataFuture;
 
-  String incomeSelected = '98';
+  String incomeSelected = '13';
 
   var lastAvaliable;
   DateTime currentTime = DateTime.now();
@@ -110,9 +110,9 @@ class _CEODashboardState extends State<CEODashboard> {
       s.getCeoTeamRanking();
       s.getCeoCarRanking();
       s.getCeoManagerRank();
-      s.getCeoIncome(
+      await s.getCeoIncome(
           noResult: true, isThisMonth: true, selectedReport: incomeSelected);
-      s.getCeoIncome(
+      await s.getCeoIncome(
           noResult: true, isThisMonth: false, selectedReport: incomeSelected);
       Navigator.popAndPushNamed(context, 'ceo_dashboard',arguments: ScreenArguments(userId: widget.userId));
     }

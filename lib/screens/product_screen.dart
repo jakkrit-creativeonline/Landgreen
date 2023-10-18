@@ -77,7 +77,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               return ListView.builder(
                                 shrinkWrap: true,
                                 primary: false,
-                                itemCount: productList.length - 1,
+                                itemCount: productList.length,
                                 itemBuilder: (context, index) {
                                   var obj = productList[index];
                                   print(obj);
@@ -101,7 +101,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                                         type: 'imageSquare',
                                                       ),
                                                       imageUrl:
-                                                          'https://landgreen.ml/system/storage/app/${obj['Image']}',
+                                                          'https://thanyakit.com/systemv2/storage/app/${obj['Image']}',
                                                       errorWidget: (context,
                                                           url, error) {
                                                         // print(rank);
@@ -146,7 +146,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                                       TextOverflow.ellipsis,
                                                 ),
                                                 Text(
-                                                  '${obj['Detail']}',
+                                                  (obj['Detail']!=null)?'${obj['Detail']}':'-',
                                                   style: TextStyle(
                                                     fontSize: 16,
                                                   ),

@@ -64,7 +64,7 @@ class _HistoryIncomeState extends State<HistoryIncome> {
   }
 
   _launchURL(id) async {
-    var url = 'https://landgreen.ml/system/public/#/account-tax_view/$id';
+    var url = 'https://thanyakit.com/systemv2/public/#/account-tax_view/$id';
     if (await canLaunch(url)) {
       await launch(url);
     } else {

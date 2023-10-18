@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:background_fetch/background_fetch.dart';
+// import 'package:background_fetch/background_fetch.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:ftpconnect/ftpconnect.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -75,7 +75,7 @@ class ServiceUploadAll {
 
     if (billNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineBill',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineBill',
           body: {'billNumber': jsonEncode(billNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {
@@ -110,7 +110,7 @@ class ServiceUploadAll {
     String folderName = now.year.toString();
     String subFolderName = now.month.toString();
     String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/customer/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/customer/';
     String uploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -121,7 +121,7 @@ class ServiceUploadAll {
       var offlineCustomer = await Sqlite()
           .query('CUSTOMER', where: 'ID = ${bill.customerId}', firstRow: true);
       var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/recordBill');
+          Uri.parse('https://thanyakit.com/systemv2/public/api/recordBill');
       var req = new http.MultipartRequest('POST', postUri);
       bool isImageCustomerUpload = true;
       bool isImageIdCardUpload = true;
@@ -214,7 +214,7 @@ class ServiceUploadAll {
       String folderName = now.year.toString();
       String subFolderName = now.month.toString();
       String mainFolder =
-          '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/receipt/';
+          '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/receipt/';
       String uploadPath = '$mainFolder$folderName/$subFolderName';
       await ftpConnect.createFolderIfNotExist(mainFolder);
       await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -225,7 +225,7 @@ class ServiceUploadAll {
       print('service upload result ---------> ${result}');
       for (var val in result) {
         var postUri =
-        Uri.parse('https://landgreen.ml/system/public/api/uploadReceipt');
+        Uri.parse('https://thanyakit.com/systemv2/public/api/uploadReceipt');
         var req = new http.MultipartRequest('POST', postUri);
         http.MultipartFile multipartFile;
         //req ของ Receipt
@@ -319,7 +319,7 @@ class ServiceUploadAll {
     //print(receiptNumber);
     if (receiptNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineReceipt',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineReceipt',
           body: {'receiptNumber': jsonEncode(receiptNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {
@@ -348,7 +348,7 @@ class ServiceUploadAll {
     String folderName = now.year.toString();
     String subFolderName = now.month.toString();
     String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/customer/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/customer/';
     String customerUploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -356,7 +356,7 @@ class ServiceUploadAll {
         .createFolderIfNotExist('$mainFolder$folderName/$subFolderName');
 
     mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/receipt/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/receipt/';
     String trailUploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -366,7 +366,7 @@ class ServiceUploadAll {
     for (var trail in result) {
       await ftpConnect.changeDirectory(customerUploadPath);
       var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/recordTrail');
+          Uri.parse('https://thanyakit.com/systemv2/public/api/recordTrail');
       var req = new http.MultipartRequest('POST', postUri);
 
       bool isImageUpload = true;
@@ -467,7 +467,7 @@ class ServiceUploadAll {
     print(trailNumber);
     if (trailNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineTrail',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineTrail',
           body: {'trailNumber': jsonEncode(trailNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {

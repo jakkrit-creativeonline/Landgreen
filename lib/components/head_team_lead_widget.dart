@@ -1,5 +1,6 @@
 import 'package:system/components/team_label.dart';
 import 'package:flutter/material.dart';
+import 'package:system/configs/constants.dart';
 
 class HeadTeamLead extends StatelessWidget {
   const HeadTeamLead({
@@ -16,14 +17,33 @@ class HeadTeamLead extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TeamLabel(
-          color: Colors.yellow,
-          text: '${lv_yellow}',
+        Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('ผจก. : ${lv_yellow}',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: subFontColor,
+                ),
+              ),
+              Text('ผอ. : ${lv_orange}',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: subFontColor,
+                ),
+              ),
+            ],
+          ),
         ),
-        TeamLabel(
-          color: Colors.orange,
-          text: '${lv_orange}',
-        ),
+        // TeamLabel(
+        //   color: Colors.yellow,
+        //   text: '${lv_yellow}',
+        // ),
+        // TeamLabel(
+        //   color: Colors.orange,
+        //   text: '${lv_orange}',
+        // ),
       ],
     );
   }

@@ -1067,7 +1067,7 @@ class _CreateBillState extends State<CreateBill> {
           }
 
           // var res = await client.post(
-          //     'https://landgreen.ml/system/public/api/test',
+          //     'https://thanyakit.com/systemv2/public/api/test',
           //     body: {'path': '${val['Image']}'});
           // if (res.body == null) {
           // } else {
@@ -1172,7 +1172,7 @@ class _CreateBillState extends State<CreateBill> {
     //   if (!File('$appDocPath/product_image_${value['ID']}.png').existsSync()) {
     //     if (value['Image'] != null && value['Image'] != '') {
     //       print('Image : ' + value['Image']);
-    //       final url = 'https://landgreen.ml/system/public/api/downloadImage';
+    //       final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
     //       File file = File('$appDocPath/product_image_${value['ID']}.png');
     //       var res = await client
     //           .post(url, body: {'path': value['Image']}).then((val) {
@@ -1200,7 +1200,7 @@ class _CreateBillState extends State<CreateBill> {
     //   if (!File('$appDocPath/product_image_${value['ID']}.png').existsSync()) {
     //     if (value['Image'] != null && value['Image'] != '') {
     //       print('Image : ' + value['Image']);
-    //       final url = 'https://landgreen.ml/system/public/api/downloadImage';
+    //       final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
     //       File file = File('$appDocPath/product_image_${value['ID']}.png');
     //       var res = await client
     //           .post(url, body: {'path': value['Image']}).then((val) {
@@ -1330,7 +1330,7 @@ class _CreateBillState extends State<CreateBill> {
         if (isConnect) {
           print('get online bill');
           var res = await client.post(
-              'https://landgreen.ml/system/public/api/getDocBillOnline',
+              'https://thanyakit.com/systemv2/public/api/getDocBillOnline',
               body: {'Docbill_id': '${widget.billId}'});
           dataSet = jsonDecode(res.body);
           for (var bill in dataSet) {
@@ -1380,7 +1380,7 @@ class _CreateBillState extends State<CreateBill> {
             _sendDate.text = f.ThaiDateFormat(bill['Date_send']);
             orderDetail = await bill['Order_detail'];
             var resImage = await client.post(
-                'https://landgreen.ml/system/public/api/test',
+                'https://thanyakit.com/systemv2/public/api/test',
                 body: {'path': '${bill['Image']}'});
             imageCustomerBase64 = resImage.body;
           }

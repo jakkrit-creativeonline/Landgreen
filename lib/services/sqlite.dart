@@ -1253,7 +1253,7 @@ class Sqlite {
   Future<Null> insertOrUpdateBillFromOnline(Map<String, dynamic> data) async {
     final Database db = await connectedDatabase();
     print('insertOrUpdateBillFromOnline');
-    print('${data}');
+    // print('${data}');
     var Bill = await query('BILL',
         firstRow: true, where: "Bill_number = '${data['Bill_number']}'  ");
     if (Bill == null) {

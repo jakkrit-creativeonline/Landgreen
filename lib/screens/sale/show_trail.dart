@@ -64,12 +64,13 @@ class _ShowTrailState extends State<ShowTrail> {
     print('getTrailOnline user_id => ${widget.userId}');
     print('getTrailOnline startDate => $startDate');
     print('getTrailOnline endDate => $endDate');
-    final response = await client
-        .post('https://landgreen.ml/system/public/api/getTrailOnline', body: {
-      'User_id': '${widget.userId}',
-      'startDate': startDate,
-      'endDate': endDate
-    });
+    final response = await client.post(
+        'https://thanyakit.com/systemv2/public/api/getTrailOnline',
+        body: {
+          'User_id': '${widget.userId}',
+          'startDate': startDate,
+          'endDate': endDate
+        });
 
     final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
 
@@ -306,7 +307,7 @@ class _ShowTrailState extends State<ShowTrail> {
             future: boolSet,
             builder: (context, data) {
               if (data.hasData) {
-                // sumAmount = 0;
+                sumAmount = 0;
                 List<Widget> detailList = new List();
 
                 for (var i = 0; i < _offlineResult.length; i++) {
@@ -1018,7 +1019,9 @@ class OfflineTrail {
     customerRefNo2 = json['Customer_ref_no2'];
     image = json['Image'];
     imageIdCard = json['Image_id_card'];
-    editUserId = (json['Edit_user_id'] == 'null')?json['User_id']:json['Edit_user_id'];
+    editUserId = (json['Edit_user_id'] == 'null')
+        ? json['User_id']
+        : json['Edit_user_id'];
     timestamp = json['Timestamp'];
     customerType = json['Customer_type'];
     pROVINCENAME = json['PROVINCE_NAME'];

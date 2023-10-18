@@ -88,7 +88,7 @@ class _CreateSaleOrderState extends State<CreateSaleOrder> {
   }
 
   // getDataForEdit() async{
-  //   var res = await client.post('https://landgreen.ml/system/public/api-store',
+  //   var res = await client.post('https://thanyakit.com/systemv2/public/api-store',
   //       body: {
   //         'func': 'get_stock_team_doc_edit',
   //         'doc_id': '${_docId}'
@@ -158,7 +158,6 @@ class _CreateSaleOrderState extends State<CreateSaleOrder> {
     var res = await client.post('$urlPath/api-store',
         body: {'func': 'get_stock_team_code', 'team_id': '${_userId}'});
     _teamCode = res.body.replaceAll('"', '');
-
   }
 
   getCatagory() async {
@@ -196,7 +195,7 @@ class _CreateSaleOrderState extends State<CreateSaleOrder> {
       if (!File('$appDocPath/product_image_${value['ID']}.png').existsSync()) {
         if (value['Image'] != null && value['Image'] != '') {
           print('Image : ' + value['Image']);
-          final url = 'https://landgreen.ml/system/public/api/downloadImage';
+          final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
           File file = File('$appDocPath/product_image_${value['ID']}.png');
           await client.post(url, body: {'path': value['Image']}).then((val) {
             file.writeAsBytesSync(val.bodyBytes);
@@ -282,7 +281,7 @@ class _CreateSaleOrderState extends State<CreateSaleOrder> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'สร้างใบสั่งขาย(ส่งของให้คลังหัวหน้าทีม)',
+                                  'สร้างใบสั่งขาย(ส่งของให้คลังหัวหน้าทีม.)',
                                   style: TextStyle(fontSize: 24.0, height: 1),
                                 ),
                                 Text(
@@ -674,19 +673,19 @@ class _CreateSaleOrderState extends State<CreateSaleOrder> {
                       },
                       validator: (val) => val == null ? '' : null,
                     ),
-                  if (_catSel == '1')
-                    DropDown(
-                      items: _attributeData,
-                      hintText: '',
-                      labelText: 'เนื้อสินค้า',
-                      value: _attribute,
-                      onChange: (val) async {
-                        setState(() {
-                          _attribute = val;
-                        });
-                      },
-                      validator: (val) => val == null ? '' : null,
-                    ),
+                  // if (_catSel == '1')
+                  //   DropDown(
+                  //     items: _attributeData,
+                  //     hintText: '',
+                  //     labelText: 'เนื้อสินค้า',
+                  //     value: _attribute,
+                  //     onChange: (val) async {
+                  //       setState(() {
+                  //         _attribute = val;
+                  //       });
+                  //     },
+                  //     validator: (val) => val == null ? '' : null,
+                  //   ),
                   SquareInput(
                     hintText: '',
                     labelText: 'จำนวน',
@@ -973,7 +972,7 @@ class _CreateSaleOrderState extends State<CreateSaleOrder> {
         String folderName = now.year.toString();
         String subFolderName = now.month.toString();
         String mainFolder =
-            '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/saleOrder/';
+            '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/saleOrder/';
         String uploadPath = '$mainFolder$folderName/$subFolderName';
         await ftpConnect.createFolderIfNotExist(mainFolder);
         await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -1028,15 +1027,15 @@ class _CreateSaleOrderState extends State<CreateSaleOrder> {
               color: Colors.black, fontSize: 19.0, fontWeight: FontWeight.w600),
         );
 
-        var postUri = Uri.parse('https://landgreen.ml/system/public/api-store');
+        var postUri =
+            Uri.parse('https://thanyakit.com/systemv2/public/api-store');
         var req = new http.MultipartRequest('POST', postUri);
         http.MultipartFile multipartFile;
         //req ของ record_doc_stock_team_save
         req.fields['func'] = 'record_doc_stock_team_head_create_fromapp';
         // req.fields['car_plate_number'] = '${_userCarData['car_name']}';
         req.fields['sel_team_id'] = '$_userId';
-        req.fields['sel_team_name'] =
-            '${userData[0]['Name']} ${userData[0]['Surname']} ';
+        req.fields['sel_team_name'] = '${userData[0]['Name']} ${userData[0]['Surname']} ';
         req.fields['code'] = '$_teamCode';
         req.fields['data_detail'] = jsonEncode(_listProductSel);
         req.fields['Edit_user_id'] = '$_userId';

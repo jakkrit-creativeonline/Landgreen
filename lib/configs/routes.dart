@@ -23,6 +23,7 @@ import 'package:system/screens/hr/hr_screen.dart';
 import 'package:system/screens/login_screen.dart';
 import 'package:system/screens/manager/manager_dashboard.dart';
 import 'package:system/screens/product_screen.dart';
+import 'package:system/screens/register.dart';
 import 'package:system/screens/sale/create_bill.dart';
 import 'package:system/screens/sale/create_bill_trail.dart';
 import 'package:system/screens/sale/create_contract.dart';
@@ -50,7 +51,7 @@ class Routes {
         );
       case 'dashboard':
         return MaterialPageRoute(
-            builder: (context) => DashboardScreen(),
+          builder: (context) => DashboardScreen(),
           settings: RouteSettings(name: 'SaleDashboard'),
         );
       case 'createBill':
@@ -58,113 +59,113 @@ class Routes {
         return MaterialPageRoute(
             settings: RouteSettings(name: 'CreateBill'),
             builder: (context) => CreateBill(
-              userId: args.userId,
-              editStatus: args.editStatus,
-              billId: args.billId,
-              customerId: args.customerId,
-              isBillOnline: args.isBillOnline,
-            ));
+                  userId: args.userId,
+                  editStatus: args.editStatus,
+                  billId: args.billId,
+                  customerId: args.customerId,
+                  isBillOnline: args.isBillOnline,
+                ));
       case 'createBillTrail':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'CreateTrail'),
             builder: (context) => CreateBillTrail(
-              userId: args.userId,
-              trailId: args.trailId,
-              editStatus: args.editStatus,
-            ));
+                  userId: args.userId,
+                  trailId: args.trailId,
+                  editStatus: args.editStatus,
+                ));
       case 'showBill':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'ShowBill'),
             builder: (context) => ShowBill(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
       case 'showTrail':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'ShowTrail'),
             builder: (context) => ShowTrail(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
       case 'createReceipt':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'CreateReceipt'),
             builder: (context) => CreateReceipt(
-              billId: args.billId,
-              userId: args.userId,
-              receiptId: args.receiptId,
-              isOnline: args.isBillOnline,
-              receiptNumber: args.receiptNumber,
-            ));
+                  billId: args.billId,
+                  userId: args.userId,
+                  receiptId: args.receiptId,
+                  isOnline: args.isBillOnline,
+                  receiptNumber: args.receiptNumber,
+                ));
       case 'createContract':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'CreateContract'),
             builder: (context) => CreateContract(
-              billId: args.billId,
-              userId: args.userId,
-              contractInfo: args.contractInfo,
-              contractId: args.contractId,
-              isOnline: args.isBillOnline,
-            ));
+                  billId: args.billId,
+                  userId: args.userId,
+                  contractInfo: args.contractInfo,
+                  contractId: args.contractId,
+                  isOnline: args.isBillOnline,
+                ));
       case 'showRankAll':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'หน้าจัดอันดับยอดขายเซล'),
             builder: (context) => ShowRankAll(
-              // userId: args.userId,
-            ));
+                // userId: args.userId,
+                ));
       case 'moneyTransfer':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'หน้าหัวหน้าทีมแจ้งโอนเงินสด'),
             builder: (context) => MoneyTransfer(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
       case 'carPayDay':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'บันทึกรายจ่ายประจำวัน'),
             builder: (context) => CarPayDay(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
       case 'head_dashboard': //ข้อมูลทีมขาย
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
-            settings: RouteSettings(name: 'ข้อมูลทีมขายสีแดง'),
+            settings: RouteSettings(name: 'ข้อมูลทีมขายหัวหน้าทีม'),
             builder: (context) => HeadDashboard(
-              userId: args.userId,
-            ));
-      case 'submanager_dashboard': //ข้อมูลทีมขายสีเหลือง
+                  userId: args.userId,
+                ));
+      case 'submanager_dashboard': //ข้อมูลทีมขายผู้จัดการ
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
-            settings: RouteSettings(name: 'ข้อมูลทีมขายสีเหลือง'),
+            settings: RouteSettings(name: 'ข้อมูลทีมขายผู้จัดการ'),
             builder: (context) => SubmanagerDashboard(
-              userId: args.userId,
-            ));
-      case 'manager_dashboard': //ข้อมูลทีมขายสีเหลือง
+                  userId: args.userId,
+                ));
+      case 'manager_dashboard': //ข้อมูลทีมขายผู้จัดการ
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
-            settings: RouteSettings(name: 'ข้อมูลทีมขายสีส้ม'),
+            settings: RouteSettings(name: 'ข้อมูลทีมขายผู้อำนวยการ'),
             builder: (context) => ManagerDashboard(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
       case 'teamStock':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'จัดการคลังสินค้า'),
             builder: (context) => TeamStock(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
       case 'ceo_dashboard':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'CEODashobard'),
             builder: (context) => CEODashboard(
-              userId: args.userId,
-        ));
+                  userId: args.userId,
+                ));
       case 'ceo_topsale':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
@@ -183,15 +184,15 @@ class Routes {
       case 'report_creditmanager':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
-            settings: RouteSettings(name: 'รายงานเครดิต(สีส้ม)'),
+            settings: RouteSettings(name: 'รายงานเครดิต(ผู้อำนวยการ)'),
             builder: (context) => CreditReportManager());
       case 'historyIncome':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'ประวัติรายได้รายคน'),
             builder: (context) => HistoryIncome(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
       case 'ceo_mapStat':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
@@ -207,31 +208,31 @@ class Routes {
         return MaterialPageRoute(
             settings: RouteSettings(name: 'ตั้งค่าพนักงาน'),
             builder: (context) => UserSetting(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
       case 'docCertificate':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'เอกสารใบอนุญาตขายปุ๋ย'),
             builder: (context) => DocCertificate(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
       case 'createSaleOrder':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'สร้างใบสั่งขาย'),
             builder: (context) => CreateSaleOrder(
-              userId: args.userId,
-              editStatus:args.editStatus,
-              docId: args.docId,
-            ));
+                  userId: args.userId,
+                  editStatus: args.editStatus,
+                  docId: args.docId,
+                ));
       case 'showPTA':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'ดูใบมอบอำนาจ'),
             builder: (context) => ShowPTA(
-              userId: args.userId,
-            ));
+                  userId: args.userId,
+                ));
 
       case 'ceo_report_day':
         final ScreenArguments args = settings.arguments;
@@ -283,17 +284,21 @@ class Routes {
         return MaterialPageRoute(
             settings: RouteSettings(name: 'ประเมินการส่งสินค้า'),
             builder: (context) => SurveyTeamStock(
-              userId: args.userId,
-              docId: args.docId,
-            ));
+                  userId: args.userId,
+                  docId: args.docId,
+                ));
       case 'hr_screen':
         final ScreenArguments args = settings.arguments;
         return MaterialPageRoute(
             settings: RouteSettings(name: 'เปิดข้อมูลเอชอาร์'),
             builder: (context) => HrScreen(
-              userId: args.userId,
-
-            ));
+                  userId: args.userId,
+                ));
+      case 'register':
+        final ScreenArguments args = settings.arguments;
+        return MaterialPageRoute(
+            settings: RouteSettings(name: 'สมัครสมาชิก'),
+            builder: (context) => Register());
       case 'splash':
       default:
         return MaterialPageRoute(

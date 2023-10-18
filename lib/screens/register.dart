@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:system/components/square_input.dart';
 import 'package:system/configs/constants.dart';
 import 'package:flutter/material.dart';
@@ -13,21 +14,22 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:progress_dialog/progress_dialog.dart';
+import 'package:system/screens/splash_screen.dart';
 
-class UserSetting extends StatefulWidget {
+class Register extends StatefulWidget {
   final String title;
   final int userId;
   final int editId;
 
-  const UserSetting(
+  const Register(
       {Key key, this.title = 'ระบบแลนด์กรีน', this.userId, this.editId})
       : super(key: key);
 
   @override
-  _UserSettingState createState() => _UserSettingState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _UserSettingState extends State<UserSetting> {
+class _RegisterState extends State<Register> {
   Future<Map<String, dynamic>> userData;
   final _formKey = GlobalKey<FormState>();
   var _name = TextEditingController();
@@ -160,7 +162,7 @@ class _UserSettingState extends State<UserSetting> {
     final DateTime picked = await showDatePicker(
       context: context,
       locale: const Locale('th', 'TH'),
-      initialDate: selectedDob,
+      initialDate: DateTime(1988),
       firstDate: DateTime(1910),
       lastDate: DateTime.now(),
       builder: (BuildContext context, Widget child) {
@@ -252,7 +254,7 @@ class _UserSettingState extends State<UserSetting> {
           toolbarWidgetColor: kPrimaryColor,
           activeControlsWidgetColor: kPrimaryColor,
           initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false),
+          lockAspectRatio: true),
       iosUiSettings: IOSUiSettings(
         title: 'Cropper',
       ),
@@ -301,7 +303,8 @@ class _UserSettingState extends State<UserSetting> {
       );
     }
     await getAllSelect();
-    userData = getEditData();
+    // userData = getEditData();
+
     setState(() {});
   }
 
@@ -365,8 +368,8 @@ class _UserSettingState extends State<UserSetting> {
 
         if (isUpload) {
           var body = {
-            'Edit_User_id': '${widget.editId ?? widget.userId}',
-            'EditID': '${widget.userId}',
+            // 'Edit_User_id': '${widget.editId ?? widget.userId}',
+            // 'EditID': '${widget.userId}',
             'Name': _name.text,
             'Surname': _surname.text,
             'Password': _password.text,
@@ -379,19 +382,28 @@ class _UserSettingState extends State<UserSetting> {
             'Address': _address.text,
             'Bank_account': _bank.text,
             'Bank_id': selectedBank,
-            'Image': uploadName,
+            'Image': (uploadName == null)?'':uploadName,
           };
-          var res = await http.post('$apiPath/updateUser', body: body);
+          var res = await http.post('$apiPath/addUser', body: body);
           percentage = percentage + 30.0;
           pr.update(progress: percentage, message: "กำลังบันทึกข้อมูล...");
           if (res.statusCode == 200) {
+            var userId = res.body;
+            print('userId =>${userId}');
+            final SharedPreferences prefs = await SharedPreferences.getInstance();
+            await prefs.setInt('isLogin', 1);
+            await prefs.setInt('levelid', 1);
+            await prefs.setInt('user_id', int.parse(userId));
+
             Sqlite().updateUserData(widget.userId, body).then((value) {
               percentage = percentage + 30.0;
               pr.update(
                   progress: percentage, message: "บันทึกข้อมูลเสร็จสิ้น...");
 
               pr.hide();
+
               Navigator.of(context).pop();
+              Navigator.of(context).pushReplacementNamed('splash');
             });
           }
         }
@@ -482,11 +494,11 @@ class _UserSettingState extends State<UserSetting> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'ตั้งค่าส่วนตัว',
+                                'สมัครสมาชิก',
                                 style: TextStyle(fontSize: 24.0, height: 1),
                               ),
                               Text(
-                                'เปลี่ยนภาพประจำตัวให้กดที่รูปได้เลย',
+                                'กรอกข้อมูลประจำตัว',
                                 style: TextStyle(fontSize: 16.0, height: 1),
                               ),
                             ],
@@ -497,45 +509,7 @@ class _UserSettingState extends State<UserSetting> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: FutureBuilder<Map<String, dynamic>>(
-                      future: userData,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return editForm(size, snapshot.data);
-                        } else if (snapshot.hasError) {
-                          return Center(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 18, vertical: 10),
-                                  child: ShimmerLoading(
-                                    type: 'boxInput1Row',
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        } else {
-                          return Center(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: 10,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 18, vertical: 10),
-                                  child: ShimmerLoading(
-                                    type: 'boxInput1Row',
-                                  ),
-                                );
-                              },
-                            ),
-                          );
-                        }
-                      }),
+                  child: editForm(size),
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
@@ -551,7 +525,7 @@ class _UserSettingState extends State<UserSetting> {
     );
   }
 
-  Widget editForm(Size size, Map<String, dynamic> data) {
+  Widget editForm(Size size) {
     return Form(
       key: _formKey,
       child: Column(
@@ -563,12 +537,7 @@ class _UserSettingState extends State<UserSetting> {
               child: Container(
                 width: size.width * 0.4,
                 child: newImage == null
-                    ? CachedNetworkImage(
-                        imageUrl: '$storagePath/${data['Image']}',
-                        errorWidget: (context, error, child) {
-                          return Image.asset('assets/avatar.png');
-                        },
-                      )
+                    ? Image.asset('assets/avatar.png')
                     : Image.file(newImage),
               ),
               borderRadius: BorderRadius.circular(100),
@@ -648,7 +617,7 @@ class _UserSettingState extends State<UserSetting> {
                 ),
                 DropDown(
                   items: sexOption,
-                  hintText: 'เลือกเพศ',
+                  hintText: '',
                   labelText: 'เพศ',
                   value: selectedSex,
                   onChange: (val) {
@@ -735,7 +704,7 @@ class _UserSettingState extends State<UserSetting> {
                     RaisedButton(
                         color: kPrimaryColor,
                         child: Text(
-                          'บันทึก',
+                          'สมัคร',
                           style: TextStyle(fontSize: 18, color: whiteFontColor),
                         ),
                         onPressed: () => validateData()),

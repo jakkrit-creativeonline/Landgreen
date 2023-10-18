@@ -26,13 +26,13 @@ class SellMenu extends StatelessWidget {
       children: <Widget>[
         Container(
           height: 42,
-          color: Color(0xFF003319),
+          color: Color(0xff001f82),
           child: Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Row(
               children: [
                 Container(
-                  color: Color(0xFF92BFA4),
+                  color: Color(0xff3e5fd7),
                   width: 5,
                   height: 12,
                 ),

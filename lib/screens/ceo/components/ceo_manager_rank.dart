@@ -102,7 +102,7 @@ class _CeoManagerRankState extends State<CeoManagerRank> {
     if (d >= 1 && d <= 5) {
       m = (m - 1) == 0 ? 12 : (m - 1);
       // y = y - 1;
-      y = (m==0)?(y - 1):y;
+      y = (m == 0) ? (y - 1) : y;
       selectedReport = '${y.toString()}-${m.toString().padLeft(2, '0')}';
       optionReport[1] =
           DropdownMenuItem(value: selectedReport, child: Text('ประจำเดือนนี้'));
@@ -221,25 +221,32 @@ class _CeoManagerRankState extends State<CeoManagerRank> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.only(left: 20,right: 20,top: 5),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 5),
       child: InkWell(
         onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            settings: RouteSettings(name: 'CEOดูสีส้มเพิ่มเติม'),
-                            builder: (context) => CeoManagerRankDetail()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  settings: RouteSettings(name: 'CEOดูผู้อำนวยการเพิ่มเติม'),
+                  builder: (context) => CeoManagerRankDetail()));
         },
         child: Card(
           child: Column(
             children: [
               Stack(
                 children: [
-                  HeaderText(text:'Top 5 สายงานบริหารสีส้ม ประจำเดือนนี้',textSize: 20,gHeight: 26,),
+                  HeaderText(
+                    text: 'Top 5 สายงานบริหารผู้อำนวยการ ประจำเดือนนี้',
+                    textSize: 20,
+                    gHeight: 26,
+                  ),
                   Positioned(
-                    top: 0,
+                      top: 0,
                       right: 0,
-                      child: Icon(Icons.arrow_right,color: whiteColor,))
+                      child: Icon(
+                        Icons.arrow_right,
+                        color: whiteColor,
+                      ))
                 ],
               ),
 
@@ -260,7 +267,9 @@ class _CeoManagerRankState extends State<CeoManagerRank> {
               //               MaterialPageRoute(
               //                   builder: (context) => CeoManagerRankDetail()));
               //         })),
-              SizedBox(height: 18,),
+              SizedBox(
+                height: 18,
+              ),
               FutureBuilder(
                   future: isBarChartLoaded,
                   builder: (ctx, snap) {
@@ -284,14 +293,19 @@ class _CeoManagerRankState extends State<CeoManagerRank> {
                     borderRadius: BorderRadius.circular(4),
                     color: grayFontColor,
                   ),
-                  width: size.width*0.85,
+                  width: size.width * 0.85,
                   height: 40,
                   child: Center(
-                    child: Text('ดูข้อมูลเพิ่มเติมคลิ๊ก',style: TextStyle(fontSize: 24,color: whiteFontColor),),
+                    child: Text(
+                      'ดูข้อมูลเพิ่มเติมคลิ๊ก',
+                      style: TextStyle(fontSize: 24, color: whiteFontColor),
+                    ),
                   ),
                 ),
               ),
-              SizedBox(height: 3,)
+              SizedBox(
+                height: 3,
+              )
             ],
           ),
         ),

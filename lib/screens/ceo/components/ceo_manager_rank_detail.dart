@@ -153,12 +153,12 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
 
   Future refresh() async {
     isLoaded = Future.value();
-    AlertNewDesign().showLoading(context,MediaQuery.of(context).size);
+    AlertNewDesign().showLoading(context, MediaQuery.of(context).size);
     var res = await s.getCeoManagerRankDetail(selectedReport: selectedReport);
     showData = jsonDecode(res);
     showData.sort((a, b) => b['sum_money_total'] - a['sum_money_total']);
     isLoaded = Future.value(true);
-    if(mounted) setState(() {});
+    if (mounted) setState(() {});
     Navigator.pop(context);
   }
 
@@ -177,7 +177,7 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
     }
     showData.sort((a, b) => b['sum_money_total'] - a['sum_money_total']);
     isLoaded = Future.value(true);
-    if(mounted) setState(() {});
+    if (mounted) setState(() {});
   }
 
   Future _showMonthPicker() async {
@@ -191,10 +191,11 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
       if (date != null) {
         initDate = date;
         selectedMonth =
-        '${initDate.toString().split('-')[0]}-${initDate.toString().split('-')[1]}';
+            '${initDate.toString().split('-')[0]}-${initDate.toString().split('-')[1]}';
 
-        var _str = '${initDate.toString().split('-')[0]}-${initDate.toString().split('-')[1]}-01';
-        monthSelectText.text="ข้อมูลเดือน "+f.ThaiMonthFormat(_str);
+        var _str =
+            '${initDate.toString().split('-')[0]}-${initDate.toString().split('-')[1]}-01';
+        monthSelectText.text = "ข้อมูลเดือน " + f.ThaiMonthFormat(_str);
         // showData = fetchShowData();
         getCache(selectedMonth);
       }
@@ -221,7 +222,7 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(42),
               child: AppBar(
-                titleSpacing:0.00,
+                titleSpacing: 0.00,
                 // title: Row(
                 //   mainAxisAlignment: MainAxisAlignment.start,
                 //   children: [
@@ -231,8 +232,7 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
                 //   ],
                 // ),
                 flexibleSpace: Container(
-                  decoration:
-                  BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/img/bgTop2.png'),
                       fit: BoxFit.fill,
@@ -246,215 +246,276 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
                 //     onPressed: () => Scaffold.of(context).openDrawer(),
                 //   ),
                 // ),
-
               ),
             ),
             body: RefreshIndicator(
               onRefresh: refresh,
-              child: CustomScrollView(
-                slivers:[
-                  SliverToBoxAdapter(
-                    child: FutureBuilder(
-                        future: isLoaded,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 20),
-                              child: Column(
-
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10,bottom: 5),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(5),
-                                            color: kPrimaryColor,
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Icon(FontAwesomeIcons.chartLine,color: btTextColor,),
-                                          ),
+              child: CustomScrollView(slivers: [
+                SliverToBoxAdapter(
+                  child: FutureBuilder(
+                      future: isLoaded,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(top: 10, bottom: 5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                          color: kPrimaryColor,
                                         ),
-                                        Padding(
+                                        child: Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text('รายงานยอดขายตามสายงานบริหาร',style: TextStyle(fontSize: 24.0,height: 1),),
-                                              Text('หน้านี้สรุปข้อมูลจากวันที่ลูกค้าเซ็นรับสินค้า',style: TextStyle(fontSize: 16.0,height: 1),),
-                                            ],
+                                          child: Icon(
+                                            FontAwesomeIcons.chartLine,
+                                            color: btTextColor,
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              'รายงานยอดขายตามสายงานบริหาร',
+                                              style: TextStyle(
+                                                  fontSize: 24.0, height: 1),
+                                            ),
+                                            Text(
+                                              'หน้านี้สรุปข้อมูลจากวันที่ลูกค้าเซ็นรับสินค้า',
+                                              style: TextStyle(
+                                                  fontSize: 16.0, height: 1),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  // DropDown(
-                                  //   items: optionReport,
-                                  //   value: selectedReport,
-                                  //   hintText: '',
-                                  //   onChange: (val) {
-                                  //     selectedReport = val;
-                                  //     getCache(selectedReport);
-                                  //   },
-                                  // ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 3),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        // _showDateTimeRange(context);
-                                        _showMonthPicker();
-                                      },
-                                      child: AbsorbPointer(
-                                        child: ClipRRect(
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Expanded(
-                                                child: Stack(
-                                                    children: [
-                                                      Container(
-                                                        height: 40,
-                                                        child: Padding(
-                                                          padding: const EdgeInsets.fromLTRB(8, 1, 8, 1),
-                                                          child: TextField(
-                                                            controller: monthSelectText,
-                                                            textAlign: TextAlign.center,
-                                                            textAlignVertical: TextAlignVertical.center,
-                                                            decoration: InputDecoration(
-                                                              // labelText:'ข้อมูล ณ วันที่',
-                                                              hintText: 'ข้อมูลประจำเดือนนี้',
-                                                              contentPadding: EdgeInsets.all(5),
-                                                              border: InputBorder.none,
-                                                              isDense: true,
-
-
-                                                            ),
-
-                                                            style: TextStyle(fontSize: 18,),
-                                                          ),
-                                                        ),
-
-                                                        decoration: BoxDecoration(
-                                                          border: Border(
-                                                            top: BorderSide(width: 2,color: subFontColor),
-                                                            bottom: BorderSide(width: 2,color: subFontColor),
-                                                          ),
-                                                          color: bgInputColor,
-                                                        ),
+                                ),
+                                // DropDown(
+                                //   items: optionReport,
+                                //   value: selectedReport,
+                                //   hintText: '',
+                                //   onChange: (val) {
+                                //     selectedReport = val;
+                                //     getCache(selectedReport);
+                                //   },
+                                // ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 3),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // _showDateTimeRange(context);
+                                      _showMonthPicker();
+                                    },
+                                    child: AbsorbPointer(
+                                      child: ClipRRect(
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Expanded(
+                                              child: Stack(children: [
+                                                Container(
+                                                  height: 40,
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(8, 1, 8, 1),
+                                                    child: TextField(
+                                                      controller:
+                                                          monthSelectText,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      textAlignVertical:
+                                                          TextAlignVertical
+                                                              .center,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        // labelText:'ข้อมูล ณ วันที่',
+                                                        hintText:
+                                                            'ข้อมูลประจำเดือนนี้',
+                                                        contentPadding:
+                                                            EdgeInsets.all(5),
+                                                        border:
+                                                            InputBorder.none,
+                                                        isDense: true,
                                                       ),
-                                                      Positioned(
-                                                        right: 0,
-                                                        top: 5,
-                                                        child: Container(
-                                                          child: Icon(Icons.arrow_drop_down_outlined,color: Colors.black,size: 28,),
-                                                        ),
-                                                      )
-                                                    ]
+                                                      style: TextStyle(
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    border: Border(
+                                                      top: BorderSide(
+                                                          width: 2,
+                                                          color: subFontColor),
+                                                      bottom: BorderSide(
+                                                          width: 2,
+                                                          color: subFontColor),
+                                                    ),
+                                                    color: bgInputColor,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          borderRadius: BorderRadius.circular(1),
+                                                Positioned(
+                                                  right: 0,
+                                                  top: 5,
+                                                  child: Container(
+                                                    child: Icon(
+                                                      Icons
+                                                          .arrow_drop_down_outlined,
+                                                      color: Colors.black,
+                                                      size: 28,
+                                                    ),
+                                                  ),
+                                                )
+                                              ]),
+                                            ),
+                                          ],
                                         ),
+                                        borderRadius: BorderRadius.circular(1),
                                       ),
                                     ),
                                   ),
-                                  ListView.builder(
-                                      primary: false,
-                                      itemCount: showData.length,
-                                      shrinkWrap: true,
-                                      itemBuilder: (bc, i) {
-                                        var res = showData[i];
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    settings: RouteSettings(name: 'CEOดูข้อมูลใต้สีส้มอีกที'),
-                                                    builder: (context) =>
-                                                        CeoHeadIncomeExpense(
-                                                          headId: res['ID'],
-                                                        )));
-                                          },
-                                          child: Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 4, horizontal: 0),
-                                            child: Card(
-                                              elevation: 2,
-                                              child: Column(
-                                                children: [
-                                                  HeaderText(text:'อันดับที่ ${i + 1} คุณ${res['Name']} ',textSize: 20,gHeight: 26,),
-                                                  Padding(
-                                                    padding: const EdgeInsets.all(8.0),
-                                                    child: Row(
-                                                      children: [
-                                                        Expanded(
-                                                          flex:1,
-                                                            child: showInfo(i, size, res),
-                                                        ),
-                                                        Expanded(
-                                                          flex: 2,
-                                                          child: Card(
-                                                            color: darkColor,
-                                                            child: Column(
-                                                              children: [
-                                                                showPercent(res: res, type: 0),
-                                                                Divider(color: whiteColor,height: 2,),
-                                                                IntrinsicHeight(
-                                                                  child: Row(
-                                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                                    children: [
-                                                                      showPercent(res: res, type: 1),
-                                                                      VerticalDivider(color: whiteColor,),
-                                                                      showPercent(res: res, type: 2),
-                                                                    ],
-                                                                  ),
-                                                                )
-                                                              ],
-                                                            ),
+                                ),
+                                ListView.builder(
+                                    primary: false,
+                                    itemCount: showData.length,
+                                    shrinkWrap: true,
+                                    itemBuilder: (bc, i) {
+                                      var res = showData[i];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  settings: RouteSettings(
+                                                      name:
+                                                          'CEOดูข้อมูลใต้ผู้อำนวยการอีกที'),
+                                                  builder: (context) =>
+                                                      CeoHeadIncomeExpense(
+                                                        headId: res['ID'],
+                                                      )));
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 4, horizontal: 0),
+                                          child: Card(
+                                            elevation: 2,
+                                            child: Column(
+                                              children: [
+                                                HeaderText(
+                                                  text:
+                                                      'อันดับที่ ${i + 1} คุณ${res['Name']} ',
+                                                  textSize: 20,
+                                                  gHeight: 26,
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Row(
+                                                    children: [
+                                                      Expanded(
+                                                        flex: 1,
+                                                        child: showInfo(
+                                                            i, size, res),
+                                                      ),
+                                                      Expanded(
+                                                        flex: 2,
+                                                        child: Card(
+                                                          color: darkColor,
+                                                          child: Column(
+                                                            children: [
+                                                              showPercent(
+                                                                  res: res,
+                                                                  type: 0),
+                                                              Divider(
+                                                                color:
+                                                                    whiteColor,
+                                                                height: 2,
+                                                              ),
+                                                              IntrinsicHeight(
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceEvenly,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .center,
+                                                                  children: [
+                                                                    showPercent(
+                                                                        res:
+                                                                            res,
+                                                                        type:
+                                                                            1),
+                                                                    VerticalDivider(
+                                                                      color:
+                                                                          whiteColor,
+                                                                    ),
+                                                                    showPercent(
+                                                                        res:
+                                                                            res,
+                                                                        type:
+                                                                            2),
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            ],
                                                           ),
-                                                        )
-
-                                                      ],
-                                                    ),
+                                                        ),
+                                                      )
+                                                    ],
                                                   ),
-
-
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        );
-                                      }),
-                                ],
-                              ),
-                            );
-                          } else {
-                            return Column(
-                              children: [
-                                ShimmerLoading(type: 'boxItem',),
-                                ShimmerLoading(type: 'boxItem',),
-                                ShimmerLoading(type: 'boxItem1Row',),
+                                        ),
+                                      );
+                                    }),
                               ],
-                            );
-                          }
-                        }),
+                            ),
+                          );
+                        } else {
+                          return Column(
+                            children: [
+                              ShimmerLoading(
+                                type: 'boxItem',
+                              ),
+                              ShimmerLoading(
+                                type: 'boxItem',
+                              ),
+                              ShimmerLoading(
+                                type: 'boxItem1Row',
+                              ),
+                            ],
+                          );
+                        }
+                      }),
+                ),
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  fillOverscroll: true,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Footer(),
                   ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 10),
-                        child: Footer(),
-                    ),
-                  )
-                ]
-
-              ),
+                )
+              ]),
             ),
           ),
         ),
@@ -505,11 +566,11 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
         return Container();
     }
     Color _setColor;
-    if(percent == 0){
+    if (percent == 0) {
       _setColor = whiteColor;
-    }else if(percent > 0){
+    } else if (percent > 0) {
       _setColor = kSecondaryColor;
-    }else{
+    } else {
       _setColor = dangerColor;
     }
     return Tooltip(
@@ -521,9 +582,12 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
           child: Container(
             child: Column(
               children: [
-                Text(text, style: TextStyle(fontSize: 18, color: whiteColor,height: 1)),
+                Text(text,
+                    style:
+                        TextStyle(fontSize: 18, color: whiteColor, height: 1)),
                 Text('${f.SeperateNumber(money)} บาท',
-                    style: TextStyle(fontSize: 18, color: _setColor,height: 1)),
+                    style:
+                        TextStyle(fontSize: 18, color: _setColor, height: 1)),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -536,7 +600,8 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
                       color: _setColor,
                     ),
                     Text('${percent.abs()} %',
-                        style: TextStyle(fontSize: 18, color: _setColor,height: 1)),
+                        style: TextStyle(
+                            fontSize: 18, color: _setColor, height: 1)),
                   ],
                 )
               ],
@@ -548,7 +613,7 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
   }
 
   Widget showInfo(int i, Size size, res) {
-    TextStyle _baseFontStyle = TextStyle(fontSize: 18,height: 1);
+    TextStyle _baseFontStyle = TextStyle(fontSize: 18, height: 1);
     print('$storagePath/${res['Image']}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -556,17 +621,22 @@ class _CeoManagerRankDetailState extends State<CeoManagerRankDetail> {
       children: [
         ClipOval(
           child: CachedNetworkImage(
-            width: size.width*0.2,
+            width: size.width * 0.2,
             imageUrl: '$storagePath/${res['Image']}',
             errorWidget: (context, url, error) {
               return Image.asset('assets/avatar.png');
             },
           ),
         ),
-        SizedBox(height: 5,),
-        Text('หัวหน้าทีม ${res['head_count']} คน',style: _baseFontStyle,),
-        Text('พนักงานขาย ${res['sale_count']} คน',style: _baseFontStyle),
-        Text('จำนวนรถยนต์ ${res['car_count']} คน',style: _baseFontStyle),
+        SizedBox(
+          height: 5,
+        ),
+        Text(
+          'Sup. ${res['head_count']} คน',
+          style: _baseFontStyle,
+        ),
+        Text('พนักงานขาย ${res['sale_count']} คน', style: _baseFontStyle),
+        Text('จำนวนรถยนต์ ${res['car_count']} คน', style: _baseFontStyle),
       ],
     );
   }

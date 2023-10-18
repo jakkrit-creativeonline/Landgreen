@@ -94,7 +94,7 @@ class _ShowBillState extends State<ShowBill> {
     // List<int> statusToRemove = [6, 7, 8, 9, 10, 12, 13, 14, 15, 16];
     // for (var bill in _results) {
     //   var res = await client.post(
-    //       'https://landgreen.ml/system/public/api/getBillCredit',
+    //       'https://thanyakit.com/systemv2/public/api/getBillCredit',
     //       body: {'billNumber': '${bill['Bill_number']}'}).then((value) async {
     //     if (value.statusCode == 200) {
     //       var dataSet = jsonDecode(value.body);
@@ -126,7 +126,7 @@ class _ShowBillState extends State<ShowBill> {
       for (var val in contract) {
         print(val);
         var res = await client.post(
-            'https://landgreen.ml/system/public/api/uploadContract',
+            'https://thanyakit.com/systemv2/public/api/uploadContract',
             body: {
               'Bill_number': val['Bill_number'],
               "Contract_number": val['Contract_number'],
@@ -170,8 +170,8 @@ class _ShowBillState extends State<ShowBill> {
     if (receipt.isNotEmpty) {
       for (var val in receipt) {
         if (val['isSync'] == 0) {
-          var postUri =
-              Uri.parse('https://landgreen.ml/system/public/api/uploadReceipt');
+          var postUri = Uri.parse(
+              'https://thanyakit.com/systemv2/public/api/uploadReceipt');
           var req = new http.MultipartRequest('POST', postUri);
           http.MultipartFile multipartFile;
           req.fields['Bill_number'] = '${val['Bill_number']}';
@@ -310,7 +310,7 @@ class _ShowBillState extends State<ShowBill> {
     _offlineResult = Future.value();
     if (mounted) setState(() {});
     final response = await client
-        .post('https://landgreen.ml/system/public/api/getBillOnline', body: {
+        .post('https://thanyakit.com/systemv2/public/api/getBillOnline', body: {
       'User_id': '${widget.userId}',
       'startDate': startDate,
       'endDate': endDate
@@ -390,7 +390,7 @@ class _ShowBillState extends State<ShowBill> {
     try {
       print('get and insert SaleCommission');
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/SaleCommission',
+          'https://thanyakit.com/systemv2/public/api/SaleCommission',
           body: {'filename': '$userId'});
       var dataSet = res.body;
       if (dataSet != '') {
@@ -404,7 +404,7 @@ class _ShowBillState extends State<ShowBill> {
   Future<Null> resetBill() async {
     //await Sqlite().rawQuery('DELETE FROM CONTRACT WHERE 1');
     // await client.post(
-    //   'https://landgreen.ml/system/public/api/reset',
+    //   'https://thanyakit.com/systemv2/public/api/reset',
     // );
     await Sqlite().rawQuery('DELETE FROM RECEIPT WHERE 1');
     await Sqlite().rawQuery('DELETE FROM BILL WHERE 1');
@@ -416,7 +416,7 @@ class _ShowBillState extends State<ShowBill> {
 
   Future<List<BillOnline>> fetchResult(http.Client client) async {
     final response = await client.post(
-        'https://landgreen.ml/system/public/api/getBillOnline',
+        'https://thanyakit.com/systemv2/public/api/getBillOnline',
         body: {'User_id': '${widget.userId}'});
 
     final parsed = jsonDecode(response.body).cast<Map<String, dynamic>>();
@@ -1190,7 +1190,9 @@ class BillOnline {
     commissionPaydate = json['Commission_paydate'];
     imageSignature = json['Image_signature'];
     signatureDate = json['Signature_date'];
-    editUserId = (json['Edit_user_id'] == 'null')?json['User_id']:json['Edit_user_id'];
+    editUserId = (json['Edit_user_id'] == 'null')
+        ? json['User_id']
+        : json['Edit_user_id'];
     timestamp = json['Timestamp'];
     orderDetail = json['Order_detail'];
     creditTermId = json['Credit_term_id'];
@@ -1254,20 +1256,20 @@ class _ShowBillOnlineState extends State<ShowBillOnline> {
     switch (status) {
       case 0:
         return Text(
-          '(ยังไม่ได้ส่ง)',
+          '(อยู่ในเครื่องรอเข้าคิว ดึงรีเฟสเพื่อส่งบิลได้)',
           style: TextStyle(fontSize: 16, color: danger),
         );
         break;
       case 1:
-        return Text('(เข้าคิวแล้วกำลังส่ง)',
+        return Text('((เข้าคิวแล้วรอเข้าเซิฟเวอร์ ธุรการยังไม่เห็นบิล))',
             style: TextStyle(fontSize: 16, color: kSecondaryColor));
         break;
       case 2:
-        return Text('(ส่งเสร็จแล้ว)',
+        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว ธุรการเห็นบิลแล้ว)',
             style: TextStyle(fontSize: 16, color: kPrimaryColor));
         break;
       default:
-        return Text('(ส่งเสร็จแล้ว)',
+        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว ธุรการเห็นบิลแล้ว)',
             style: TextStyle(fontSize: 16, color: kPrimaryColor));
     }
   }
@@ -1287,14 +1289,14 @@ class _ShowBillOnlineState extends State<ShowBillOnline> {
         break;
       case 1:
         return Text('(เข้าคิวแล้วรอเข้าเซิฟเวอร์ ธุรการยังไม่เห็นบิล)',
-            style: TextStyle(fontSize: 16, color: Color(0xF9AB00)));
+            style: TextStyle(fontSize: 16, color: Color(0xFFF9AB00)));
         break;
       case 2:
-        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว ธุรการยังเห็นบิลแล้ว)',
+        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว ธุรการเห็นบิลแล้ว)',
             style: TextStyle(fontSize: 16, color: kPrimaryColor));
         break;
       default:
-        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว ธุรการยังเห็นบิลแล้ว)',
+        return Text('(ส่งเสร็จแล้วอยู่ในเซิฟเวอร์แล้ว ธุรการเห็นบิลแล้ว)',
             style: TextStyle(fontSize: 16, color: kPrimaryColor));
     }
   }
@@ -1343,7 +1345,7 @@ class _ShowBillOnlineState extends State<ShowBillOnline> {
         break;
       case 4:
         return Text(
-          'รอหัวหน้าทีม แจ้งโอนเงิน',
+          'รอหัวหน้าทีมแจ้งโอนเงิน',
           style: TextStyle(color: kPrimaryColor, fontSize: _sizeFont),
         );
         break;

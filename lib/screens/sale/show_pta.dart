@@ -660,7 +660,7 @@ class _FormRecordState extends State<FormRecord> {
       });
 
       var postUri = Uri.parse(
-          'https://landgreen.ml/system/public/api/recordMoneyReceivePTA');
+          'https://thanyakit.com/systemv2/public/api/recordMoneyReceivePTA');
       var req = new http.MultipartRequest('POST', postUri);
       req.fields['bill_id'] = '${_obj['Bill_id']}';
       req.fields['user_id'] = '${_userId}';
@@ -677,7 +677,7 @@ class _FormRecordState extends State<FormRecord> {
         String folderName = now.year.toString();
         String subFolderName = now.month.toString();
         String mainFolder =
-            '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/recordMoneyReceivePTA/';
+            '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/recordMoneyReceivePTA/';
         String uploadPath = '$mainFolder$folderName/$subFolderName';
         await ftpConnect.createFolderIfNotExist(mainFolder);
         await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -1009,7 +1009,7 @@ class _FormRecordNoteState extends State<FormRecordNote> {
       });
 
       var postUri = Uri.parse(
-          'https://landgreen.ml/system/public/api/recordMoneyReceivePTANote');
+          'https://thanyakit.com/systemv2/public/api/recordMoneyReceivePTANote');
       var req = new http.MultipartRequest('POST', postUri);
       req.fields['bill_id'] = '${_obj['Bill_id']}';
       req.fields['user_id'] = '${_userId}';

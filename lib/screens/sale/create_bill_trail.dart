@@ -425,7 +425,7 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
       if (!File('$appDocPath/product_image_${value['ID']}.png').existsSync()) {
         if (value['Image'] != null && value['Image'] != '') {
           print('Image : ' + value['Image']);
-          final url = 'https://landgreen.ml/system/public/api/downloadImage';
+          final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
           File file = File('$appDocPath/product_image_${value['ID']}.png');
           var res = await client
               .post(url, body: {'path': value['Image']}).then((val) {
@@ -1017,7 +1017,7 @@ class _CreateBillTrailState extends State<CreateBillTrail> {
                                             type: 'imageSquare',
                                           ),
                                           imageUrl:
-                                              'https://landgreen.ml/system/storage/app/${imageFromOnline[index]}',
+                                              'https://thanyakit.com/systemv2/storage/app/${imageFromOnline[index]}',
                                           errorWidget: (context, url, error) {
                                             return Image.asset(
                                                 'assets/no_image.png');

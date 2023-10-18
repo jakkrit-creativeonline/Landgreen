@@ -32,6 +32,7 @@ class _MoneyTransferState extends State<MoneyTransfer> {
   // StreamController<List> _controllerStream = new StreamController<List> ();
   List<MoneyTransferResult> _result;
   Future<bool> _setFutureResult;
+  var _resultBank ;
   List<TransferHistoryResult> _resultHistory;
   Future<bool> isLoaded;
   Future<bool> isHistoryLoaded;
@@ -39,14 +40,17 @@ class _MoneyTransferState extends State<MoneyTransfer> {
   List _orderDetail;
 
   var _dateRange = TextEditingController();
+  Map bankData ;
   DateTimeRange initDateTimeRange;
   DateTimeRange defaultDateTimeRange;
 
   Future<List<MoneyTransferResult>> fetchResult(http.Client client) async {
     //print(widget.userId);
     final response = await client.post(
-        'https://landgreen.ml/system/public/api/getMoneyTransfer',
+        'https://thanyakit.com/systemv2/public/api/getMoneyTransfer',
         body: {'user_id': '${widget.userId}'});
+    print('response.body');
+    print('${response.body}');
 
     //Sqlite().insertJson('MoneyTransfer', '${widget.userId}', response.body);
     return await parseResult(response.body);
@@ -56,7 +60,7 @@ class _MoneyTransferState extends State<MoneyTransfer> {
       http.Client client) async* {
     //print(widget.userId);
     var response = await client.post(
-        'https://landgreen.ml/system/public/api/getMoneyTransfer',
+        'https://thanyakit.com/systemv2/public/api/getMoneyTransfer',
         body: {'user_id': '${widget.userId}'});
 
     //Sqlite().insertJson('MoneyTransfer', '${widget.userId}', response.body);
@@ -89,20 +93,20 @@ class _MoneyTransferState extends State<MoneyTransfer> {
 
   Future<Null> getOrderDetail(http.Client client) async {
     final res = await client.get(
-      'https://landgreen.ml/system/public/api-heads/getBillOrderDetail',
+      'https://thanyakit.com/systemv2/public/api-heads/getBillOrderDetail',
     );
     _orderDetail = json.decode(res.body);
   }
 
   Future<List<TransferHistoryResult>> fetchHistory(http.Client client,
       {String startDate = '', String endDate = ''}) async {
-    // final res = await client.post('https://landgreen.ml/system/public/api-heads',
+    // final res = await client.post('https://thanyakit.com/systemv2/public/api-heads',
     //     body: {
     //       'user_id': '512',
     //       'func': 'bill_money_transfer_get_table_data_history'
     //     });
     final res = await client.post(
-        'https://landgreen.ml/system/public/api/getBillMoneyTransferHistory',
+        'https://thanyakit.com/systemv2/public/api/getBillMoneyTransferHistory',
         body: {
           'user_id': '${widget.userId}',
           'startDate': startDate,
@@ -116,6 +120,17 @@ class _MoneyTransferState extends State<MoneyTransfer> {
         .toList();
   }
 
+  fetchBank(http.Client client) async{
+    final res = await client.get('https://thanyakit.com/systemv2/public/api/getSettingBank',);
+    final parsed = jsonDecode(res.body).cast<Map<String, dynamic>>();
+    bankData = parsed[0];
+    // isHistoryLoaded = Future.value(true);
+    // return parsed
+    //     .map<TransferHistoryResult>(
+    //         (json) => TransferHistoryResult.fromJson(json))
+    //     .toList();
+  }
+
   Future<void> getData() async {
     //await getOrderDetail(http.Client());
 
@@ -123,6 +138,8 @@ class _MoneyTransferState extends State<MoneyTransfer> {
     _setFutureResult = Future.value(true);
     // _resultStream = await fetchResultStream(http.Client());
     _resultHistory = await fetchHistory(http.Client());
+    _resultBank = await fetchBank(http.Client());
+
 
     setState(() {});
   }
@@ -184,6 +201,7 @@ class _MoneyTransferState extends State<MoneyTransfer> {
             sumMoney: sumMoney,
             billId: billId,
             userId: widget.userId,
+            bankData: bankData,
           );
         });
     callBack.then((value) {
@@ -657,7 +675,7 @@ class _MoneyTransferState extends State<MoneyTransfer> {
                                                 billId.add(b.billId);
                                               }
                                             }
-                                            if (sumMoney == 0) {
+                                            if (billId.length == 0) {
                                               ShowModalBottom().alertDialog(
                                                   context,
                                                   'กรุณาเลือกรายการที่ต้องการโอน');
@@ -775,6 +793,8 @@ class _MoneyTransferState extends State<MoneyTransfer> {
       ),
     );
   }
+
+
 }
 
 class MoneyTransferHistoeyList extends StatefulWidget {
@@ -1084,8 +1104,9 @@ class TransferDetail extends StatefulWidget {
   final sumMoney;
   final List billId;
   final int userId;
+  final bankData;
 
-  const TransferDetail({Key key, this.sumMoney, this.billId, this.userId})
+  const TransferDetail({Key key, this.sumMoney, this.billId, this.userId,this.bankData})
       : super(key: key);
   @override
   _TransferDetailState createState() => _TransferDetailState();
@@ -1096,6 +1117,7 @@ class _TransferDetailState extends State<TransferDetail> {
   FormatMethod f = FormatMethod();
   final picker = ImagePicker();
   FTPConnect ftpConnect;
+  Map _bankData;
 
   Future pickImage(bool isFromCamera) async {
     var pickedFile;
@@ -1151,7 +1173,7 @@ class _TransferDetailState extends State<TransferDetail> {
     });
 
     var postUri = Uri.parse(
-        'https://landgreen.ml/system/public/api/recordBillMoneyTransfer');
+        'https://thanyakit.com/systemv2/public/api/recordBillMoneyTransfer');
     var req = new http.MultipartRequest('POST', postUri);
     req.fields['bill_id'] = '${widget.billId}';
     req.fields['user_id'] = '${widget.userId}';
@@ -1166,7 +1188,7 @@ class _TransferDetailState extends State<TransferDetail> {
       String folderName = now.year.toString();
       String subFolderName = now.month.toString();
       String mainFolder =
-          '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/moneyTransfer/';
+          '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/moneyTransfer/';
       String uploadPath = '$mainFolder$folderName/$subFolderName';
       await ftpConnect.createFolderIfNotExist(mainFolder);
       await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -1225,120 +1247,124 @@ class _TransferDetailState extends State<TransferDetail> {
 
   @override
   Widget build(BuildContext context) {
+    _bankData = widget.bankData;
     return SafeArea(
       child: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(vertical: 20),
-          child: Wrap(
-            crossAxisAlignment: WrapCrossAlignment.center,
-            alignment: WrapAlignment.center,
-            children: [
-              Text(
-                'แจ้งโอนเงินสด',
-                style: TextStyle(fontSize: 24, color: kPrimaryColor),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                child: Row(
+        child: MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          child: Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 20),
+            child: Wrap(
+              crossAxisAlignment: WrapCrossAlignment.center,
+              alignment: WrapAlignment.center,
+              children: [
+                Text(
+                  'แจ้งโอนเงินสด',
+                  style: TextStyle(fontSize: 24, color: kPrimaryColor),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          height: 130,
+                          child: Card(
+                            elevation: 2.0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Center(
+                                      child: Text(
+                                    'โอนไปที่',
+                                    style: TextStyle(fontSize: 20),
+                                  )),
+                                  Text('ธนาคาร${_bankData['Namebank']} สาขา${_bankData['branchnamebank']}',
+                                      style: TextStyle(fontSize: 19)),
+                                  Text('บัญชีเลขที่ : ${_bankData['Numberbank']}',
+                                      style: TextStyle(fontSize: 19)),
+                                  Text('ชื่อบัญชี : ${_bankData['Accountnamebank']}',
+                                      style: TextStyle(fontSize: 19)),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          height: 130,
+                          child: Card(
+                            elevation: 2.0,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('ทั้งหมด', style: TextStyle(fontSize: 20)),
+                                  Text(
+                                      '${f.SeperateNumber(widget.sumMoney.toString())}',
+                                      style: TextStyle(
+                                          fontSize: 20, color: kPrimaryColor))
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                if (_image != null)
+                  SizedBox(
+                    height: 200,
+                    child: Image.file(
+                      _image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(
-                      flex: 2,
-                      child: Container(
-                        height: 130,
-                        child: Card(
-                          elevation: 2.0,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Center(
-                                    child: Text(
-                                  'โอนไปที่',
-                                  style: TextStyle(fontSize: 20),
-                                )),
-                                Text('ธนาคารกรุงเทพฯ สาขาบ่อพลอยนิวกรุงไทย',
-                                    style: TextStyle(fontSize: 20)),
-                                Text('บัญชีเลขที่ : 441-7-05287-7',
-                                    style: TextStyle(fontSize: 20)),
-                                Text('ชื่อบัญชี : บจ.แลนด์กรีนอะโกร',
-                                    style: TextStyle(fontSize: 20)),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                    Column(
+                      children: [
+                        IconButton(
+                            icon: Icon(Icons.photo_camera),
+                            onPressed: () => pickImage(true)),
+                        Text('ถ่ายภาพ')
+                      ],
                     ),
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        height: 130,
-                        child: Card(
-                          elevation: 2.0,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text('ทั้งหมด', style: TextStyle(fontSize: 20)),
-                                Text(
-                                    '${f.SeperateNumber(widget.sumMoney.toString())}',
-                                    style: TextStyle(
-                                        fontSize: 20, color: kPrimaryColor))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
+                    Column(
+                      children: [
+                        IconButton(
+                            icon: Icon(Icons.photo_library),
+                            onPressed: () => pickImage(false)),
+                        Text('เลือกรูปภาพ')
+                      ],
+                    ),
                   ],
                 ),
-              ),
-              if (_image != null)
                 SizedBox(
-                  height: 200,
-                  child: Image.file(
-                    _image,
-                    fit: BoxFit.cover,
-                  ),
+                  height: 20,
                 ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.photo_camera),
-                          onPressed: () => pickImage(true)),
-                      Text('ถ่ายภาพ')
-                    ],
-                  ),
-                  Column(
-                    children: [
-                      IconButton(
-                          icon: Icon(Icons.photo_library),
-                          onPressed: () => pickImage(false)),
-                      Text('เลือกรูปภาพ')
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              CustomButton(
-                text: 'แจ้งโอนเงิน',
-                onPress: () async {
-                  if (_image == null) {
-                    ShowModalBottom().alertDialog(context, 'กรุณาแนบสลิป');
-                  } else {
-                    await submit();
-                  }
-                },
-              )
-            ],
+                CustomButton(
+                  text: 'แจ้งโอนเงิน',
+                  onPress: () async {
+                    if (_image == null) {
+                      ShowModalBottom().alertDialog(context, 'กรุณาแนบสลิป');
+                    } else {
+                      await submit();
+                    }
+                  },
+                )
+              ],
+            ),
           ),
         ),
       ),

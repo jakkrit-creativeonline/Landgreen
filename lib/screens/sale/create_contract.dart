@@ -87,7 +87,7 @@ class _CreateContractState extends State<CreateContract> {
       if (widget.isOnline) {
         var client = http.Client();
         var res = await client.post(
-            'https://landgreen.ml/system/public/api/getContractOnline',
+            'https://thanyakit.com/systemv2/public/api/getContractOnline',
             body: {
               'Bill_number': '${widget.contractInfo['billData']['billNumber']}'
             });

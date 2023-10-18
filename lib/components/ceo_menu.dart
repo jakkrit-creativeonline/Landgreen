@@ -25,17 +25,20 @@ class CEOMenu extends StatelessWidget {
       children: <Widget>[
         Container(
           height: 42,
-          color: Color(0xFF003319),
+          color: Color(0xff001f82),
           child: Padding(
             padding: const EdgeInsets.only(left: 20),
             child: Row(
               children: [
                 Container(
-                  color: Color(0xFF92BFA4),
+                  color: Color(0xff3e5fd7),
                   width: 5,
                   height: 12,
                 ),
-                Text(' เลือกเมนูย่อยได้จากลิสด้านล่างนี้',style: TextStyle(fontSize: 21,color: Colors.white),)
+                Text(
+                  ' เลือกเมนูย่อยได้จากลิสด้านล่างนี้',
+                  style: TextStyle(fontSize: 21, color: Colors.white),
+                )
               ],
             ),
           ),
@@ -57,7 +60,6 @@ class CEOMenu extends StatelessWidget {
             onTap: () {
               //print('แดชบอร์ด');
               Navigator.pop(context);
-
             }),
         CustomListTile(
             text: 'ยอดขายรายวัน',
@@ -66,8 +68,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_report_day');
-              locator<NavigationService>().navigateTo('ceo_report_day',ScreenArguments());
-
+              locator<NavigationService>()
+                  .navigateTo('ceo_report_day', ScreenArguments());
             }),
         CustomListTile(
             text: 'รายงานรายรับ-จ่าย',
@@ -76,7 +78,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_income_expense');
-              locator<NavigationService>().navigateTo('ceo_income_expense',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('ceo_income_expense', ScreenArguments());
             }),
         CustomListTile(
             text: 'Top Sales',
@@ -85,7 +88,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_topsale');
-              locator<NavigationService>().navigateTo('ceo_topsale',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('ceo_topsale', ScreenArguments());
             }),
         CustomListTile(
             text: 'Top Teams',
@@ -94,7 +98,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_topteam');
-              locator<NavigationService>().navigateTo('ceo_topteam',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('ceo_topteam', ScreenArguments());
             }),
         CustomListTile(
             text: 'ยอดขายทีมเป้า 300 กส.',
@@ -103,18 +108,19 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_report_car');
-              locator<NavigationService>().navigateTo('ceo_report_car',ScreenArguments());
-
+              locator<NavigationService>()
+                  .navigateTo('ceo_report_car', ScreenArguments());
             }),
 
         CustomListTile(
-            text: 'เครดิตค้างชำระ(สีส้ม)',
+            text: 'เครดิตค้างชำระ(ผอ.)',
             icon: FontAwesomeIcons.chartBar,
             onTap: () {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('report_creditmanager');
-              locator<NavigationService>().navigateTo('report_creditmanager',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('report_creditmanager', ScreenArguments());
             }),
         CustomListTile(
             text: 'เครดิตค้างชำระ(คันรถ)',
@@ -123,7 +129,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('report_creditcar');
-              locator<NavigationService>().navigateTo('report_creditcar',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('report_creditcar', ScreenArguments());
             }),
         CustomListTile(
             text: 'KPI สินเชื่อ',
@@ -132,7 +139,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_creditKPI');
-              locator<NavigationService>().navigateTo('ceo_creditKPI',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('ceo_creditKPI', ScreenArguments());
             }),
         CustomListTile(
             text: 'รายงาน ใบมอบอำนาจ',
@@ -141,7 +149,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_pta');
-              locator<NavigationService>().navigateTo('ceo_pta',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('ceo_pta', ScreenArguments());
             }),
         CustomListTile(
             text: 'รายงานรายได้ฝ่ายสินเชื่อ',
@@ -150,7 +159,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('commision_employee');
-              locator<NavigationService>().navigateTo('commision_employee',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('commision_employee', ScreenArguments());
             }),
         CustomListTile(
             text: 'รายงานใบอนุญาตขายปุ๋ย',
@@ -159,7 +169,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_doc_certificate');
-              locator<NavigationService>().navigateTo('ceo_doc_certificate',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('ceo_doc_certificate', ScreenArguments());
             }),
         CustomListTile(
             text: 'รายงานแจกสินค้าทดลอง',
@@ -168,7 +179,8 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_report_trail');
-              locator<NavigationService>().navigateTo('ceo_report_trail',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('ceo_report_trail', ScreenArguments());
             }),
 
         CustomListTile(
@@ -178,27 +190,28 @@ class CEOMenu extends StatelessWidget {
               //print('แดชบอร์ด');
               Navigator.pop(context);
               // Navigator.of(context).pushNamed('ceo_complaint');
-              locator<NavigationService>().navigateTo('ceo_complaint',ScreenArguments());
+              locator<NavigationService>()
+                  .navigateTo('ceo_complaint', ScreenArguments());
             }),
 
-        if(userId == 807)
-        CustomListTile(
-            text: 'ประวัติรายได้',
-            icon: FontAwesomeIcons.handHoldingUsd,
-            onTap: () {
-              //print('แดชบอร์ด');
-              Navigator.pop(context);
-              locator<NavigationService>().navigateTo('historyIncome',
-                  ScreenArguments(userId: userId));
-            }),
+        if (userId == 807)
+          CustomListTile(
+              text: 'ประวัติรายได้',
+              icon: FontAwesomeIcons.handHoldingUsd,
+              onTap: () {
+                //print('แดชบอร์ด');
+                Navigator.pop(context);
+                locator<NavigationService>().navigateTo(
+                    'historyIncome', ScreenArguments(userId: userId));
+              }),
         CustomListTile(
             text: 'ตั้งค่าส่วนตัว',
             icon: FontAwesomeIcons.userCog,
             onTap: () {
               //print('แดชบอร์ด');
               Navigator.pop(context);
-              locator<NavigationService>().navigateTo('userSetting',
-                  ScreenArguments(userId: userId));
+              locator<NavigationService>()
+                  .navigateTo('userSetting', ScreenArguments(userId: userId));
             }),
         CustomListTile(
           text: 'ออกจากระบบ',

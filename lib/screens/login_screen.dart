@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (isConnect) {
       print('get and insert SaleCommission');
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/SaleCommission',
+          'https://thanyakit.com/systemv2/public/api/SaleCommission',
           body: {'filename': '$userId'});
       var dataSet = res.body;
       //var dataSet = await jsonDecode(res.body);
@@ -331,6 +331,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                         text: 'กดเพื่อเข้าสู่ระบบ',
                                         press: _validate),
                                   ),
+                                  // Padding(
+                                  //   padding: EdgeInsets.only(
+                                  //       left: 28, right: 28, bottom: 0),
+                                  //   child: RoundedButton(
+                                  //       text: 'กดเพื่อสมัครสมาชิก',
+                                  //       press: (){
+                                  //         locator<NavigationService>()
+                                  //             .navigateTo('register',
+                                  //             ScreenArguments());
+                                  //       }),
+                                  // ),
+
                                   Padding(
                                     padding: EdgeInsets.only(
                                         left: 28, right: 28, bottom: 18),

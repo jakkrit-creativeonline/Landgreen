@@ -45,8 +45,10 @@ class _SplashScreenState extends State<SplashScreen>
 
     internetVariable =
         DataConnectionChecker().onStatusChange.listen((status) async {
+          // print('status ----------> ${status}');
       switch (status) {
         case DataConnectionStatus.connected:
+          print('internet connect');
           stateText = "Data connection is available.";
           // print('Data connection is available.');
           isConnect = true;
@@ -55,6 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
           await readUser();
           break;
         case DataConnectionStatus.disconnected:
+          print('internet disconnect');
           // print('You are disconnected from the internet.');
           isConnect = false;
           setState(() {});
@@ -93,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen>
                       opacity: animationController.value,
                       child: Image.asset('assets/img/logo.png',width: size.width*0.5,),
                       // child: Image.network(
-                      //   // 'https://landgreen.ml/system/storage/app/Logoimage.png',
+                      //   // 'https://thanyakit.com/systemv2/storage/app/Logoimage.png',
                       //    'assets/img/logo.png',
                       //   width: size.width * 0.5,
                       // ),
@@ -247,7 +250,7 @@ class _SplashScreenState extends State<SplashScreen>
   Future<Null> insertJson(String api, String filename) async {
     print('load data online to sqlife');
     stateText = 'กำลังดาวน์โหลด $filename.json';
-    final url = 'https://landgreen.ml/system/public/api/$api';
+    final url = 'https://thanyakit.com/systemv2/public/api/$api';
     final req = http.Request('GET', Uri.parse(url));
     final http.StreamedResponse response = await http.Client().send(req);
     final contentLength =

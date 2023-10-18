@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:background_fetch/background_fetch.dart';
+// import 'package:background_fetch/background_fetch.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -126,7 +126,7 @@ class _HrScreenState extends State<HrScreen> {
   //     endDate = DateTime(now.year,now.month,lastdaypreiousmonth,23,59,59);
   //   }
   //   final response = await client.post(
-  //       'https://landgreen.ml/system/public/api/getBillOnline',
+  //       'https://thanyakit.com/systemv2/public/api/getBillOnline',
   //       body: {
   //         'User_id': '${_userId}',
   //         'startDate':startDate.toString(),
@@ -157,7 +157,7 @@ class _HrScreenState extends State<HrScreen> {
       endDate = DateTime(now.year, now.month, lastdaypreiousmonth, 23, 59, 59);
     }
     final response = await client
-        .post('https://landgreen.ml/system/public/api/getTrailOnline', body: {
+        .post('https://thanyakit.com/systemv2/public/api/getTrailOnline', body: {
       'User_id': '${_userId}',
       'startDate': startDate.toString(),
       'endDate': endDate.toString()
@@ -193,7 +193,7 @@ class _HrScreenState extends State<HrScreen> {
     String folderName = now.year.toString();
     String subFolderName = now.month.toString();
     String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/customer/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/customer/';
     String customerUploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -201,7 +201,7 @@ class _HrScreenState extends State<HrScreen> {
         .createFolderIfNotExist('$mainFolder$folderName/$subFolderName');
 
     mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/receipt/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/receipt/';
     String trailUploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -211,7 +211,7 @@ class _HrScreenState extends State<HrScreen> {
     for (var trail in result) {
       await ftpConnect.changeDirectory(customerUploadPath);
       var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/recordTrail');
+          Uri.parse('https://thanyakit.com/systemv2/public/api/recordTrail');
       var req = new http.MultipartRequest('POST', postUri);
 
       bool isImageUpload = true;
@@ -310,7 +310,7 @@ class _HrScreenState extends State<HrScreen> {
     //print(trailNumber);
     if (trailNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineTrail',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineTrail',
           body: {'trailNumber': jsonEncode(trailNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {
@@ -605,7 +605,7 @@ class _HrScreenState extends State<HrScreen> {
     if (!File('$appDocPath/user_avatar_$user_id.jpeg').existsSync()) {
       //print('no file');
       if (_user['Image'] != null) {
-        final url = 'https://landgreen.ml/system/public/api/downloadImage';
+        final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
         File file = File('$appDocPath/user_avatar_$user_id.jpeg');
         var res = await client
             .post(url, body: {'path': '${_user['Image']}'}).then((val) {
@@ -624,44 +624,44 @@ class _HrScreenState extends State<HrScreen> {
     super.dispose();
   }
 
-  Future<void> initPlatformState() async {
-    //ftpConnect = FTPConnect(ftpHost, user: ftpUser, pass: ftpPass, port: 21);
-    BackgroundFetch.configure(
-        BackgroundFetchConfig(
-            minimumFetchInterval: 15,
-            stopOnTerminate: true,
-            enableHeadless: false,
-            requiresBatteryNotLow: false,
-            requiresCharging: false,
-            requiresStorageNotLow: false,
-            requiresDeviceIdle: false,
-            requiredNetworkType: NetworkType.ANY), (String taskId) async {
-      switch (taskId) {
-        case 'taskA':
-          print('task a jaaaaaaaa');
-          break;
-        default:
-          print("DASHBOARD : [BackgroundFetch] Event received $taskId");
-          bool isConnect = await DataConnectionChecker().hasConnection;
-          // await getBill();
-          if (isConnect) {
-            await ftpConnect.connect();
-            await _uploadTrail();
-            await _checkTrail();
-            await ftpConnect.disconnect();
-          }
-      }
-      BackgroundFetch.finish(taskId);
-    }).then((int status) {
-      print('DASHBOARD : [BackgroundFetch] configure success: $status');
-    }).catchError((e) {
-      print('DASHBOARD : [BackgroundFetch] configure ERROR: $e');
-    });
-  }
+  // Future<void> initPlatformState() async {
+  //   //ftpConnect = FTPConnect(ftpHost, user: ftpUser, pass: ftpPass, port: 21);
+  //   BackgroundFetch.configure(
+  //       BackgroundFetchConfig(
+  //           minimumFetchInterval: 15,
+  //           stopOnTerminate: true,
+  //           enableHeadless: false,
+  //           requiresBatteryNotLow: false,
+  //           requiresCharging: false,
+  //           requiresStorageNotLow: false,
+  //           requiresDeviceIdle: false,
+  //           requiredNetworkType: NetworkType.ANY), (String taskId) async {
+  //     switch (taskId) {
+  //       case 'taskA':
+  //         print('task a jaaaaaaaa');
+  //         break;
+  //       default:
+  //         print("DASHBOARD : [BackgroundFetch] Event received $taskId");
+  //         bool isConnect = await DataConnectionChecker().hasConnection;
+  //         // await getBill();
+  //         if (isConnect) {
+  //           await ftpConnect.connect();
+  //           await _uploadTrail();
+  //           await _checkTrail();
+  //           await ftpConnect.disconnect();
+  //         }
+  //     }
+  //     BackgroundFetch.finish(taskId);
+  //   }).then((int status) {
+  //     print('DASHBOARD : [BackgroundFetch] configure success: $status');
+  //   }).catchError((e) {
+  //     print('DASHBOARD : [BackgroundFetch] configure ERROR: $e');
+  //   });
+  // }
 
   @override
   void initState() {
-    print("https://landgreen.ml/system/public/viewinapp?id=${widget.userId}");
+    print("https://thanyakit.com/systemv2/public/viewinapp?id=${widget.userId}");
     // TODO: implement initState
     CheckVersionUpdate().check(context);
 
@@ -720,7 +720,7 @@ class _HrScreenState extends State<HrScreen> {
   Future getSaleCommission(int userId) async {
     //print('get and insert SaleCommission');
     var res = await client.post(
-        'https://landgreen.ml/system/public/api/SaleCommission',
+        'https://thanyakit.com/systemv2/public/api/SaleCommission',
         body: {'filename': '$userId'});
     var dataSet = res.body;
     ////print(dataSet);

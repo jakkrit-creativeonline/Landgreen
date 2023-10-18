@@ -45,7 +45,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
   Widget imageAvatar;
   TextStyle _baseFontStyle = TextStyle(fontSize: 18);
 
-      Future<Null> getData() async {
+  Future<Null> getData() async {
     initDataSet();
     getCarCount();
     getUserData();
@@ -54,7 +54,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
     getBillDataThisMonthForTeamSorkRank();
     await getAllBillDataThisMonth();
     await getTeamGoal();
-    if(mounted) setState(() {});
+    if (mounted) setState(() {});
   }
 
   Future<Null> initDataSet() async {
@@ -85,7 +85,8 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
     Directory appDocDir = await getApplicationDocumentsDirectory();
     String appDocPath = appDocDir.path;
     if (File('$appDocPath/user_avatar_${widget.userId}.jpeg').existsSync()) {
-      imageAvatar = Image.file(File('$appDocPath/user_avatar_${widget.userId}.jpeg'));
+      imageAvatar =
+          Image.file(File('$appDocPath/user_avatar_${widget.userId}.jpeg'));
     } else {
       imageAvatar = Image.asset('assets/avatar.png');
     }
@@ -151,7 +152,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
     } else {
       bool isConnect = await DataConnectionChecker().hasConnection;
       if (isConnect) {
-        AlertNewDesign().showLoading(context,MediaQuery.of(context).size);
+        AlertNewDesign().showLoading(context, MediaQuery.of(context).size);
         var res = await client.post('$apiPath-manager', body: {
           'func': 'get_all_bill_data_this_month_test',
           'manager_id': '${widget.userId}'
@@ -351,7 +352,8 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
             '${sales.total.toString()} กระสอบ',
         insideLabelStyleAccessorFn: (SaleRanking sales, _) {
           final color = charts.MaterialPalette.black;
-          return new charts.TextStyleSpec(color: color, fontFamily: 'DB',fontSize: 14);
+          return new charts.TextStyleSpec(
+              color: color, fontFamily: 'DB', fontSize: 14);
         },
       )
     ];
@@ -380,11 +382,10 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(42),
               child: AppBar(
-                titleSpacing:0.00,
+                titleSpacing: 0.00,
                 title: Text('ข้อมูลภายใต้สายบริหาร'),
                 flexibleSpace: Container(
-                  decoration:
-                  BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/img/bgTop2.png'),
                       fit: BoxFit.fill,
@@ -398,28 +399,20 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                 //     onPressed: () => Scaffold.of(context).openDrawer(),
                 //   ),
                 // ),
-
               ),
             ),
             body: CustomScrollView(
               slivers: [
-
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
                       showOwner(),
                       Padding(
-                        padding: const EdgeInsets.only(left: 5,right: 20),
+                        padding: const EdgeInsets.only(left: 5, right: 20),
                         child: Row(
                           children: [
-                            Expanded(
-                              flex:1,
-                                child: goalChart()
-                            ),
-                            Expanded(
-                                flex:1,
-                                child: showTeamGoal()
-                            ),
+                            Expanded(flex: 1, child: goalChart()),
+                            Expanded(flex: 1, child: showTeamGoal()),
                           ],
                         ),
                       ),
@@ -431,8 +424,11 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                 ),
                 SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.only(left: 22,right: 22,top: 5,bottom: 0),
-                    child: HeaderText(text: 'สรุปข้อมูลยอดขายแต่ละคันรถ',),
+                    padding: const EdgeInsets.only(
+                        left: 22, right: 22, top: 5, bottom: 0),
+                    child: HeaderText(
+                      text: 'สรุปข้อมูลยอดขายแต่ละคันรถ',
+                    ),
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -501,17 +497,26 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                         children: [
                           Text(
                             'ขายได้แล้ว',
-                            style: TextStyle(color: backgroundColor,fontSize: 18,height: 1),
+                            style: TextStyle(
+                                color: backgroundColor,
+                                fontSize: 18,
+                                height: 1),
                           ),
                           Text(
                             '${f.SeperateNumber(ds['cash_product_cat1'] + ds['credit_product_cat1'])} กระสอบ',
-                            style: TextStyle(color: kSecondaryColor,fontSize: 20,height: 1),
+                            style: TextStyle(
+                                color: kSecondaryColor,
+                                fontSize: 20,
+                                height: 1),
                           ),
                         ],
                       )),
                   Padding(
                     padding: const EdgeInsets.all(5.0),
-                    child: Text('เขตการขาย : ${userData['PROVINCE_NAME']}',style: TextStyle(fontSize: 18),),
+                    child: Text(
+                      'เขตการขาย : ${userData['PROVINCE_NAME']}',
+                      style: TextStyle(fontSize: 18),
+                    ),
                   )
                 ],
               ),
@@ -531,7 +536,8 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                  settings: RouteSettings(name: 'สีส้มดูข้อมูลภายใต้สายงาน'),
+                  settings:
+                      RouteSettings(name: 'ผู้อำนวยการดูข้อมูลภายใต้สายงาน'),
                   builder: (context) => ManagerTeamDetail(
                         userId: res['Head_id'],
                         carId: res['Head_car_ID'],
@@ -561,18 +567,25 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
         future: isBarChartLoaded,
         builder: (context, snap) {
           if (snap.hasData) {
-          // if(false){
+            // if(false){
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Card(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    HeaderText(text: 'Top 5 ยอดขายแต่ละคันรถ',textSize: 20,gHeight: 26,),
+                    HeaderText(
+                      text: 'Top 5 ยอดขายแต่ละคันรถ',
+                      textSize: 20,
+                      gHeight: 26,
+                    ),
                     Padding(
-                      padding: const EdgeInsets.only(left: 10,top: 5),
-                      child: Text('สินค้าที่นำมาจัดอันดับยอดขายจะเป็นเฉพาะสินค้าประเภทปุ๋ยเม็ดเท่านั้น',style: _baseFontStyle,),
+                      padding: const EdgeInsets.only(left: 10, top: 5),
+                      child: Text(
+                        'สินค้าที่นำมาจัดอันดับยอดขายจะเป็นเฉพาะสินค้าประเภทปุ๋ยเม็ดเท่านั้น',
+                        style: _baseFontStyle,
+                      ),
                     ),
                     SizedBox(height: 10),
                     ChartRanking(
@@ -584,7 +597,9 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
               ),
             );
           } else {
-            return ShimmerLoading(type: 'boxGraph1row',);
+            return ShimmerLoading(
+              type: 'boxGraph1row',
+            );
             // return Container();
           }
         });
@@ -594,7 +609,7 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
     Size size = MediaQuery.of(context).size;
     TextStyle _headFontStyle = TextStyle(fontSize: 20);
     return Padding(
-      padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -608,12 +623,23 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    HeaderText(text: 'ทีม ${userData['Name']}',textSize: 20,gHeight: 26,),
-                    SizedBox(height: 5,),
-                    Text('     ทีมรับผิดชอบ : $teamCount ทีม', style: _headFontStyle),
-                    Text('     จำนวนรถยนต์ : $carCount คัน', style: _headFontStyle),
-                    Text('     จำนวนพนักงานขาย : $salesCount คน', style: _headFontStyle),
-                    SizedBox(height: 5,),
+                    HeaderText(
+                      text: 'ทีม ${userData['Name']}',
+                      textSize: 20,
+                      gHeight: 26,
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text('     ทีมรับผิดชอบ : $teamCount ทีม',
+                        style: _headFontStyle),
+                    Text('     จำนวนรถยนต์ : $carCount คัน',
+                        style: _headFontStyle),
+                    Text('     จำนวนพนักงานขาย : $salesCount คน',
+                        style: _headFontStyle),
+                    SizedBox(
+                      height: 5,
+                    ),
                   ],
                 ),
               ),
@@ -632,7 +658,6 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
               ),
             ),
           ),
-
         ],
       ),
     );
@@ -640,48 +665,74 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
 
   Widget showTeamGoalCredit() {
     return Padding(
-      padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+      padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
       child: Card(
         child: Column(
           children: [
-            HeaderText(text:'สรุปยอดขาย เครดิต ประจำเดือนนี้',textSize: 20,gHeight: 26,),
+            HeaderText(
+              text: 'สรุปยอดขาย เครดิต ประจำเดือนนี้',
+              textSize: 20,
+              gHeight: 26,
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ยอดขายเครดิตรวม ',style: _baseFontStyle,),
-                      Text('${f.SeperateNumber(ds['credit_moneytotal'])} บาท (${f.SeperateNumber(ds['credit_product_cat1'])} กระสอบ)',style: _baseFontStyle,),
+                      Text(
+                        'ยอดขายเครดิตรวม ',
+                        style: _baseFontStyle,
+                      ),
+                      Text(
+                        '${f.SeperateNumber(ds['credit_moneytotal'])} บาท (${f.SeperateNumber(ds['credit_product_cat1'])} กระสอบ)',
+                        style: _baseFontStyle,
+                      ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ขายปุ๋ยราคา 590 ได้ ',style: _baseFontStyle,),
-                      Text('${f.SeperateNumber(ds['credit_product_cat1_590'])} กระสอบ',style: _baseFontStyle,),
+                      Text(
+                        'ขายปุ๋ยราคา 590 ได้ ',
+                        style: _baseFontStyle,
+                      ),
+                      Text(
+                        '${f.SeperateNumber(ds['credit_product_cat1_590'])} กระสอบ',
+                        style: _baseFontStyle,
+                      ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ขายปุ๋ยราคา 690 ได้ ',style: _baseFontStyle,),
-                      Text('${f.SeperateNumber(ds['credit_product_cat1_690'])} กระสอบ',style: _baseFontStyle,),
+                      Text(
+                        'ขายปุ๋ยราคา 690 ได้ ',
+                        style: _baseFontStyle,
+                      ),
+                      Text(
+                        '${f.SeperateNumber(ds['credit_product_cat1_690'])} กระสอบ',
+                        style: _baseFontStyle,
+                      ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ลูกค้าชำระแล้ว ',style: _baseFontStyle,),
-                      Text('${f.SeperateNumber(ds['credit_product_cat1_wait'])} กระสอบ',style: _baseFontStyle,),
+                      Text(
+                        'ลูกค้าชำระแล้ว ',
+                        style: _baseFontStyle,
+                      ),
+                      Text(
+                        '${f.SeperateNumber(ds['credit_product_cat1_wait'])} กระสอบ',
+                        style: _baseFontStyle,
+                      ),
                     ],
                   ),
-
                 ],
               ),
             ),
-
           ],
         ),
       ),
@@ -690,41 +741,65 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
 
   Widget showTeamGoalCash() {
     return Padding(
-      padding: const EdgeInsets.only(left: 20,right: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20),
       child: Card(
         child: Column(
           children: [
-            HeaderText(text:'สรุปยอดขาย เงินสด ประจำเดือนนี้',textSize: 20,gHeight: 26,),
+            HeaderText(
+              text: 'สรุปยอดขาย เงินสด ประจำเดือนนี้',
+              textSize: 20,
+              gHeight: 26,
+            ),
             Padding(
-              padding: const EdgeInsets.only(left: 8,right: 8,top: 5,bottom: 5),
+              padding:
+                  const EdgeInsets.only(left: 8, right: 8, top: 5, bottom: 5),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ยอดขายเงินสดรวม ',style: _baseFontStyle,),
-                      Text('${f.SeperateNumber(ds['cash_moneytotal'])} บาท (${f.SeperateNumber(ds['cash_product_cat1'])} กระสอบ)',style: _baseFontStyle)
+                      Text(
+                        'ยอดขายเงินสดรวม ',
+                        style: _baseFontStyle,
+                      ),
+                      Text(
+                          '${f.SeperateNumber(ds['cash_moneytotal'])} บาท (${f.SeperateNumber(ds['cash_product_cat1'])} กระสอบ)',
+                          style: _baseFontStyle)
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ขายปุ๋ยราคา 590 ได้ ',style: _baseFontStyle,),
-                      Text('${f.SeperateNumber(ds['cash_product_cat1_590'])} กระสอบ',style: _baseFontStyle)
+                      Text(
+                        'ขายปุ๋ยราคา 590 ได้ ',
+                        style: _baseFontStyle,
+                      ),
+                      Text(
+                          '${f.SeperateNumber(ds['cash_product_cat1_590'])} กระสอบ',
+                          style: _baseFontStyle)
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ขายปุ๋ยราคา 690 ได้ ',style: _baseFontStyle,),
-                      Text('${f.SeperateNumber(ds['cash_product_cat1_690'])} กระสอบ',style: _baseFontStyle)
+                      Text(
+                        'ขายปุ๋ยราคา 690 ได้ ',
+                        style: _baseFontStyle,
+                      ),
+                      Text(
+                          '${f.SeperateNumber(ds['cash_product_cat1_690'])} กระสอบ',
+                          style: _baseFontStyle)
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('ขายฮอร์โมนได้ ',style: _baseFontStyle,),
-                      Text('${f.SeperateNumber(ds['cash_product_cat2'])} ขวด',style: _baseFontStyle)
+                      Text(
+                        'ขายฮอร์โมนได้ ',
+                        style: _baseFontStyle,
+                      ),
+                      Text('${f.SeperateNumber(ds['cash_product_cat2'])} ขวด',
+                          style: _baseFontStyle)
                     ],
                   ),
                 ],
@@ -738,64 +813,98 @@ class _ManagerDashboardState extends State<ManagerDashboard> {
   }
 
   Widget showTeamGoal() {
-
     return Card(
       child: Column(
         children: [
-          HeaderText(text:'เป้ายอดขายทีม',textSize: 20,gHeight: 26,),
+          HeaderText(
+            text: 'เป้ายอดขายทีม',
+            textSize: 20,
+            gHeight: 26,
+          ),
           Padding(
-            padding: const EdgeInsets.only(left: 15,right: 10,top: 5,bottom: 2),
+            padding:
+                const EdgeInsets.only(left: 15, right: 10, top: 5, bottom: 2),
             child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('เป้ายอดขาย ',style: _baseFontStyle,),
-                    Text('${f.SeperateNumber(teamGoal)} กส.',style: _baseFontStyle),
+                    Text(
+                      'เป้ายอดขาย ',
+                      style: _baseFontStyle,
+                    ),
+                    Text('${f.SeperateNumber(teamGoal)} กส.',
+                        style: _baseFontStyle),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('ขายได้แล้ว ',style: _baseFontStyle,),
-                    Text('${f.SeperateNumber(ds['cash_product_cat1'] + ds['credit_product_cat1'])} กส.',style: _baseFontStyle,),
+                    Text(
+                      'ขายได้แล้ว ',
+                      style: _baseFontStyle,
+                    ),
+                    Text(
+                      '${f.SeperateNumber(ds['cash_product_cat1'] + ds['credit_product_cat1'])} กส.',
+                      style: _baseFontStyle,
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('ขาดอีก ',style: _baseFontStyle),
-                    teamGoal > (ds['cash_product_cat1'] + ds['credit_product_cat1'])
+                    Text('ขาดอีก ', style: _baseFontStyle),
+                    teamGoal >
+                            (ds['cash_product_cat1'] +
+                                ds['credit_product_cat1'])
                         ? Text(
-                        '${f.SeperateNumber(teamGoal - (ds['cash_product_cat1'] + ds['credit_product_cat1']))} กส.',style: _baseFontStyle)
-                        : Text('0 กระสอบ',style: _baseFontStyle),
+                            '${f.SeperateNumber(teamGoal - (ds['cash_product_cat1'] + ds['credit_product_cat1']))} กส.',
+                            style: _baseFontStyle)
+                        : Text('0 กระสอบ', style: _baseFontStyle),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('ขายปุ๋ยราคา 590 ได้ ',style: _baseFontStyle,),
-                    Text('${f.SeperateNumber(ds['cash_product_cat1_590'] + ds['credit_product_cat1_590'])} กส.',style: _baseFontStyle,),
+                    Text(
+                      'ขายปุ๋ยราคา 590 ได้ ',
+                      style: _baseFontStyle,
+                    ),
+                    Text(
+                      '${f.SeperateNumber(ds['cash_product_cat1_590'] + ds['credit_product_cat1_590'])} กส.',
+                      style: _baseFontStyle,
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('ขายปุ๋ยราคา 690 ได้ ',style: _baseFontStyle,),
-                    Text('${f.SeperateNumber(ds['cash_product_cat1_690'] + ds['credit_product_cat1_690'])} กส.',style: _baseFontStyle,),
+                    Text(
+                      'ขายปุ๋ยราคา 690 ได้ ',
+                      style: _baseFontStyle,
+                    ),
+                    Text(
+                      '${f.SeperateNumber(ds['cash_product_cat1_690'] + ds['credit_product_cat1_690'])} กส.',
+                      style: _baseFontStyle,
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text('ขายฮอร์โมนได้ ',style: _baseFontStyle,),
-                    Text('${f.SeperateNumber(ds['cash_product_cat2'] + ds['credit_product_cat2'])} กส.',style: _baseFontStyle,),
+                    Text(
+                      'ขายฮอร์โมนได้ ',
+                      style: _baseFontStyle,
+                    ),
+                    Text(
+                      '${f.SeperateNumber(ds['cash_product_cat2'] + ds['credit_product_cat2'])} กส.',
+                      style: _baseFontStyle,
+                    ),
                   ],
                 ),
               ],
             ),
           ),
-
         ],
       ),
     );

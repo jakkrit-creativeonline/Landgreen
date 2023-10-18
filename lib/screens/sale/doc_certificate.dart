@@ -36,7 +36,7 @@ class _DocCertificateState extends State<DocCertificate> {
     bool isConnect = await DataConnectionChecker().hasConnection;
     if (isConnect) {
       var res = await client
-          .post('https://landgreen.ml/system/public/api-settingall', body: {
+          .post('https://thanyakit.com/systemv2/public/api-settingall', body: {
         'func': 'getShowCertificationSale',
         'Sale_id': widget.userId.toString()
       });
@@ -75,7 +75,7 @@ class _DocCertificateState extends State<DocCertificate> {
     //   print('no file');
     //
     //   if (isConnect) {
-    //     var res = await client.post('https://landgreen.ml/system/public/api-settingall',
+    //     var res = await client.post('https://thanyakit.com/systemv2/public/api-settingall',
     //         body: {'func': 'getShowCertificationSale','Sale_id':widget.userId.toString()});
     //     // var result = res.body;
     //     Sqlite().insertJson('CERTIFICATE_DOC', 'certificate_$user_id', res.body);
@@ -108,7 +108,7 @@ class _DocCertificateState extends State<DocCertificate> {
   //   if (!File('$appDocPath/user_avatar_$user_id.jpeg').existsSync()) {
   //     //print('no file');
   //     if (_user['Image'] != null) {
-  //       final url = 'https://landgreen.ml/system/public/api/downloadImage';
+  //       final url = 'https://thanyakit.com/systemv2/public/api/downloadImage';
   //       File file = File('$appDocPath/user_avatar_$user_id.jpeg');
   //       var res = await client
   //           .post(url, body: {'path': '${_user['Image']}'}).then((val) {

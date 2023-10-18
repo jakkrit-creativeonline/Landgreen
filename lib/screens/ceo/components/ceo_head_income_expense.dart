@@ -86,7 +86,7 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
       print('online');
       bool isConnect = await DataConnectionChecker().hasConnection;
       if (isConnect) {
-        AlertNewDesign().showLoading(context,MediaQuery.of(context).size);
+        AlertNewDesign().showLoading(context, MediaQuery.of(context).size);
         var client = Client();
         var res = await client.get(
             '$apiPath/getIncomeExpenseCeoReport/$selectedMonth/${widget.headId}');
@@ -119,7 +119,7 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
           incomeData['cash_money_total_cat2'] +
           incomeData['credit_count_product_cat2'];
       sumExpense = sumExpenseChart +
-          incomeData['SumUserMoneyRecommend']+
+          incomeData['SumUserMoneyRecommend'] +
           expenseMoneyShare['SumUserMoneyShareHead'] +
           expenseMoneyRecommend['SumUserMoneyRecommend'] +
           incomeData['cash_count_commission_cat1'] +
@@ -135,13 +135,13 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
   void initState() {
     // TODO: implement initState
 
-    if(initDate.day >=1 && initDate.day<=5){
+    if (initDate.day >= 1 && initDate.day <= 5) {
       initDate = new DateTime(initDate.year, initDate.month - 1, initDate.day);
       selectedMonth =
-      '${initDate.toString().split('-')[0]}/${initDate.toString().split('-')[1]}';
-    }else{
+          '${initDate.toString().split('-')[0]}/${initDate.toString().split('-')[1]}';
+    } else {
       selectedMonth =
-      '${initDate.toString().split('-')[0]}/${initDate.toString().split('-')[1]}';
+          '${initDate.toString().split('-')[0]}/${initDate.toString().split('-')[1]}';
     }
     getData();
     super.initState();
@@ -160,7 +160,7 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
             appBar: PreferredSize(
               preferredSize: Size.fromHeight(42),
               child: AppBar(
-                titleSpacing:0.00,
+                titleSpacing: 0.00,
                 // title: Row(
                 //   mainAxisAlignment: MainAxisAlignment.start,
                 //   children: [
@@ -170,8 +170,7 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                 //   ],
                 // ),
                 flexibleSpace: Container(
-                  decoration:
-                  BoxDecoration(
+                  decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/img/bgTop2.png'),
                       fit: BoxFit.fill,
@@ -185,7 +184,6 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                 //     onPressed: () => Scaffold.of(context).openDrawer(),
                 //   ),
                 // ),
-
               ),
             ),
             body: RefreshIndicator(
@@ -199,22 +197,170 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                     child: showChart(),
                   ),
                   SliverList(
-                      delegate: SliverChildListDelegate([
-                            FutureBuilder(
-                        future: isLoaded,
-                        builder: (context, snapshot) {
-                          TextStyle _baseFontStyle = TextStyle(fontSize: 18);
-                          if (snapshot.hasData) {
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 10),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Consumer<ShowDetail>(
-                                      builder: (context, show, child) {
-
-                                    return GestureDetector(
-                                      onTap: () => show.changeIncome(),
+                    delegate: SliverChildListDelegate([
+                      FutureBuilder(
+                          future: isLoaded,
+                          builder: (context, snapshot) {
+                            TextStyle _baseFontStyle = TextStyle(fontSize: 18);
+                            if (snapshot.hasData) {
+                              return Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Consumer<ShowDetail>(
+                                        builder: (context, show, child) {
+                                      return GestureDetector(
+                                        onTap: () => show.changeIncome(),
+                                        child: Card(
+                                          elevation: 2,
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 24, vertical: 8),
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'รวมรายรับ',
+                                                      style: TextStyle(
+                                                          fontSize: 20),
+                                                    ),
+                                                    Text(
+                                                      '${f.SeperateNumber(sumIncome)} บาท',
+                                                      style: TextStyle(
+                                                          color: kPrimaryColor,
+                                                          fontSize: 20),
+                                                    ),
+                                                  ],
+                                                ),
+                                                if (show.showIncome)
+                                                  Column(
+                                                    children: [
+                                                      HeaderText(
+                                                        text:
+                                                            'รายละเอียดรายรับ',
+                                                        textSize: 20,
+                                                        gHeight: 26,
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 14,
+                                                                vertical: 4),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Expanded(
+                                                                child: Text(
+                                                              'ขายปุ๋ยเงินสด ${f.SeperateNumber(incomeData['cash_count_product_cat1'])} กระสอบ',
+                                                              style:
+                                                                  _baseFontStyle,
+                                                            )),
+                                                            Text(
+                                                              '${f.SeperateNumber(incomeData['cash_money_total_cat1'])} บาท',
+                                                              style:
+                                                                  _baseFontStyle,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .symmetric(
+                                                                horizontal: 14,
+                                                                vertical: 4),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Expanded(
+                                                                child: Text(
+                                                              'เงินมัดจำปุ๋ยเครดิต ${f.SeperateNumber(incomeData['credit_count_product_cat1'])} กระสอบ',
+                                                              style:
+                                                                  _baseFontStyle,
+                                                            )),
+                                                            Text(
+                                                              '${f.SeperateNumber(incomeData['credit_money_earnest'])} บาท',
+                                                              style:
+                                                                  _baseFontStyle,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      if (incomeData[
+                                                              'sum_count_product_cat2'] !=
+                                                          0)
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .symmetric(
+                                                                  horizontal:
+                                                                      14,
+                                                                  vertical: 4),
+                                                          child: Row(
+                                                            children: [
+                                                              Expanded(
+                                                                  child: Text(
+                                                                'รับเงินขายฮอร์โมน ${f.SeperateNumber(incomeData['sum_count_product_cat2'])} ขวด',
+                                                                style:
+                                                                    _baseFontStyle,
+                                                              )),
+                                                              Text(
+                                                                '${f.SeperateNumber(incomeData['cash_money_total_cat2'] + incomeData['credit_count_product_cat2'])} บาท',
+                                                                style:
+                                                                    _baseFontStyle,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      // Padding(
+                                                      //   padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 4),
+                                                      //   child: Row(
+                                                      //     children: [
+                                                      //       Expanded(
+                                                      //           child: Text('ค่าแนะนำ',
+                                                      //               style: _baseFontStyle)),
+                                                      //       Text(
+                                                      //           '${f.SeperateNumber(incomeData['SumUserMoneyRecommend'])} บาท',
+                                                      //           style: _baseFontStyle)
+                                                      //     ],
+                                                      //   ),
+                                                      // ),
+                                                    ],
+                                                  )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                    GestureDetector(
+                                      onTap: () => Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              settings: RouteSettings(
+                                                  name:
+                                                      'CEOดูข้อมูลรายจ่ายทีม'),
+                                              builder: (context) =>
+                                                  ExpenseDetail(
+                                                    expense: expenseData,
+                                                    expenseMoneyRecommend:
+                                                        expenseMoneyRecommend,
+                                                    expenseMoneyShare:
+                                                        expenseMoneyShare,
+                                                    income: incomeData,
+                                                    transferTeam: transferTeam,
+                                                  ))),
                                       child: Card(
                                         elevation: 2,
                                         child: Padding(
@@ -223,184 +369,99 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                                           child: Column(
                                             children: [
                                               Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  Text('รวมรายรับ',style: TextStyle(fontSize: 20),),
                                                   Text(
-                                                    '${f.SeperateNumber(sumIncome)} บาท',
-                                                    style: TextStyle(
-                                                        color: kPrimaryColor,
-                                                        fontSize: 20
-                                                    ),
+                                                    'รวมรายจ่าย',
+                                                    style:
+                                                        TextStyle(fontSize: 20),
                                                   ),
+                                                  Text(
+                                                    '${f.SeperateNumber(sumExpense)} บาท',
+                                                    style: TextStyle(
+                                                        color: danger,
+                                                        fontSize: 20),
+                                                  )
                                                 ],
                                               ),
-                                              if (show.showIncome)
-                                                Column(
-                                                  children: [
-                                                    HeaderText(text: 'รายละเอียดรายรับ',textSize: 20,gHeight: 26,),
-                                                    Padding(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 4),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Expanded(
-                                                              child: Text(
-                                                                  'ขายปุ๋ยเงินสด ${f.SeperateNumber(incomeData['cash_count_product_cat1'])} กระสอบ',
-                                                                style: _baseFontStyle,
-                                                              )),
-                                                          Text(
-                                                              '${f.SeperateNumber(incomeData['cash_money_total_cat1'])} บาท',
-                                                            style: _baseFontStyle,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 4),
-                                                      child: Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Expanded(
-                                                              child: Text(
-                                                                  'เงินมัดจำปุ๋ยเครดิต ${f.SeperateNumber(incomeData['credit_count_product_cat1'])} กระสอบ',
-                                                                style: _baseFontStyle,
-                                                              )),
-                                                          Text(
-                                                              '${f.SeperateNumber(incomeData['credit_money_earnest'])} บาท',
-                                                            style: _baseFontStyle,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ),
-                                                    if (incomeData[
-                                                            'sum_count_product_cat2'] !=
-                                                        0)
-                                                      Padding(
-                                                        padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 4),
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                                child: Text(
-                                                                    'รับเงินขายฮอร์โมน ${f.SeperateNumber(incomeData['sum_count_product_cat2'])} ขวด',style: _baseFontStyle,)),
-                                                            Text(
-                                                                '${f.SeperateNumber(incomeData['cash_money_total_cat2'] + incomeData['credit_count_product_cat2'])} บาท',style: _baseFontStyle,)
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    // Padding(
-                                                    //   padding: const EdgeInsets.symmetric(horizontal: 14,vertical: 4),
-                                                    //   child: Row(
-                                                    //     children: [
-                                                    //       Expanded(
-                                                    //           child: Text('ค่าแนะนำ',
-                                                    //               style: _baseFontStyle)),
-                                                    //       Text(
-                                                    //           '${f.SeperateNumber(incomeData['SumUserMoneyRecommend'])} บาท',
-                                                    //           style: _baseFontStyle)
-                                                    //     ],
-                                                    //   ),
-                                                    // ),
-                                                  ],
-                                                )
                                             ],
                                           ),
                                         ),
                                       ),
-                                    );
-                                  }),
-                                  GestureDetector(
-                                    onTap: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            settings: RouteSettings(name: 'CEOดูข้อมูลรายจ่ายทีม'),
-                                            builder: (context) => ExpenseDetail(
-                                                  expense: expenseData,
-                                                  expenseMoneyRecommend:
-                                                      expenseMoneyRecommend,
-                                                  expenseMoneyShare:
-                                                      expenseMoneyShare,
-                                                  income: incomeData,
-                                                  transferTeam: transferTeam,
-                                                ))),
-                                    child: Card(
+                                    ),
+                                    Card(
                                       elevation: 2,
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 24, vertical: 8),
-                                        child: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          HeaderText(
+                                            text: 'ยอดขายเครดิต',
+                                            textSize: 20,
+                                            gHeight: 26,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 15, vertical: 5),
+                                            child: Column(
                                               children: [
-                                                Text('รวมรายจ่าย',style: TextStyle(fontSize: 20),),
-                                                Text(
-                                                  '${f.SeperateNumber(sumExpense)} บาท',
-                                                  style: TextStyle(color: danger,fontSize: 20),
-                                                )
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      'ยอดขายเครดิต ${f.SeperateNumber(incomeData['credit_count_product_cat1'])} กระสอบ',
+                                                      style: _baseFontStyle,
+                                                    ),
+                                                    Text(
+                                                        '${f.SeperateNumber(incomeData['credit_money_total_cat1'])} บาท',
+                                                        style: _baseFontStyle),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                        'เงินมัดจำ ${f.SeperateNumber(incomeData['credit_count_product_cat1'])} กระสอบ',
+                                                        style: _baseFontStyle),
+                                                    Text(
+                                                        '${f.SeperateNumber(incomeData['credit_money_earnest'])} บาท',
+                                                        style: _baseFontStyle),
+                                                  ],
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                        'จำนวนเงิน ${f.SeperateNumber(incomeData['credit_money_total_cat1'])} บาท',
+                                                        style: _baseFontStyle),
+                                                    Text(
+                                                        'ค้างชำระ ${f.SeperateNumber(incomeData['credit_money_total_cat1'] + incomeData['credit_money_earnest'])} บาท',
+                                                        style: _baseFontStyle),
+                                                  ],
+                                                ),
                                               ],
                                             ),
-                                          ],
-                                        ),
+                                          )
+                                        ],
                                       ),
-                                    ),
-                                  ),
-                                  Card(
-                                    elevation: 2,
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        HeaderText(text:'ยอดขายเครดิต',textSize: 20,gHeight: 26,),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                      'ยอดขายเครดิต ${f.SeperateNumber(incomeData['credit_count_product_cat1'])} กระสอบ',style: _baseFontStyle,),
-                                                  Text(
-                                                      '${f.SeperateNumber(incomeData['credit_money_total_cat1'])} บาท',style: _baseFontStyle),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                      'เงินมัดจำ ${f.SeperateNumber(incomeData['credit_count_product_cat1'])} กระสอบ',style: _baseFontStyle),
-                                                  Text(
-                                                      '${f.SeperateNumber(incomeData['credit_money_earnest'])} บาท',style: _baseFontStyle),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Text(
-                                                      'จำนวนเงิน ${f.SeperateNumber(incomeData['credit_money_total_cat1'])} บาท',style: _baseFontStyle),
-                                                  Text(
-                                                      'ค้างชำระ ${f.SeperateNumber(incomeData['credit_money_total_cat1'] + incomeData['credit_money_earnest'])} บาท',style: _baseFontStyle),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        )
-
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          } else {
-                            return ShimmerLoading(type: 'boxItem1Row',);
-                          }
-                        })
-                      ]
-                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            } else {
+                              return ShimmerLoading(
+                                type: 'boxItem1Row',
+                              );
+                            }
+                          })
+                    ]),
                   ),
                   SliverToBoxAdapter(
                     child: Padding(
@@ -433,7 +494,9 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                     incomeData['cash_money_total'],
                     incomeData['credit_money_total']
                   ])),
-                  SizedBox(width: 15,),
+                  SizedBox(
+                    width: 15,
+                  ),
                   Expanded(
                       child: renderChart(id: 'income_expense', color: [
                     grayDarkColor,
@@ -473,7 +536,7 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
           ? Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(top: 10,bottom: 5),
+                  padding: const EdgeInsets.only(top: 10, bottom: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -485,7 +548,10 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Icon(FontAwesomeIcons.calculator,color: btTextColor,),
+                          child: Icon(
+                            FontAwesomeIcons.calculator,
+                            color: btTextColor,
+                          ),
                         ),
                       ),
                       Padding(
@@ -494,8 +560,14 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('รายรับ - รายจ่าย',style: TextStyle(fontSize: 24.0,height: 1),),
-                            Text('สรุปข้อมูลจากวันที่ลูกค้าเซ็นรับสินค้า',style: TextStyle(fontSize: 16.0,height: 1),),
+                            Text(
+                              'รายรับ - รายจ่าย',
+                              style: TextStyle(fontSize: 24.0, height: 1),
+                            ),
+                            Text(
+                              'สรุปข้อมูลจากวันที่ลูกค้าเซ็นรับสินค้า',
+                              style: TextStyle(fontSize: 16.0, height: 1),
+                            ),
                           ],
                         ),
                       ),
@@ -511,68 +583,87 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                       Padding(
                         padding: const EdgeInsets.only(right: 20),
                         child: Container(
-                          width: size.width*0.28,
+                          width: size.width * 0.28,
                           child: ClipOval(
                             child: CachedNetworkImage(
                               imageUrl: '$storagePath/${userData['Image']}',
                               errorWidget: (context, url, error) {
                                 return Image.asset('assets/avatar.png');
                               },
-                            ),),
+                            ),
+                          ),
                         ),
                       ),
-
                       Expanded(
                           child: Card(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                HeaderText(textSize: 20,gHeight: 26,text: 'ทีม : ${userData['Name']}',),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            HeaderText(
+                              textSize: 20,
+                              gHeight: 26,
+                              text: 'ทีม : ${userData['Name']}',
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15, vertical: 5),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('พนักงานขาย',style: _baseFontStyle,),
-                                          Text('${userData['team_count']} คน',style: _baseFontStyle,),
-                                        ],
+                                      Text(
+                                        'พนักงานขาย',
+                                        style: _baseFontStyle,
                                       ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('ทะเบียน',style: _baseFontStyle),
-                                          Text('${userData['car_platenumber'].trim()}',style: _baseFontStyle),
-                                        ],
+                                      Text(
+                                        '${userData['team_count']} คน',
+                                        style: _baseFontStyle,
                                       ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text('เขตพื้นที่การขาย',style: _baseFontStyle),
-                                          Text('${userData['PROVINCE_NAME'].trim()}',style: _baseFontStyle)
-                                        ],
-                                      ),
-
-
-
                                     ],
                                   ),
-                                ),
-
-                              ],
-                      ),
-                          )),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('ทะเบียน', style: _baseFontStyle),
+                                      Text(
+                                          '${userData['car_platenumber'].trim()}',
+                                          style: _baseFontStyle),
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('เขตพื้นที่การขาย',
+                                          style: _baseFontStyle),
+                                      Text(
+                                          '${userData['PROVINCE_NAME'].trim()}',
+                                          style: _baseFontStyle)
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      )),
                     ],
                   ),
                 ),
                 // RaisedButton(
                 //     child: Text('เลือกรายงาน'),
                 //     onPressed: () => _showMonthPicker())
-                SizedBox(height: 10,),
+                SizedBox(
+                  height: 10,
+                ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20,),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                  ),
                   child: GestureDetector(
                     onTap: () {
                       // _showDateTimeRange(context);
@@ -584,47 +675,51 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Expanded(
-                              child: Stack(
-                                  children: [
-                                    Container(
-                                      height: 40,
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(8, 1, 8, 1),
-                                        child: TextField(
-                                          controller: monthSelectText,
-                                          textAlign: TextAlign.center,
-                                          textAlignVertical: TextAlignVertical.center,
-                                          decoration: InputDecoration(
-                                            // labelText:'ข้อมูล ณ วันที่',
-                                            hintText: 'ข้อมูลประจำเดือนนี้',
-                                            contentPadding: EdgeInsets.all(5),
-                                            border: InputBorder.none,
-                                            isDense: true,
-
-
-                                          ),
-
-                                          style: TextStyle(fontSize: 18,),
-                                        ),
+                              child: Stack(children: [
+                                Container(
+                                  height: 40,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(8, 1, 8, 1),
+                                    child: TextField(
+                                      controller: monthSelectText,
+                                      textAlign: TextAlign.center,
+                                      textAlignVertical:
+                                          TextAlignVertical.center,
+                                      decoration: InputDecoration(
+                                        // labelText:'ข้อมูล ณ วันที่',
+                                        hintText: 'ข้อมูลประจำเดือนนี้',
+                                        contentPadding: EdgeInsets.all(5),
+                                        border: InputBorder.none,
+                                        isDense: true,
                                       ),
-
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          top: BorderSide(width: 2,color: subFontColor),
-                                          bottom: BorderSide(width: 2,color: subFontColor),
-                                        ),
-                                        color: bgInputColor,
+                                      style: TextStyle(
+                                        fontSize: 18,
                                       ),
                                     ),
-                                    Positioned(
-                                      right: 0,
-                                      top: 5,
-                                      child: Container(
-                                        child: Icon(Icons.arrow_drop_down_outlined,color: Colors.black,size: 28,),
-                                      ),
-                                    )
-                                  ]
-                              ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      top: BorderSide(
+                                          width: 2, color: subFontColor),
+                                      bottom: BorderSide(
+                                          width: 2, color: subFontColor),
+                                    ),
+                                    color: bgInputColor,
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  top: 5,
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.arrow_drop_down_outlined,
+                                      color: Colors.black,
+                                      size: 28,
+                                    ),
+                                  ),
+                                )
+                              ]),
                             ),
                           ],
                         ),
@@ -635,7 +730,9 @@ class _CeoHeadIncomeExpenseState extends State<CeoHeadIncomeExpense> {
                 ),
               ],
             )
-          : ShimmerLoading(type: 'boxItem1Row',),
+          : ShimmerLoading(
+              type: 'boxItem1Row',
+            ),
     );
   }
 }
@@ -718,14 +815,12 @@ class ExpenseDetail extends StatelessWidget {
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: SafeArea(
         child: Scaffold(
-
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(42),
             child: AppBar(
-              titleSpacing:0.00,
+              titleSpacing: 0.00,
               flexibleSpace: Container(
-                decoration:
-                BoxDecoration(
+                decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/img/bgTop2.png'),
                     fit: BoxFit.fill,
@@ -743,7 +838,7 @@ class ExpenseDetail extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 10,bottom: 5),
+                        padding: const EdgeInsets.only(top: 10, bottom: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -754,8 +849,12 @@ class ExpenseDetail extends StatelessWidget {
                                 color: kPrimaryColor,
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 5,right: 12,top: 8,bottom: 8),
-                                child: Icon(FontAwesomeIcons.amazonPay,color: btTextColor,),
+                                padding: const EdgeInsets.only(
+                                    left: 5, right: 12, top: 8, bottom: 8),
+                                child: Icon(
+                                  FontAwesomeIcons.amazonPay,
+                                  color: btTextColor,
+                                ),
                               ),
                             ),
                             Padding(
@@ -764,8 +863,14 @@ class ExpenseDetail extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('รายละเอียดค่าใช้จ่าย',style: TextStyle(fontSize: 24.0,height: 1),),
-                                  Text('ข้อมูลรายการค่าใช้จ่ายทั้งหมดภายในคันรถ',style: TextStyle(fontSize: 16.0,height: 1),),
+                                  Text(
+                                    'รายละเอียดค่าใช้จ่าย',
+                                    style: TextStyle(fontSize: 24.0, height: 1),
+                                  ),
+                                  Text(
+                                    'ข้อมูลรายการค่าใช้จ่ายทั้งหมดภายในคันรถ',
+                                    style: TextStyle(fontSize: 16.0, height: 1),
+                                  ),
                                 ],
                               ),
                             ),
@@ -775,9 +880,14 @@ class ExpenseDetail extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text('ค่าส่วนต่างหัวหน้าทีม เงินสด',style: _baseFontStyle,),
                           Text(
-                              '${f.SeperateNumber(expenseMoneyShare['SumUserMoneyShareHead_cat1'])} บาท',style: _baseFontStyle,)
+                            'ค่าส่วนต่างSup. เงินสด',
+                            style: _baseFontStyle,
+                          ),
+                          Text(
+                            '${f.SeperateNumber(expenseMoneyShare['SumUserMoneyShareHead_cat1'])} บาท',
+                            style: _baseFontStyle,
+                          )
                         ],
                       ),
                       Divider(),
@@ -787,12 +897,10 @@ class ExpenseDetail extends StatelessWidget {
                           children: [
                             Text(
                                 'ค่าแนะนำ เงินสด ${f.SeperateNumber(expenseMoneyRecommend['SumUserMoneyRecommend_cat1'])} กระสอบ',
-                                style: _baseFontStyle
-                            ),
+                                style: _baseFontStyle),
                             Text(
                                 '${f.SeperateNumber(expenseMoneyRecommend['SumUserMoneyRecommend'])} บาท',
-                                style: _baseFontStyle
-                            )
+                                style: _baseFontStyle)
                           ],
                         ),
                       if (expenseMoneyRecommend['SumUserMoneyRecommend'] != 0)
@@ -802,12 +910,10 @@ class ExpenseDetail extends StatelessWidget {
                         children: [
                           Text(
                               'ค่าคอมมิชชั่นปุ๋ย ${f.SeperateNumber(income['cash_count_product_cat1'])} กระสอบ',
-                              style: _baseFontStyle
-                          ),
+                              style: _baseFontStyle),
                           Text(
                               '${f.SeperateNumber(income['cash_count_commission_cat1'])} บาท',
-                              style: _baseFontStyle
-                          )
+                              style: _baseFontStyle)
                         ],
                       ),
                       Divider(),
@@ -816,12 +922,10 @@ class ExpenseDetail extends StatelessWidget {
                         children: [
                           Text(
                               'ต้นทุนปุ๋ย ${f.SeperateNumber(income['cash_count_product_cat1'])} กระสอบ',
-                              style: _baseFontStyle
-                          ),
+                              style: _baseFontStyle),
                           Text(
                               '${f.SeperateNumber(income['cash_count_cost_cat1'])} บาท',
-                              style: _baseFontStyle
-                          )
+                              style: _baseFontStyle)
                         ],
                       ),
                       Divider(),
@@ -830,12 +934,10 @@ class ExpenseDetail extends StatelessWidget {
                         children: [
                           Text(
                               'ต้นทุนยา ${f.SeperateNumber(income['cash_count_product_cat2'])} กระสอบ',
-                              style: _baseFontStyle
-                          ),
+                              style: _baseFontStyle),
                           Text(
                               '${f.SeperateNumber(income['cash_count_cost_cat2'])} บาท',
-                              style: _baseFontStyle
-                          )
+                              style: _baseFontStyle)
                         ],
                       ),
                       Divider(),
@@ -844,11 +946,9 @@ class ExpenseDetail extends StatelessWidget {
                         children: [
                           Text(
                               'ค่าขนส่ง ${f.SeperateNumber(transferTeam['sum_cat1'])} กระสอบ',
-                              style: _baseFontStyle
-                          ),
+                              style: _baseFontStyle),
                           Text('${f.SeperateNumber(transferTeam['sum'])} บาท',
-                              style: _baseFontStyle
-                          )
+                              style: _baseFontStyle)
                         ],
                       ),
                       Divider(),
@@ -856,7 +956,6 @@ class ExpenseDetail extends StatelessWidget {
                   ),
                 ),
               ),
-
               SliverList(
                   delegate: SliverChildBuilderDelegate((bc, i) {
                 var res = expense[i];
@@ -870,12 +969,10 @@ class ExpenseDetail extends StatelessWidget {
                           Expanded(
                             child: Text(
                                 '${res['car_pay_name']} (${res['car_pay_detail'] ?? ''} รถทะเบียน ${res['car_number']})',
-                                style: _baseFontStyle
-                            ),
+                                style: _baseFontStyle),
                           ),
                           Text('${f.SeperateNumber(res['car_pay_money'])} บาท',
-                              style: _baseFontStyle
-                          )
+                              style: _baseFontStyle)
                         ],
                       ),
                       Divider(),

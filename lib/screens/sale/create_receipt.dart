@@ -137,7 +137,7 @@ class _CreateReceiptState extends State<CreateReceipt> {
     if (widget.isOnline) {
       // billData['billNumber']
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/getContractOnline',
+          'https://thanyakit.com/systemv2/public/api/getContractOnline',
           body: {'Bill_number': '${billData['billNumber']}'});
       var tmp = jsonDecode(res.body);
       print(tmp.toString() == '[]');
@@ -165,9 +165,9 @@ class _CreateReceiptState extends State<CreateReceipt> {
         Directory appDocDir = await getApplicationDocumentsDirectory();
         String appDocPath = appDocDir.path;
         var res = await client.get(
-            'https://landgreen.ml/system/public/api/getReceiptByDocNumber/${widget.receiptNumber}');
+            'https://thanyakit.com/systemv2/public/api/getReceiptByDocNumber/${widget.receiptNumber}');
         // var res = await client.post(
-        //     'https://landgreen.ml/system/public/api/getDocBillOnline',
+        //     'https://thanyakit.com/systemv2/public/api/getDocBillOnline',
         //     body: {'Docbill_id': '${widget.billId}'});
         var tmp = jsonDecode(res.body);
         var dataSet = tmp[0];
@@ -446,7 +446,7 @@ class _CreateReceiptState extends State<CreateReceipt> {
     var dataSet;
     if (widget.isOnline) {
       res = await client.post(
-          'https://landgreen.ml/system/public/api/getDocBillOnline',
+          'https://thanyakit.com/systemv2/public/api/getDocBillOnline',
           body: {'Docbill_id': '${widget.billId}'});
       var tmp = jsonDecode(res.body);
       print(tmp);
@@ -962,7 +962,7 @@ class _CreateReceiptState extends State<CreateReceipt> {
                                                     type: 'imageSquare',
                                                   ),
                                                   imageUrl:
-                                                      'https://landgreen.ml/system/storage/app/${imageUrl[index]}',
+                                                      'https://thanyakit.com/systemv2/storage/app/${imageUrl[index]}',
                                                   errorWidget:
                                                       (context, url, error) {
                                                     // print(rank);
@@ -1006,7 +1006,7 @@ class _CreateReceiptState extends State<CreateReceipt> {
                                                     type: 'imageSquare',
                                                   ),
                                                   imageUrl:
-                                                      'https://landgreen.ml/system/storage/app/${imageUrl[index]}',
+                                                      'https://thanyakit.com/systemv2/storage/app/${imageUrl[index]}',
                                                   errorWidget:
                                                       (context, url, error) {
                                                     // print(rank);

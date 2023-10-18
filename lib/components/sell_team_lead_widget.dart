@@ -1,6 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:system/components/team_label.dart';
+import 'package:system/configs/constants.dart';
 
 class SellTeamLead extends StatelessWidget {
   const SellTeamLead({
@@ -19,17 +19,51 @@ class SellTeamLead extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        (lv_red!='--' && lv_red !=''  )?TeamLabel(
-          color: Color(0xFFD42219),
-          text: 'สีแดง / ${lv_red}',
-        ):Container(),
-        (lv_yellow!='--' && lv_yellow !=''  )?TeamLabel(
-          color: Color(0xFFF9BE19),
-          text: 'สีเหลือง / ${lv_yellow}',
-        ):Container(),
-        TeamLabel(
-          color: Color(0xFFF15A24),
-          text: 'สีส้ม / ${lv_orange}',
+        (lv_red != '--' && lv_red != '')
+            ? Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Sub. : ${lv_red}',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: subFontColor,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Container(),
+        (lv_yellow != '--' && lv_yellow != '')
+            ? Container(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'ผจก. : ${lv_yellow}',
+                      style: TextStyle(
+                        fontSize: 18,
+                        color: subFontColor,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : Container(),
+        Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'ผอ. : ${lv_orange}',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: subFontColor,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

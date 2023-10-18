@@ -18,7 +18,7 @@ class _SurveyTeamStockState extends State<SurveyTeamStock> {
 
   @override
   void initState() {
-    print("https://landgreen.ml/system/public/viewinapp?id=${widget.docId}");
+    print("https://thanyakit.com/systemv2/public/viewinapp?id=${widget.docId}");
     // TODO: implement initState
     super.initState();
   }
@@ -51,7 +51,7 @@ class _SurveyTeamStockState extends State<SurveyTeamStock> {
               ),
               body: WebView(
                 initialUrl:
-                    "https://landgreen.ml/system/public/viewinapp?id=${widget.docId}",
+                    "https://thanyakit.com/systemv2/public/viewinapp?id=${widget.docId}",
                 javascriptMode: JavascriptMode.unrestricted,
               )),
         ),

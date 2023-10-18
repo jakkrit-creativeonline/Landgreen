@@ -37,7 +37,7 @@ class SaleRankingItem extends StatelessWidget {
                         type: 'imageSquare',
                       ),
                       imageUrl:
-                          'https://landgreen.ml/system/storage/app/${imgUrl}',
+                          'https://thanyakit.com/systemv2/storage/app/${imgUrl}',
                       errorWidget: (context, url, error) {
                         // print(rank);
                         // print(error);

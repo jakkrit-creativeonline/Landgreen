@@ -3,9 +3,9 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:io' as IO;
 
-import 'package:background_fetch/background_fetch.dart';
+// import 'package:background_fetch/background_fetch.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_analytics/observer.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  FirebaseAnalytics analytics = FirebaseAnalytics();
+  // FirebaseAnalytics analytics = FirebaseAnalytics();
   FirebaseMessaging firebaseMessaging = FirebaseMessaging();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
@@ -110,7 +110,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     if (billNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineBill',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineBill',
           body: {'billNumber': jsonEncode(billNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {
@@ -145,7 +145,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     String folderName = now.year.toString();
     String subFolderName = now.month.toString();
     String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/customer/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/customer/';
     String uploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -157,7 +157,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       var offlineCustomer = await Sqlite()
           .query('CUSTOMER', where: 'ID = ${bill.customerId}', firstRow: true);
       var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/recordBill');
+          Uri.parse('https://thanyakit.com/systemv2/public/api/recordBill');
       var req = new http.MultipartRequest('POST', postUri);
       bool isImageCustomerUpload = true;
       bool isImageIdCardUpload = true;
@@ -248,7 +248,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     String folderName = now.year.toString();
     String subFolderName = now.month.toString();
     String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/receipt/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/receipt/';
     String uploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -257,7 +257,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     await ftpConnect.changeDirectory(uploadPath);
     for (var val in result) {
       var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/uploadReceipt');
+          Uri.parse('https://thanyakit.com/systemv2/public/api/uploadReceipt');
       var req = new http.MultipartRequest('POST', postUri);
       http.MultipartFile multipartFile;
       //req ของ Receipt
@@ -345,7 +345,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     //print(receiptNumber);
     if (receiptNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineReceipt',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineReceipt',
           body: {'receiptNumber': jsonEncode(receiptNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {
@@ -374,7 +374,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     String folderName = now.year.toString();
     String subFolderName = now.month.toString();
     String mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/customer/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/customer/';
     String customerUploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -382,7 +382,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         .createFolderIfNotExist('$mainFolder$folderName/$subFolderName');
 
     mainFolder =
-        '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/receipt/';
+        '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/receipt/';
     String trailUploadPath = '$mainFolder$folderName/$subFolderName';
     await ftpConnect.createFolderIfNotExist(mainFolder);
     await ftpConnect.createFolderIfNotExist('$mainFolder$folderName');
@@ -392,7 +392,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     for (var trail in result) {
       await ftpConnect.changeDirectory(customerUploadPath);
       var postUri =
-          Uri.parse('https://landgreen.ml/system/public/api/recordTrail');
+          Uri.parse('https://thanyakit.com/systemv2/public/api/recordTrail');
       var req = new http.MultipartRequest('POST', postUri);
 
       bool isImageUpload = true;
@@ -491,7 +491,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     //print(trailNumber);
     if (trailNumber.isNotEmpty) {
       var res = await client.post(
-          'https://landgreen.ml/system/public/api/checkOnlineTrail',
+          'https://thanyakit.com/systemv2/public/api/checkOnlineTrail',
           body: {'trailNumber': jsonEncode(trailNumber)}).then((value) {
         if (value.statusCode == 200) {
           try {
@@ -515,61 +515,61 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
   }
 
-  Future<void> initPlatformState() async {
-    print("-- >  Future<void> initPlatformState() async {");
-    ftpConnect = FTPConnect(ftpHost,
-        user: ftpUser, pass: ftpPass, port: 21, timeout: 60);
-    print('----> 1');
-    BackgroundFetch.configure(
-        BackgroundFetchConfig(
-            minimumFetchInterval: 15,
-            // stopOnTerminate: true,
-            // enableHeadless: false,
-            // requiresBatteryNotLow: false,
-            // requiresCharging: false,
-            // requiresStorageNotLow: false,
-            // requiresDeviceIdle: false,
-            forceAlarmManager: false,
-            stopOnTerminate: false,
-            startOnBoot: true,
-            enableHeadless: true,
-            requiresBatteryNotLow: false,
-            requiresCharging: false,
-            requiresStorageNotLow: false,
-            requiresDeviceIdle: false,
-            requiredNetworkType: NetworkType.ANY), (String taskId) async {
-      // _taskID = taskId;
-      // insertOffToOn(_taskID);
-      print("-- >MAIN : [BackgroundFetch] Event received $taskId");
-      bool isConnect = await DataConnectionChecker().hasConnection;
-      await getBill();
-      if (isConnect) {
-        await ftpConnect.connect();
-        await _uploadBill();
-        await _checkBill();
-        await _uploadReceipt();
-        await _checkReceipt();
-        await _uploadTrail();
-        await _checkTrail();
-        await ftpConnect.disconnect();
-        print('< ------------------- >');
-      }
-      BackgroundFetch.finish(taskId);
-    }).then((int status) {
-      // insertOffToOn(_taskID);
-      print('MAIN : [BackgroundFetch] configure success: $status');
-    }).catchError((e) {
-      print('MAIN : [BackgroundFetch] configure ERROR: $e');
-    });
-  }
+  // Future<void> initPlatformState() async {
+  //   print("-- >  Future<void> initPlatformState() async {");
+  //   ftpConnect = FTPConnect(ftpHost,
+  //       user: ftpUser, pass: ftpPass, port: 21, timeout: 60);
+  //   print('----> 1');
+  //   BackgroundFetch.configure(
+  //       BackgroundFetchConfig(
+  //           minimumFetchInterval: 15,
+  //           // stopOnTerminate: true,
+  //           // enableHeadless: false,
+  //           // requiresBatteryNotLow: false,
+  //           // requiresCharging: false,
+  //           // requiresStorageNotLow: false,
+  //           // requiresDeviceIdle: false,
+  //           forceAlarmManager: false,
+  //           stopOnTerminate: false,
+  //           startOnBoot: true,
+  //           enableHeadless: true,
+  //           requiresBatteryNotLow: false,
+  //           requiresCharging: false,
+  //           requiresStorageNotLow: false,
+  //           requiresDeviceIdle: false,
+  //           requiredNetworkType: NetworkType.ANY), (String taskId) async {
+  //     // _taskID = taskId;
+  //     // insertOffToOn(_taskID);
+  //     print("-- >MAIN : [BackgroundFetch] Event received $taskId");
+  //     bool isConnect = await DataConnectionChecker().hasConnection;
+  //     await getBill();
+  //     if (isConnect) {
+  //       await ftpConnect.connect();
+  //       await _uploadBill();
+  //       await _checkBill();
+  //       await _uploadReceipt();
+  //       await _checkReceipt();
+  //       await _uploadTrail();
+  //       await _checkTrail();
+  //       await ftpConnect.disconnect();
+  //       print('< ------------------- >');
+  //     }
+  //     // BackgroundFetch.finish(taskId);
+  //   }).then((int status) {
+  //     // insertOffToOn(_taskID);
+  //     print('MAIN : [BackgroundFetch] configure success: $status');
+  //   }).catchError((e) {
+  //     print('MAIN : [BackgroundFetch] configure ERROR: $e');
+  //   });
+  // }
 
   @override
   void initState() {
     // TODO: implement initState
-    print('main initstat');
+    // print('main initstat');
     initLocalNotification();
     initFirebaseMessaging();
-    initPlatformState();
+    // initPlatformState();
     // uploadData();
     // print('xxxxxxxxxxx');
     // if(IO.Platform.isIOS)
@@ -578,7 +578,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   uploadData() async{
-    print('-------------xxxx');
+    // print('-------------xxxx');
       await ServiceUploadAll().uploadALL();
 
   }
@@ -617,7 +617,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       await ftpConnect.disconnect();
       print('< ------------------- >');
     }
-    BackgroundFetch.finish(tID);
+    // BackgroundFetch.finish(tID);
   }
 
   initLocalNotification() async {

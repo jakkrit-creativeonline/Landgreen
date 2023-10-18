@@ -31,8 +31,14 @@ export 'package:system/components/horizontal_bar_chart.dart';
 export 'package:system/components/pie_chart.dart';
 export 'package:system/components/alert_newdesign.dart';
 
-const kPrimaryColor = Color(0xFF006837);
-const kPrimaryLightColor = Color(0xFF009245);
+// const kPrimaryColor = Color(0xFF006837);
+// const kPrimaryLightColor = Color(0xFF009245);
+
+const kPrimaryColor = Color(0xff0234ea);
+const kPrimaryLightColor = Color(0xff0f3df5);
+
+// const kPrimaryColor = Color(0xFF0033AA);
+// const kPrimaryLightColor = Color(0xFF0033EE);
 const darkColor = Color(0xFF252D3A);
 const ltFontColor = Color(0xFFC2C7D0);
 const menuFontColor = Colors.white;
@@ -76,15 +82,15 @@ const brownColor = Color(0xFFCDA44A);
 const goldColor = Color(0xFFFACF19);
 
 String ftpHost = '119.59.125.159';
-String ftpUser = 'landgreen';
+String ftpUser = 'app@thanyakit.com';
 String ftpPass = 'Online123';
 
 String zipFileDirectory =
-    '/domains/landgreen.ml/public_html/system/storage/app/faarunApp/jsonTable/';
-String storagePath = 'https://landgreen.ml/system/storage/app/';
+    '/domains/thanyakit.com/public_html/systemv2/storage/app/faarunApp/jsonTable/';
+String storagePath = 'https://thanyakit.com/systemv2/storage/app/';
 String noImagePath = 'no_image.png';
-String apiPath = 'https://landgreen.ml/system/public/api';
-String urlPath = 'https://landgreen.ml/system/public';
+String apiPath = 'https://thanyakit.com/systemv2/public/api';
+String urlPath = 'https://thanyakit.com/systemv2/public';
 // ignore: non_constant_identifier_names
 String SPLASH_PAGE = '/SplashScreen',
 // ignore: non_constant_identifier_names

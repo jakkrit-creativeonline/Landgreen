@@ -26,8 +26,9 @@ class _DocPTAState extends State<DocPTA> {
   @override
   void initState() {
     _obj = widget.obj;
-    print('_obj.runtimetype =>${_obj.runtimeType}');
+    print('_obj.runtimetype =>${_obj}');
     print('_obj =>${_obj['Approve_user_id']}');
+
     getData();
     super.initState();
   }

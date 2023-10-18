@@ -25,7 +25,6 @@ class CEODashboard extends StatefulWidget {
   const CEODashboard({Key key, this.userId}) : super(key: key);
   @override
   _CEODashboardState createState() => _CEODashboardState();
-
 }
 
 class _CEODashboardState extends State<CEODashboard> {
@@ -40,12 +39,11 @@ class _CEODashboardState extends State<CEODashboard> {
   var userData = new Map();
   Future<bool> userDataFuture;
 
-  String incomeSelected = '13';
+  String incomeSelected = '98';
 
   var lastAvaliable;
   DateTime currentTime = DateTime.now();
   FormatMethod f = new FormatMethod();
-
 
   Future<int> getPref() async {
     final SharedPreferences prefs = await _prefs;
@@ -84,7 +82,6 @@ class _CEODashboardState extends State<CEODashboard> {
     await getAvailableReport();
     setState(() {});
     CheckEarlyMonth();
-
   }
 
   Future getAvailableReport() async {
@@ -110,17 +107,15 @@ class _CEODashboardState extends State<CEODashboard> {
       s.getCeoTeamRanking();
       s.getCeoCarRanking();
       s.getCeoManagerRank();
-      await s.getCeoIncome(
-          noResult: true, isThisMonth: true, selectedReport: incomeSelected);
-      await s.getCeoIncome(
-          noResult: true, isThisMonth: false, selectedReport: incomeSelected);
-      Navigator.popAndPushNamed(context, 'ceo_dashboard',arguments: ScreenArguments(userId: widget.userId));
+      s.getCeoIncome(noResult: true, isThisMonth: true, selectedReport: incomeSelected);
+      s.getCeoIncome(noResult: true, isThisMonth: false, selectedReport: incomeSelected);
+      Navigator.popAndPushNamed(context, 'ceo_dashboard', arguments: ScreenArguments(userId: widget.userId));
     }
   }
 
-  CheckEarlyMonth() async{
+  CheckEarlyMonth() async {
     print('CheckEarlyMonth');
-    AlertNewDesign().showEarlyMonth(context,MediaQuery.of(context).size);
+    AlertNewDesign().showEarlyMonth(context, MediaQuery.of(context).size);
   }
 
   @override
@@ -128,11 +123,9 @@ class _CEODashboardState extends State<CEODashboard> {
     print('init state ceo dashboard');
     CheckVersionUpdate().check(context);
 
-
     getData();
     // TODO: implement initState
     super.initState();
-
   }
 
   @override
@@ -142,17 +135,16 @@ class _CEODashboardState extends State<CEODashboard> {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
       child: Container(
-        color:kPrimaryColor,
+        color: kPrimaryColor,
         child: SafeArea(
           bottom: false,
-
           child: WillPopScope(
             onWillPop: _onBackPressed,
             child: Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(42),
                 child: AppBar(
-                  titleSpacing:0.00,
+                  titleSpacing: 0.00,
                   // title: Row(
                   //   mainAxisAlignment: MainAxisAlignment.start,
                   //   children: [
@@ -162,8 +154,7 @@ class _CEODashboardState extends State<CEODashboard> {
                   //   ],
                   // ),
                   flexibleSpace: Container(
-                    decoration:
-                    BoxDecoration(
+                    decoration: BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage('assets/img/bgTop2.png'),
                         fit: BoxFit.fill,
@@ -177,14 +168,15 @@ class _CEODashboardState extends State<CEODashboard> {
                   //     onPressed: () => Scaffold.of(context).openDrawer(),
                   //   ),
                   // ),
-
                 ),
               ),
               drawer: Drawer(
                 elevation: 8.0,
                 child: Container(
                   color: kPrimaryColor,
-                  child: CEOMenu(userId: userId,),
+                  child: CEOMenu(
+                    userId: userId,
+                  ),
                 ),
               ),
               // floatingActionButton: FloatingActionButton(
@@ -197,7 +189,7 @@ class _CEODashboardState extends State<CEODashboard> {
                   slivers: <Widget>[
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 26,right: 20,top: 15),
+                        padding: const EdgeInsets.only(left: 26, right: 20, top: 15),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -214,34 +206,48 @@ class _CEODashboardState extends State<CEODashboard> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       FutureBuilder(
-                                        future:userDataFuture,
+                                        future: userDataFuture,
                                         builder: (context, snapshot) {
-                                          if(snapshot.hasData){
+                                          if (snapshot.hasData) {
                                             return Column(
                                               mainAxisAlignment: MainAxisAlignment.start,
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
-
-                                                Text('${userData['Name']} ',style: TextStyle(fontSize: 35,height:1,color: mainFontColor),),
-                                                Text('${userData['Surname']} ',style: TextStyle(fontSize: 35,height:1,color: mainFontColor),)
+                                                Text(
+                                                  '${userData['Name']} ',
+                                                  style: TextStyle(fontSize: 35, height: 1, color: mainFontColor),
+                                                ),
+                                                Text(
+                                                  '${userData['Surname']} ',
+                                                  style: TextStyle(fontSize: 35, height: 1, color: mainFontColor),
+                                                )
                                               ],
                                             );
-                                          }else{
+                                          } else {
                                             return Container();
                                           }
                                         },
                                       ),
-
-                                      VerticalDivider(color: mainFontColor,thickness: 1,indent: 10,endIndent: 10,),
-
+                                      VerticalDivider(
+                                        color: mainFontColor,
+                                        thickness: 1,
+                                        indent: 10,
+                                        endIndent: 10,
+                                      ),
                                       Column(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Text('',style: TextStyle(fontSize: 24,color: mainFontColor),),
-                                          Text('CEO',style: TextStyle(fontSize: 45,height:1,color: mainFontColor),)
+                                          Text(
+                                            '',
+                                            style: TextStyle(fontSize: 24, color: mainFontColor),
+                                          ),
+                                          Text(
+                                            'CEO',
+                                            style: TextStyle(fontSize: 45, height: 1, color: mainFontColor),
+                                          )
                                         ],
                                       ),
                                     ],
@@ -261,14 +267,22 @@ class _CEODashboardState extends State<CEODashboard> {
                                           child: Image.asset('assets/icons/icon_mail.png'),
                                         ),
                                       ),
-                                      SizedBox(width: 10,),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
                                       Column(
                                         mainAxisAlignment: MainAxisAlignment.start,
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          Text('อัพเดทเมื่อเวลา ${currentTime.hour}:${currentTime.minute} น.',style: TextStyle(fontSize: 18,height: 1),),
-                                          Text('วันที่ ${f.ThaiDateFormat(currentTime.year.toString()+'-'+currentTime.month.toString()+'-'+currentTime.day.toString())}',style: TextStyle(fontSize: 18,height: 1),)
+                                          Text(
+                                            'อัพเดทเมื่อเวลา ${currentTime.hour}:${currentTime.minute} น.',
+                                            style: TextStyle(fontSize: 18, height: 1),
+                                          ),
+                                          Text(
+                                            'วันที่ ${f.ThaiDateFormat(currentTime.year.toString() + '-' + currentTime.month.toString() + '-' + currentTime.day.toString())}',
+                                            style: TextStyle(fontSize: 18, height: 1),
+                                          )
                                         ],
                                       )
                                     ],
@@ -283,13 +297,13 @@ class _CEODashboardState extends State<CEODashboard> {
                                   if (userData['Image'] != null)
                                     Container(
                                       child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(100),
-                                          child:CachedNetworkImage(
-                                                  imageUrl: '$storagePath/${userData['Image']}',
-                                                  errorWidget: (context, url, error){
-                                                    return Image.asset('assets/avatar.png');
-                                                  },
-                                                ),
+                                        borderRadius: BorderRadius.circular(100),
+                                        child: CachedNetworkImage(
+                                          imageUrl: '$storagePath/${userData['Image']}',
+                                          errorWidget: (context, url, error) {
+                                            return Image.asset('assets/avatar.png');
+                                          },
+                                        ),
                                       ),
                                       width: size.width * 0.30,
                                     ),
@@ -302,7 +316,7 @@ class _CEODashboardState extends State<CEODashboard> {
                     ),
                     SliverToBoxAdapter(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 20,right: 20),
+                        padding: const EdgeInsets.only(left: 20, right: 20),
                         child: CeoIncome(testCallBack),
                       ),
                     ),
@@ -321,7 +335,6 @@ class _CEODashboardState extends State<CEODashboard> {
                     SliverToBoxAdapter(
                       child: CeoCarRank(),
                     ),
-
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.only(top: 15),
@@ -340,41 +353,45 @@ class _CEODashboardState extends State<CEODashboard> {
 
   Future<bool> _onBackPressed() {
     return showDialog(
-      context: context,
-      builder: (context) => new AlertDialog(
-        title: Center(child: Text('คุณต้องการออกจากแอพหรือไม่ ?',style: TextStyle(fontSize: 23),)),
-        content: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 5),
-            FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: Text("ไม่",style: TextStyle(color: Colors.white),),
-              color: kPrimaryLightColor,
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: Center(
+                child: Text(
+              'คุณต้องการออกจากแอพหรือไม่ ?',
+              style: TextStyle(fontSize: 23),
+            )),
+            content: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(height: 5),
+                FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  child: Text(
+                    "ไม่",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: kPrimaryLightColor,
+                ),
+                SizedBox(width: 16),
+                FlatButton(
+                  onPressed: () {
+                    //SystemNavigator.pop();
+                    //exit(0);
+                    Navigator.of(context).pop(true);
+                  },
+                  child: Text(
+                    "ยืนยัน",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  color: kPrimaryColor,
+                ),
+              ],
             ),
-            SizedBox(width: 16),
-            FlatButton(
-              onPressed: () {
-                //SystemNavigator.pop();
-                //exit(0);
-                Navigator.of(context).pop(true);
-              },
-              child: Text(
-                "ยืนยัน",
-                style: TextStyle(color: Colors.white),
-              ),
-              color: kPrimaryColor,
-            ),
-          ],
-        ),
-      ),
-    ) ??
+          ),
+        ) ??
         false;
   }
-
-
-
 }
